@@ -84,9 +84,10 @@ const aboutName =
 				{selectedSlug.data.featured && (
 					<article>
 						<h2>{selectedSlug.data.title}</h2>
-						<p>{selectedSlug.data.description}</p>
 						<h3>{selectedSlug.data.featured.headline}</h3>
-						<p>{selectedSlug.data.featured.summary}</p>
+						{selectedSlug.data.featured.summary.map((paragraph) => (
+							<p>{paragraph}</p>
+						))}
 					</article>
 				)}
 			</section>

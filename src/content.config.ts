@@ -19,7 +19,12 @@ const slugs = defineCollection({
 			featured: z
 				.object({
 					headline: z.string().min(1),
-					summary: z.string().min(1),
+					summary: z
+						.union([
+							z.string().min(1),
+							z.array(z.string().min(1)).min(1),
+						])
+						.transform((v) => (Array.isArray(v) ? v : [v])),
 				})
 				.optional(),
 			music: z
