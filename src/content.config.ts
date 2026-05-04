@@ -38,6 +38,24 @@ const slugs = defineCollection({
 				.optional(),
 			links: z
 				.object({
+					small: z
+						.array(
+							z.object({
+								id: z.string().min(1),
+								label: z.string().min(1),
+								href: z.string().url(),
+							}),
+						)
+						.optional(),
+					large: z
+						.array(
+							z.object({
+								id: z.string().min(1),
+								label: z.string().min(1),
+								href: z.string().url(),
+							}),
+						)
+						.optional(),
 					paid: z
 						.array(
 							z.object({
@@ -46,7 +64,7 @@ const slugs = defineCollection({
 								href: z.string().url(),
 							}),
 						)
-						.default([]),
+						.optional(),
 					free: z
 						.array(
 							z.object({
@@ -55,9 +73,13 @@ const slugs = defineCollection({
 								href: z.string().url(),
 							}),
 						)
-						.default([]),
+						.optional(),
 				})
-				.default({ paid: [], free: [] }),
+				.default({})
+				.transform((v) => ({
+					small: v.small ?? v.paid ?? [],
+					large: v.large ?? v.free ?? [],
+				})),
 		}),
 });
 
