@@ -10,27 +10,69 @@ const { selectedSlug } = Astro.props;
 ---
 
 <main>
-
 	{
 		selectedSlug && (
 			<section>
-				{selectedSlug.data.music && (
-					<article>
-						<audio controls src={selectedSlug.data.music.audioUrl}></audio>
-					</article>
-				)}
+				<div class="media-container-wrapper">
+					{selectedSlug.data.cover && (
+						<div class="cover-container">
+							<article>
+								{/* I have zero issues with assuming that a string, no matter what, is being passed to the cover key - there's a smarter way for this but oh well */}
+								<img
+									src={
+										selectedSlug.data
+											.cover as unknown as string
+									}
+									alt={selectedSlug.data.title}
+									width={300}
+									height={300}
+								/>
+							</article>
+						</div>
+					)}
+					{selectedSlug.data.music && (
+						<div class="media-container">
+							<article>
+								<audio
+									controls
+									src={selectedSlug.data.music.audioUrl}
+								/>
+							</article>
+						</div>
+					)}
+				</div>
 
 				<h2>{selectedSlug.data.title}</h2>
 				<p>{selectedSlug.data.description}</p>
 
-				{selectedSlug.data.links.length > 0 && (
+				{(selectedSlug.data.links.paid.length > 0 ||
+					selectedSlug.data.links.free.length > 0) && (
 					<>
 						<h3>Slug-Specific Links</h3>
-						<ul>
-							{selectedSlug.data.links.map((link) => (
-								<li><a href={link.href}>{link.label}</a></li>
-							))}
-						</ul>
+						{selectedSlug.data.links.paid.length > 0 && (
+							<>
+								<h4>Requires Payment</h4>
+								<ul>
+									{selectedSlug.data.links.paid.map((link) => (
+										<li>
+											<a href={link.href}>{link.label}</a>
+										</li>
+									))}
+								</ul>
+							</>
+						)}
+						{selectedSlug.data.links.free.length > 0 && (
+							<>
+								<h4>Free Downloads</h4>
+								<ul>
+									{selectedSlug.data.links.free.map((link) => (
+										<li>
+											<a href={link.href}>{link.label}</a>
+										</li>
+									))}
+								</ul>
+							</>
+						)}
 					</>
 				)}
 				<br />
@@ -44,10 +86,13 @@ const { selectedSlug } = Astro.props;
 			</section>
 		)
 	}
-	
+
 	<section>
 		<h1>Link Lander</h1>
-		<p>Default links are always visible. Slug-specific links and featured content append below.</p>
+		<p>
+			Default links are always visible. Slug-specific links and featured
+			content append below.
+		</p>
 	</section>
 
 	<section>
@@ -55,13 +100,13 @@ const { selectedSlug } = Astro.props;
 		<ul>
 			{
 				defaultLinks.map((link) => (
-					<li><a href={link.href}>{link.label}</a></li>
+					<li>
+						<a href={link.href}>{link.label}</a>
+					</li>
 				))
 			}
 		</ul>
 	</section>
-
-	
 </main>
 
 <style>

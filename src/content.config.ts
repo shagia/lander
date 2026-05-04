@@ -32,14 +32,27 @@ const slugs = defineCollection({
 				})
 				.optional(),
 			links: z
-				.array(
-					z.object({
-						id: z.string().min(1),
-						label: z.string().min(1),
-						href: z.string().url(),
-					}),
-				)
-				.default([]),
+				.object({
+					paid: z
+						.array(
+							z.object({
+								id: z.string().min(1),
+								label: z.string().min(1),
+								href: z.string().url(),
+							}),
+						)
+						.default([]),
+					free: z
+						.array(
+							z.object({
+								id: z.string().min(1),
+								label: z.string().min(1),
+								href: z.string().url(),
+							}),
+						)
+						.default([]),
+				})
+				.default({ paid: [], free: [] }),
 		}),
 });
 
