@@ -42,34 +42,36 @@ const { selectedSlug } = Astro.props;
 					)}
 				</div>
 
-				<h2>{selectedSlug.data.title}</h2>
-				<p>{selectedSlug.data.description}</p>
-
 				{(selectedSlug.data.links.paid.length > 0 ||
 					selectedSlug.data.links.free.length > 0) && (
 					<>
-						<h3>Slug-Specific Links</h3>
 						{selectedSlug.data.links.paid.length > 0 && (
 							<>
-								<h4>Requires Payment</h4>
-								<ul>
-									{selectedSlug.data.links.paid.map((link) => (
-										<li>
-											<a href={link.href}>{link.label}</a>
-										</li>
-									))}
+								<ul class="paid-links-list">
+									{selectedSlug.data.links.paid.map(
+										(link) => (
+											<li>
+												<a href={link.href}>
+													{link.label}
+												</a>
+											</li>
+										),
+									)}
 								</ul>
 							</>
 						)}
 						{selectedSlug.data.links.free.length > 0 && (
 							<>
-								<h4>Free Downloads</h4>
-								<ul>
-									{selectedSlug.data.links.free.map((link) => (
-										<li>
-											<a href={link.href}>{link.label}</a>
-										</li>
-									))}
+								<ul class="free-links-list">
+									{selectedSlug.data.links.free.map(
+										(link) => (
+											<li>
+												<a href={link.href}>
+													{link.label}
+												</a>
+											</li>
+										),
+									)}
 								</ul>
 							</>
 						)}
@@ -79,6 +81,8 @@ const { selectedSlug } = Astro.props;
 
 				{selectedSlug.data.featured && (
 					<article>
+						<h2>{selectedSlug.data.title}</h2>
+						<p>{selectedSlug.data.description}</p>
 						<h3>{selectedSlug.data.featured.headline}</h3>
 						<p>{selectedSlug.data.featured.summary}</p>
 					</article>
@@ -87,7 +91,7 @@ const { selectedSlug } = Astro.props;
 		)
 	}
 
-	<section>
+	<section class="default-links-section">
 		<h1>Link Lander</h1>
 		<p>
 			Default links are always visible. Slug-specific links and featured
@@ -122,6 +126,24 @@ const { selectedSlug } = Astro.props;
 
 	section {
 		margin-bottom: 2rem;
+	}
+
+	.paid-links-list{
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		list-style: none;
+		padding: 0;
+		gap: 0.5rem;
+	}
+
+	.free-links-list{
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		list-style: none;
+		padding: 0;
+		gap: 0.5rem;
 	}
 
 	h1,
