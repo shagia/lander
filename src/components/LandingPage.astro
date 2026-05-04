@@ -147,6 +147,7 @@ const aboutName =
 
 <style>
 	main {
+		box-sizing: border-box;
 		max-width: 40vw;
 		margin: 2rem;
 		padding: 2rem 1rem 4rem;
@@ -154,6 +155,8 @@ const aboutName =
 		line-height: 1.5;
 		background-color: #fff;
 		border-radius: 1rem;
+		overflow-y: scroll;
+		height: 90vh;
 	}
 
 	section {
@@ -238,7 +241,7 @@ const aboutName =
 	.cover-image {
 		border-radius: 1rem;
 		border: 1px solid #95b9ff;
-		width: 100%;
+		width: 80%;
 	}
 
 	.default-links-disclosure-panel {
@@ -247,5 +250,21 @@ const aboutName =
 
 	.default-links-disclosure-panel section:last-child {
 		margin-bottom: 0;
+	}
+
+
+	@media (max-width: 440px) and (orientation: portrait) {
+		main {
+			max-width: none;
+			width: auto;
+			margin: 1rem;
+			padding: 1.25rem 1rem 3rem;
+			border-radius: 0.75rem;
+			overflow-y: scroll;
+			height: auto;
+		}
+		.cover-image {
+			width: 100%;
+		}
 	}
 </style>
