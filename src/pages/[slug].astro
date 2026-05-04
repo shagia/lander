@@ -1,0 +1,21 @@
+---
+import type { GetStaticPaths } from "astro";
+import LandingPage from "../components/LandingPage.astro";
+import Layout from "../layouts/Layout.astro";
+import { getPublishedSlugs, getSlugByIdOrSlug } from "../lib/landing";
+
+export const getStaticPaths = (async () => {
+	const slugs = await getPublishedSlugs();
+	return slugs.map((entry) => ({
+		params: { slug: entry.id },
+		props: { slugId: entry.id },
+	}));
+}) satisfies GetStaticPaths;
+
+const { slugId } = Astro.props;
+const selectedSlug = await getSlugByIdOrSlug(slugId);
+---
+
+<Layout>
+	<LandingPage selectedSlug={selectedSlug} />
+</Layout>
