@@ -27,8 +27,7 @@ const aboutName =
 											.cover as unknown as string
 									}
 									alt={selectedSlug.data.title}
-									width={300}
-									height={300}
+									class="cover-image"
 								/>
 							</article>
 						</div>
@@ -148,7 +147,7 @@ const aboutName =
 
 <style>
 	main {
-		max-width: 50rem;
+		max-width: 40vw;
 		margin: 2rem;
 		padding: 2rem 1rem 4rem;
 		font-family: Inter, system-ui, sans-serif;
@@ -235,6 +234,11 @@ const aboutName =
 	.default-links-summary-label {
 		flex: 1 1 auto;
 		min-width: 0;
+	}
+	.cover-image {
+		border-radius: 1rem;
+		border: 1px solid #95b9ff;
+		width: 100%;
 	}
 
 	.default-links-disclosure-panel {
