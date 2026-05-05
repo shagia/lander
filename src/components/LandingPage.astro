@@ -39,7 +39,8 @@ const slugSmallLinks = selectedSlug?.data.links?.small ?? [];
 const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 ---
 
-<main>
+<main class="main-container">
+	<div class="main-container-scroll">
 	{
 		selectedSlug && (
 			<section>
@@ -120,14 +121,26 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 				
 				<br />
 
+				
 				{selectedSlug.data.featured && (
-					<article>
-						<h2>{selectedSlug.data.title}</h2>
-						<h3>{selectedSlug.data.featured.headline}</h3>
-						{selectedSlug.data.featured.summary.map((paragraph) => (
-							<p>{paragraph}</p>
-						))}
-					</article>
+					<h2>{selectedSlug.data.title}</h2>
+
+					<details class="default-links-disclosure">
+					<summary class="default-links-summary">
+						<span class="default-links-summary-label">
+							Information
+						</span>
+					</summary>
+					<div class="default-links-disclosure-panel">
+						<br />
+						<section class="default-links-section">
+							<h3>{selectedSlug.data.featured.headline}</h3>
+							{selectedSlug.data.featured.summary.map((paragraph) => (
+								<p>{paragraph}</p>
+							))}
+						</section>
+					</div>
+				</details>
 				)}
 			</section>
 		)
@@ -193,20 +206,69 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 			</>
 		)
 	}
+	</div>
 </main>
 
 <style>
-	main {
+	.main-container {
+		--main-container-bg: rgba(255, 255, 255, 0.8);
+		--main-container-fade: 3.25rem;
+
+		position: relative;
 		box-sizing: border-box;
 		max-width: 40vw;
 		margin: 2rem;
-		padding: 3rem;
+		padding: 0;
 		font-family: Inter, system-ui, sans-serif;
+		font-weight: 500;
 		line-height: 1.5;
-		background-color: #fff;
+		background-color: var(--main-container-bg);
 		border-radius: 1rem;
-		overflow-y: scroll;
+		border: 6px solid rgba(255, 255, 255, 0.2);
+		overflow: hidden;
 		height: 90vh;
+		backdrop-filter: blur(10px);
+		isolation: isolate;
+		transform: rotate(-0.02deg);
+	}
+
+	.main-container::before,
+	.main-container::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		padding-top: 10px;
+		height: var(--main-container-fade);
+		pointer-events: none;
+		z-index: 2;
+	}
+
+	.main-container::before {
+		top: 0;
+		background: linear-gradient(
+			to bottom,
+			var(--main-container-bg),
+			transparent
+		);
+	}
+
+	.main-container::after {
+		bottom: 0;
+		background: linear-gradient(
+			to top,
+			var(--main-container-bg),
+			transparent
+		);
+	}
+
+	.main-container-scroll {
+		box-sizing: border-box;
+		height: 100%;
+		overflow-y: auto;
+		padding: 3rem;
+		position: relative;
+		z-index: 0;
 	}
 	.media-container-wrapper {
 		width: 100%;
@@ -313,7 +375,7 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 		background: #f9fafb;
 	}
 
-	main a:focus-visible {
+	.main-container a:focus-visible {
 		outline: 2px solid #2563eb;
 		outline-offset: 2px;
 	}
@@ -390,21 +452,34 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 
 
 	@media (max-width: 630px) and (orientation: portrait) {
-		main {
+		.main-container {
 			max-width: none;
 			width: auto;
 			margin: 1rem;
-			padding: 1.25rem 1rem 3rem;
 			border-radius: 0.75rem;
-			overflow-y: scroll;
 			height: auto;
 		}
+
+		.main-container::before {
+			border-radius: 0.75rem 0.75rem 0 0;
+		}
+
+		.main-container::after {
+			border-radius: 0 0 0.75rem 0.75rem;
+		}
+
+		.main-container-scroll {
+			height: auto;
+			overflow-y: visible;
+			padding: 1.25rem 1rem 3rem;
+		}
+
 		.cover-image {
 			width: 100%;
 		}
 
 		.media-container-wrapper {
-		width: 100%;
-	}
+			width: 100%;
+		}
 	}
 </style>
