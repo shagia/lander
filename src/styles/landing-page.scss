@@ -1,0 +1,276 @@
+.landing-shell {
+	--main-container-bg: var(--color-panel);
+	--main-container-fade: 3.25rem;
+
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	min-height: 0;
+	max-width: 40vw;
+
+	.main-container {
+		position: relative;
+		box-sizing: border-box;
+		flex: 1;
+		min-height: 0;
+		margin: 0;
+		padding: 0;
+		background-color: var(--main-container-bg);
+		border-radius: 1rem;
+		border: 6px solid var(--color-panel-border);
+		overflow: hidden;
+		backdrop-filter: blur(10px);
+		isolation: isolate;
+		transform: rotate(-0.02deg);
+
+		&::before,
+		&::after {
+			content: "";
+			position: absolute;
+			left: 0;
+			right: 0;
+			padding-top: 10px;
+			height: var(--main-container-fade);
+			pointer-events: none;
+			z-index: 2;
+		}
+
+		&::before {
+			top: 0;
+			background: linear-gradient(
+				to bottom,
+				var(--main-container-bg),
+				transparent
+			);
+		}
+
+		&::after {
+			bottom: 0;
+			background: linear-gradient(
+				to top,
+				var(--main-container-bg),
+				transparent
+			);
+		}
+
+		a:focus-visible {
+			outline: 2px solid var(--color-focus);
+			outline-offset: 2px;
+		}
+	}
+
+	.main-container-scroll {
+		box-sizing: border-box;
+		height: 100%;
+		overflow-y: auto;
+		padding: 3rem;
+		position: relative;
+		z-index: 0;
+	}
+
+	.media-container-wrapper {
+		width: 100%;
+	}
+
+	section {
+		margin-bottom: 2rem;
+	}
+
+	.visually-hidden {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	.links-large-list {
+		display: flex;
+		flex-direction: column;
+		list-style: none;
+		padding: 0;
+		margin: 0 0 0.75rem;
+		gap: 0.5rem;
+		width: 100%;
+
+		.link-large {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 0.5rem;
+			width: 100%;
+			box-sizing: border-box;
+			padding: 0.65rem 1rem;
+			text-decoration: none;
+			background: var(--color-surface);
+			border-radius: 0.5rem;
+			border: 1px solid var(--color-border);
+			font-weight: 500;
+
+			&:hover {
+				background: var(--color-surface-hover);
+			}
+		}
+	}
+
+	.links-small-list {
+		display: flex;
+		flex-direction: row;
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		gap: 0.4rem;
+		align-items: center;
+
+		li {
+			width: 100%;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.link-small {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0.25rem 0.5rem;
+			font-size: 1.0125rem;
+			text-decoration: none;
+			background: var(--color-canvas);
+			border: 1px solid var(--color-border-muted);
+			border-radius: 9999px;
+			line-height: 1.2;
+			width: 100%;
+			height: 30px;
+
+			&:hover {
+				border-color: var(--color-border-strong);
+				background: var(--color-surface-muted);
+			}
+		}
+	}
+
+	.link-small-icon,
+	.link-large-icon {
+		svg {
+			display: block;
+			fill: currentColor;
+		}
+	}
+
+	.link-small-icon svg {
+		width: 1.125rem;
+		height: 1.125rem;
+	}
+
+	.link-large-icon svg {
+		width: 1.25rem;
+		height: 1.25rem;
+		flex-shrink: 0;
+	}
+
+	h1,
+	h2,
+	h3 {
+		margin: 0 0 0.5rem;
+		font-weight: 500;
+	}
+
+	ul {
+		margin: 0;
+		padding-left: 1.25rem;
+	}
+
+	audio {
+		width: 100%;
+	}
+
+	.default-links-disclosure {
+		margin-bottom: 2rem;
+
+		&[open] .default-links-summary::before {
+			transform: rotate(45deg);
+			margin-top: 0.15rem;
+		}
+	}
+
+	.default-links-summary {
+		list-style: none;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem 0.75rem;
+		padding: 0;
+		cursor: pointer;
+		user-select: none;
+
+		&::-webkit-details-marker {
+			display: none;
+		}
+
+		&::before {
+			content: "";
+			display: inline-block;
+			width: 0.5rem;
+			height: 0.5rem;
+			margin-right: 0.5rem;
+			border-right: 2px solid var(--color-muted);
+			border-bottom: 2px solid var(--color-muted);
+			transform: rotate(-45deg);
+			vertical-align: middle;
+			transition: transform 0.15s ease;
+		}
+	}
+
+	.default-links-summary-label {
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+
+	.cover-image {
+		border-radius: 1rem;
+		border: 1px solid var(--color-border-accent);
+		width: 100%;
+	}
+
+	.default-links-disclosure-panel {
+		padding: 0;
+
+		section:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	@media (max-width: 630px) and (orientation: portrait) {
+		max-width: none;
+		width: auto;
+
+		.main-container {
+			border-radius: 0.75rem;
+
+			&::before {
+				border-radius: 0.75rem 0.75rem 0 0;
+			}
+
+			&::after {
+				border-radius: 0 0 0.75rem 0.75rem;
+			}
+		}
+
+		.main-container-scroll {
+			padding: 1.25rem 1rem 3rem;
+		}
+
+		.cover-image {
+			width: 100%;
+		}
+
+		.media-container-wrapper {
+			width: 100%;
+		}
+	}
+}
