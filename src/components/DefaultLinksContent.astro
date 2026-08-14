@@ -1,0 +1,32 @@
+---
+import { defaultLinks } from "../lib/landing";
+
+interface Props {
+	linkDestinationHint: (href: string) => string;
+}
+
+const { linkDestinationHint } = Astro.props;
+---
+
+<section class="default-links-section">
+	<h1>Link Lander</h1>
+	<p>
+		Default links are always visible. Slug-specific links and featured content
+		append below.
+	</p>
+</section>
+<section>
+	<h2>Default Links</h2>
+	<ul>
+		{defaultLinks.map((link) => (
+			<li>
+				<a href={link.href}>
+					{link.label}
+					<span class="visually-hidden">
+						{linkDestinationHint(link.href)}
+					</span>
+				</a>
+			</li>
+		))}
+	</ul>
+</section>

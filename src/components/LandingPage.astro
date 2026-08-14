@@ -1,7 +1,7 @@
 ---
 import type { SlugEntry } from "../lib/landing";
-import { defaultLinks } from "../lib/landing";
 import {siSoundcloud, siApplemusic, siSpotify, siBandcamp, siTidal} from "simple-icons";
+import DefaultLinksContent from "./DefaultLinksContent.astro";
 
 const slugLinkSvgById: Record<string, string> = {
 	soundcloud: siSoundcloud.svg,
@@ -155,55 +155,13 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 					</span>
 				</summary>
 				<div class="default-links-disclosure-panel">
-					<section class="default-links-section">
-						<h1>Link Lander</h1>
-						<p>
-							Default links are always visible. Slug-specific links
-							and featured content append below.
-						</p>
-					</section>
-					<section>
-						<h2>Default Links</h2>
-						<ul>
-							{defaultLinks.map((link) => (
-								<li>
-									<a href={link.href}>
-										{link.label}
-										<span class="visually-hidden">
-											{linkDestinationHint(link.href)}
-										</span>
-									</a>
-								</li>
-							))}
-						</ul>
-					</section>
+					<DefaultLinksContent
+						linkDestinationHint={linkDestinationHint}
+					/>
 				</div>
 			</details>
 		) : (
-			<>
-				<section class="default-links-section">
-					<h1>Link Lander</h1>
-					<p>
-						Default links are always visible. Slug-specific links and
-						featured content append below.
-					</p>
-				</section>
-				<section>
-					<h2>Default Links</h2>
-					<ul>
-						{defaultLinks.map((link) => (
-							<li>
-								<a href={link.href}>
-									{link.label}
-									<span class="visually-hidden">
-										{linkDestinationHint(link.href)}
-									</span>
-								</a>
-							</li>
-						))}
-					</ul>
-				</section>
-			</>
+			<DefaultLinksContent linkDestinationHint={linkDestinationHint} />
 		)
 	}
 	</div>
