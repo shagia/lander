@@ -1,0 +1,25 @@
+@use "abstracts/colors" as *;
+
+:root {
+	--color-canvas: #{$canvas};
+	--color-canvas-rgb: #{$canvas-rgb};
+	--color-text: #{$text};
+
+	--color-surface: #{$surface};
+	--color-surface-hover: #{$surface-hover};
+	--color-surface-muted: #{$surface-muted};
+
+	--color-border: #{$border};
+	--color-border-muted: #{$border-muted};
+	--color-border-strong: #{$border-strong};
+	--color-border-accent: #{$border-accent};
+
+	--color-focus: #{$focus};
+	--color-muted: #{$muted};
+
+	--color-overlay: rgb(var(--color-canvas-rgb));
+	--color-overlay-88: rgba(var(--color-canvas-rgb), 0.88);
+	--color-overlay-78: rgba(var(--color-canvas-rgb), 0.78);
+	--color-panel: rgba(var(--color-canvas-rgb), 0.8);
+	--color-panel-border: rgba(var(--color-canvas-rgb), 0.2);
+}
