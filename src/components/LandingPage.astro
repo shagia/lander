@@ -175,7 +175,7 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 		position: relative;
 		box-sizing: border-box;
 		max-width: 40vw;
-		margin: 2rem;
+		margin: 0;
 		padding: 0;
 		font-family: Inter, system-ui, sans-serif;
 		font-weight: 500;
@@ -184,7 +184,7 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 		border-radius: 1rem;
 		border: 6px solid rgba(255, 255, 255, 0.2);
 		overflow: hidden;
-		height: 90vh;
+		height: 100%;
 		backdrop-filter: blur(10px);
 		isolation: isolate;
 		transform: rotate(-0.02deg);
@@ -413,7 +413,7 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 		.main-container {
 			max-width: none;
 			width: auto;
-			margin: 1rem;
+			margin: 0;
 			border-radius: 0.75rem;
 			height: auto;
 		}

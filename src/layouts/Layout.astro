@@ -18,16 +18,41 @@
 	body {
 		margin: 0;
 		width: 100%;
-		background-image: url('https://f4.bcbits.com/img/a3793080960_10.jpg');
-		background-size: cover;
+		height: 100%;
+		background-color: #fff;
+	}
+
+	body {
+		box-sizing: border-box;
+		min-height: 100vh;
+		min-height: 100dvh;
+		padding: 2rem;
+		overflow: hidden;
+		background-image:
+			radial-gradient(
+				ellipse 80% 100% at 22% 50%,
+				rgb(255, 255, 255) 0%,
+				rgb(255, 255, 255) 32%,
+				rgba(255, 255, 255, 0.88) 72%,
+				rgba(255, 255, 255, 0.78) 100%
+			),
+			url("https://f4.bcbits.com/img/a3793080960_10.jpg");
+		background-size: 100% 100%, cover;
 		background-position: center;
 		background-attachment: fixed;
 		background-repeat: no-repeat;
 	}
 
 	@media (max-width: 630px) and (orientation: portrait) {
+		html,
+		body {
+			height: auto;
+		}
+
 		body {
 			background-image: none;
+			padding: 1rem;
+			overflow: visible;
 		}
 	}
 
