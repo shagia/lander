@@ -14,6 +14,7 @@
   "dependencies": {
     "astro": "^6.1.9",
     "pg": "^8.20.0",
+    "sass": "^1.102.0",
     "simple-icons": "^16.18.1",
     "zod": "^4.3.6"
   }
