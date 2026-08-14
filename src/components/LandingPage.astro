@@ -14,7 +14,13 @@ const slugLinkSvgById: Record<string, string> = {
 const slugLinkSvgFallback = siBandcamp.svg;
 
 function slugLinkSvgMarkup(id: string) {
-	return slugLinkSvgById[id] ?? slugLinkSvgFallback;
+	const svg = slugLinkSvgById[id] ?? slugLinkSvgFallback;
+	// Simple Icons fill the 24×24 canvas (some paths even spill past it).
+	// Expand the viewBox so SVG overflow:hidden does not clip the marks.
+	return svg.replace(
+		'viewBox="0 0 24 24"',
+		'viewBox="-2 -2 28 28"',
+	);
 }
 
 /** Appends host in parentheses for screen readers (e.g. ` (example.com)`). */
@@ -42,6 +48,7 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 
 <div class="landing-shell">
 	<main class="main-container">
+	<div class="main-container-fades" aria-hidden="true"></div>
 	<div class="main-container-scroll">
 	{
 		selectedSlug && (
@@ -162,9 +169,19 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 </div>
 
 <script>
-	const scroller = document.querySelector(".main-container-scroll");
+	const firefoxNeedsBgScrollPolyfill = CSS.supports("-moz-appearance: none");
+	const prefersReducedMotion = window.matchMedia(
+		"(prefers-reduced-motion: reduce)",
+	).matches;
+	const scroller = document.querySelector(".landing-shell");
 
-	if (scroller instanceof HTMLElement) {
+	if (
+		firefoxNeedsBgScrollPolyfill &&
+		!prefersReducedMotion &&
+		scroller instanceof HTMLElement
+	) {
+		document.body.classList.add("bg-scroll-js");
+
 		const bgImage = new Image();
 		let ticking = false;
 		let maxTravel = 0;
