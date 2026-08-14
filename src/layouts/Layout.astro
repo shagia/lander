@@ -27,7 +27,7 @@ import Header from "../components/Header.astro";
 		background-color: #cfcfcf;
 	}
 
-	body > :global(.main-container) {
+	body > :global(.landing-shell) {
 		flex: 1;
 		min-height: 0;
 	}
@@ -60,15 +60,9 @@ import Header from "../components/Header.astro";
 	}
 
 	@media (max-width: 630px) and (orientation: portrait) {
-		html,
-		body {
-			height: auto;
-		}
-
 		body {
 			background-image: none;
 			padding: 1rem;
-			overflow: visible;
 		}
 	}
 

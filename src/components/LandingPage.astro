@@ -39,7 +39,8 @@ const slugSmallLinks = selectedSlug?.data.links?.small ?? [];
 const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 ---
 
-<main class="main-container">
+<div class="landing-shell">
+	<main class="main-container">
 	<div class="main-container-scroll">
 	{
 		selectedSlug && (
@@ -166,6 +167,7 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 	}
 	</div>
 </main>
+</div>
 
 <script>
 	const scroller = document.querySelector(".main-container-scroll");
@@ -233,13 +235,22 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 </script>
 
 <style>
-	.main-container {
+	.landing-shell {
 		--main-container-bg: rgba(207, 207, 207, 0.8);
 		--main-container-fade: 3.25rem;
 
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		min-height: 0;
+		max-width: 40vw;
+	}
+
+	.main-container {
 		position: relative;
 		box-sizing: border-box;
-		max-width: 40vw;
+		flex: 1;
+		min-height: 0;
 		margin: 0;
 		padding: 0;
 		font-family: Inter, system-ui, sans-serif;
@@ -249,7 +260,6 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 		border-radius: 1rem;
 		border: 6px solid rgba(207, 207, 207, 0.2);
 		overflow: hidden;
-		height: 100%;
 		backdrop-filter: blur(10px);
 		isolation: isolate;
 		transform: rotate(-0.02deg);
@@ -473,14 +483,14 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 		margin-bottom: 0;
 	}
 
-
 	@media (max-width: 630px) and (orientation: portrait) {
-		.main-container {
+		.landing-shell {
 			max-width: none;
 			width: auto;
-			margin: 0;
+		}
+
+		.main-container {
 			border-radius: 0.75rem;
-			height: auto;
 		}
 
 		.main-container::before {
@@ -492,8 +502,6 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 		}
 
 		.main-container-scroll {
-			height: auto;
-			overflow-y: visible;
 			padding: 1.25rem 1rem 3rem;
 		}
 
