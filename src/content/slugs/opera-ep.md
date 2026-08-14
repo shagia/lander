@@ -1,7 +1,7 @@
 ---
-id: new-release
-title: New Release
-description: Landing page variant focused on the latest release push.
+id: opera-ep
+title: Opera (Compilation)
+description: Five belters made in between the five walls of 2025 and 2026
 priority: 7
 publishedAt: 2026-04-22
 category: releases
@@ -10,13 +10,16 @@ tags:
   - music
 status: published
 featured:
-  headline: New Single Out Now
-  summary: Stream the latest single and open the full release links below.
+  headline: Five belters made in between the five walls of 2025 and 2026
+  summary: 
+  - First passage
+  - Second passage, a little longer.
+  - Still eurphoric. Still hardcore. Still club ready.
 cover: https://placehold.co/300
 music:
-  trackId: track-release-001
-  title: Launch Sequence
-  artist: Lunar Echo
+  trackId: opera-ep
+  title: Opera (Compilation)
+  artist: Devin S.G.
   audioUrl: https://cdn.pixabay.com/download/audio/2022/03/10/audio_7f41f11795.mp3
 links:
   small:
