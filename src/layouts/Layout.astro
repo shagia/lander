@@ -23,6 +23,8 @@
 	}
 
 	body {
+		--bg-scroll: 0px;
+		--page-bg: url("https://f4.bcbits.com/img/a3793080960_10.jpg");
 		box-sizing: border-box;
 		min-height: 100vh;
 		min-height: 100dvh;
@@ -36,9 +38,11 @@
 				rgba(255, 255, 255, 0.88) 72%,
 				rgba(255, 255, 255, 0.78) 100%
 			),
-			url("https://f4.bcbits.com/img/a3793080960_10.jpg");
+			var(--page-bg);
 		background-size: 100% 100%, cover;
-		background-position: right;
+		background-position:
+			right center,
+			right calc(50% - var(--bg-scroll));
 		background-attachment: fixed;
 		background-repeat: no-repeat;
 	}
