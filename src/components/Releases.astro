@@ -1,0 +1,67 @@
+---
+import { coverSrc, getReleaseSlugs } from "../lib/landing";
+import "../styles/components/releases.scss";
+
+interface Props {
+	onSlugPage?: boolean;
+}
+
+const { onSlugPage = false } = Astro.props;
+const releases = await getReleaseSlugs();
+const heading = onSlugPage ? "More Releases" : "Releases";
+
+function formatPublishedAt(date: Date) {
+	return date.toLocaleDateString("en-US", {
+		year: "numeric",
+		month: "short",
+		day: "numeric",
+	});
+}
+---
+
+{
+	releases.length > 0 && (
+		<section class="releases" aria-labelledby="releases-heading">
+			<h2 id="releases-heading">{heading}</h2>
+			<div class="releases-carousel" tabindex="0">
+				<ul class="releases-track">
+					{releases.map((release) => {
+						const src = coverSrc(release.data.cover);
+						const href = `/${release.id}`;
+						return (
+							<li class="releases-item">
+								<a class="releases-card" href={href}>
+									{src ? (
+										<img
+											class="releases-thumb"
+											src={src}
+											alt=""
+											loading="lazy"
+											decoding="async"
+										/>
+									) : (
+										<div
+											class="releases-thumb releases-thumb--empty"
+											aria-hidden="true"
+										/>
+									)}
+									<span class="releases-title">
+										{release.data.title}
+									</span>
+									<time
+										class="releases-date"
+										datetime={release.data.publishedAt.toISOString()}
+									>
+										{formatPublishedAt(
+											release.data.publishedAt,
+										)}
+									</time>
+								</a>
+							</li>
+						);
+					})}
+				</ul>
+			</div>
+		</section>
+	)
+}
