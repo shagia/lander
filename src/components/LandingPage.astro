@@ -124,24 +124,15 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 
 				
 				{selectedSlug.data.featured && (
-					<h2>{selectedSlug.data.title}</h2>
-
-					<details class="default-links-disclosure">
-					<summary class="default-links-summary">
-						<span class="default-links-summary-label">
-							Information
-						</span>
-					</summary>
-					<div class="default-links-disclosure-panel">
-						<br />
+					<>
+						<h2>{selectedSlug.data.title}</h2>
 						<section class="default-links-section">
 							<h3>{selectedSlug.data.featured.headline}</h3>
 							{selectedSlug.data.featured.summary.map((paragraph) => (
 								<p>{paragraph}</p>
 							))}
 						</section>
-					</div>
-				</details>
+					</>
 				)}
 			</section>
 		)
