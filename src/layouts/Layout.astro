@@ -1,5 +1,5 @@
 ---
-import logo from "../assets/logo.svg";
+import Header from "../components/Header.astro";
 ---
 
 <!doctype html>
@@ -13,7 +13,7 @@ import logo from "../assets/logo.svg";
 		<title>Astro Basics</title>
 	</head>
 	<body>
-		<img src={logo.src} width="361" height="264" alt="Logo" class="site-logo" />
+		<Header />
 		<slot />
 	</body>
 </html>
@@ -25,16 +25,6 @@ import logo from "../assets/logo.svg";
 		width: 100%;
 		height: 100%;
 		background-color: #cfcfcf;
-	}
-
-	.site-logo {
-		display: block;
-		width: auto;
-		height: 3.5rem;
-		margin-bottom: 1rem;
-		margin-left: calc(6px + 3rem);
-		flex-shrink: 0;
-		align-self: flex-start;
 	}
 
 	body > :global(.main-container) {
@@ -79,11 +69,6 @@ import logo from "../assets/logo.svg";
 			background-image: none;
 			padding: 1rem;
 			overflow: visible;
-		}
-
-		.site-logo {
-			align-self: center;
-			margin-left: 0;
 		}
 	}
 

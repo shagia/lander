@@ -1,0 +1,29 @@
+---
+import logo from "../assets/logo.svg";
+---
+
+<header class="site-header">
+	<img src={logo.src} width="361" height="264" alt="Logo" class="site-logo" />
+</header>
+
+<style>
+	.site-header {
+		flex-shrink: 0;
+		align-self: flex-start;
+		margin-bottom: 1rem;
+		margin-left: calc(6px + 3rem);
+	}
+
+	.site-logo {
+		display: block;
+		width: auto;
+		height: 3.5rem;
+	}
+
+	@media (max-width: 630px) and (orientation: portrait) {
+		.site-header {
+			align-self: center;
+			margin-left: 0;
+		}
+	}
+</style>
