@@ -167,6 +167,71 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 	</div>
 </main>
 
+<script>
+	const scroller = document.querySelector(".main-container-scroll");
+
+	if (scroller instanceof HTMLElement) {
+		const bgImage = new Image();
+		let ticking = false;
+		let maxTravel = 0;
+
+		const backgroundUrl = () => {
+			const value = getComputedStyle(document.body)
+				.getPropertyValue("--page-bg")
+				.trim();
+			return value.match(/url\((['"]?)(.*?)\1\)/)?.[2] ?? "";
+		};
+
+		const coverOverflowY = () => {
+			const { naturalWidth, naturalHeight } = bgImage;
+			if (!naturalWidth || !naturalHeight) return 0;
+
+			const scale = Math.max(
+				window.innerWidth / naturalWidth,
+				window.innerHeight / naturalHeight,
+			);
+			return Math.max(0, naturalHeight * scale - window.innerHeight);
+		};
+
+		const syncBackground = () => {
+			const maxScroll = scroller.scrollHeight - scroller.clientHeight;
+			const progress = maxScroll > 0 ? scroller.scrollTop / maxScroll : 0;
+			document.body.style.setProperty(
+				"--bg-scroll",
+				`${progress * maxTravel}px`,
+			);
+			ticking = false;
+		};
+
+		const requestSync = () => {
+			if (ticking) return;
+			ticking = true;
+			requestAnimationFrame(syncBackground);
+		};
+
+		const recalc = () => {
+			maxTravel = coverOverflowY() / 2;
+			syncBackground();
+		};
+
+		const url = backgroundUrl();
+		if (url) {
+			bgImage.addEventListener("load", recalc);
+			bgImage.src = url;
+			if (bgImage.complete) recalc();
+		}
+
+		scroller.addEventListener("scroll", requestSync, { passive: true });
+		window.addEventListener("resize", recalc);
+
+		const resizeObserver = new ResizeObserver(recalc);
+		resizeObserver.observe(scroller);
+		for (const child of scroller.children) {
+			resizeObserver.observe(child);
+		}
+	}
+</script>
+
 <style>
 	.main-container {
 		--main-container-bg: rgba(255, 255, 255, 0.8);
