@@ -9,33 +9,13 @@
 	}
 }
 
-.releases-carousel {
-	container-type: inline-size;
-	overflow-x: auto;
-	overscroll-behavior-x: contain;
-	scroll-snap-type: x mandatory;
-	scrollbar-width: thin;
-	-webkit-overflow-scrolling: touch;
-
-	&:focus-visible {
-		outline: 2px solid var(--color-focus);
-		outline-offset: 2px;
-	}
-}
-
-.releases-track {
-	display: flex;
+.releases-list {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
 	gap: var(--releases-gap);
 	list-style: none;
 	margin: 0;
-	padding: 0 0 0.35rem;
-	width: max-content;
-}
-
-.releases-item {
-	flex: 0 0 auto;
-	scroll-snap-align: start;
-	width: calc((100cqi - var(--releases-gap)) / 2);
+	padding: 0;
 }
 
 .releases-card {
@@ -87,17 +67,7 @@
 }
 
 @media (max-width: 630px) and (orientation: portrait) {
-	.releases-carousel {
-		overflow-x: visible;
-		scroll-snap-type: none;
-	}
-
-	.releases-track {
-		flex-direction: column;
-		width: 100%;
-	}
-
-	.releases-item {
-		width: 100%;
+	.releases-list {
+		grid-template-columns: 1fr;
 	}
 }
