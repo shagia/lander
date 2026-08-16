@@ -1,6 +1,8 @@
 @use "abstracts/colors" as *;
 
 :root {
+	--radius: 6px;
+
 	--color-canvas: #{$canvas};
 	--color-canvas-rgb: #{$canvas-rgb};
 	--color-text: #{$text};

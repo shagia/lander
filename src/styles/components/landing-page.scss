@@ -36,7 +36,7 @@
 			height: 100cqh;
 			margin-bottom: -100cqh;
 			background-color: var(--main-container-bg);
-			border-radius: 1rem;
+			border-radius: var(--radius);
 			border: 6px solid var(--color-panel-border);
 			backdrop-filter: blur(10px);
 			isolation: isolate;
@@ -55,7 +55,7 @@
 		border: 6px solid transparent;
 		border-top-width: 0;
 		border-bottom-width: 0;
-		border-radius: 1rem;
+		border-radius: var(--radius);
 		pointer-events: none;
 		z-index: 2;
 		background:
@@ -122,7 +122,7 @@
 			padding: 0.65rem 1rem;
 			text-decoration: none;
 			background: var(--color-surface);
-			border-radius: 0.5rem;
+			border-radius: var(--radius);
 			border: 1px solid var(--color-border);
 			font-weight: 500;
 
@@ -157,7 +157,7 @@
 			text-decoration: none;
 			background: var(--color-canvas);
 			border: 1px solid var(--color-border-muted);
-			border-radius: 9999px;
+			border-radius: var(--radius);
 			line-height: 1.2;
 			width: 100%;
 			height: 30px;
@@ -250,7 +250,7 @@
 	}
 
 	.cover-image {
-		border-radius: 1rem;
+		border-radius: var(--radius);
 		border: 1px solid var(--color-border-accent);
 		width: 100%;
 	}
@@ -266,14 +266,6 @@
 	@media (max-width: 630px) and (orientation: portrait) {
 		.main-container {
 			max-width: none;
-
-			&::before {
-				border-radius: 0.75rem;
-			}
-		}
-
-		.main-container-fades {
-			border-radius: 0.75rem;
 		}
 
 		.main-container-scroll {
