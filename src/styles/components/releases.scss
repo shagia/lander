@@ -43,6 +43,13 @@
 	border-radius: var(--radius);
 	border: 1px solid #000;
 	background: var(--color-surface-muted);
+	transition:
+		border-color var(--animation-speed)
+			var(--link-lens-enter-ease),
+		background-color var(--animation-speed)
+			var(--link-lens-enter-ease),
+		box-shadow var(--animation-speed)
+			var(--link-lens-enter-ease);
 
 	&--empty {
 		border-style: dashed;

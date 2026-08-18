@@ -1,0 +1,96 @@
+:root {
+	--link-lens-size: 7rem;
+	--link-lens-radius: 3.5rem;
+	--animation-speed: 0.32s;
+	--link-lens-enter-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@property --lens-invert {
+	syntax: "<number>";
+	inherits: false;
+	initial-value: 0.2;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.link-lens {
+		--lens-zoom: 1.12;
+		--lens-radius: var(--link-lens-radius);
+		position: fixed;
+		top: var(--lens-y, -100px);
+		left: var(--lens-x, -100px);
+		z-index: 10000;
+		box-sizing: border-box;
+		width: 0;
+		height: 0;
+		margin: 0;
+		padding: 0;
+		border: 1.5px solid color-mix(in srgb, var(--color-text) 28%, transparent);
+		border-radius: 50%;
+		overflow: hidden;
+		pointer-events: none;
+		visibility: hidden;
+		box-shadow:
+			0 0 0 1px rgb(255 255 255 / 0.06) inset,
+			0 8px 22px rgb(0 0 0 / 0.08);
+		background: transparent;
+	}
+
+	.link-lens-magnifier,
+	.link-lens-filter {
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+	}
+
+	.link-lens-magnifier {
+		background: transparent;
+	}
+
+	.link-lens-filter {
+		background-color: rgba(var(--color-canvas-rgb), 0.16);
+		backdrop-filter: blur(1px);
+		-webkit-backdrop-filter: blur(1px);
+	}
+
+	.link-lens {
+		transition:
+			width var(--animation-speed) var(--link-lens-enter-ease),
+			height var(--animation-speed) var(--link-lens-enter-ease),
+			margin var(--animation-speed) var(--link-lens-enter-ease),
+			visibility 0s linear var(--animation-speed);
+
+		&.is-active {
+			width: var(--link-lens-size);
+			height: var(--link-lens-size);
+			margin:
+				calc(var(--link-lens-radius) * -1)
+				0
+				0
+				calc(var(--link-lens-radius) * -1);
+			visibility: visible;
+			transition:
+				width var(--animation-speed) var(--link-lens-enter-ease),
+				height var(--animation-speed) var(--link-lens-enter-ease),
+				margin var(--animation-speed) var(--link-lens-enter-ease),
+				visibility 0s;
+			animation: link-lens-pulse 2.6s ease-in-out infinite;
+		}
+	}
+
+	@keyframes link-lens-pulse {
+		0%,
+		100% {
+			--lens-invert: 0.18;
+		}
+
+		50% {
+			--lens-invert: 1;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.link-lens {
+			display: none;
+		}
+	}
+}

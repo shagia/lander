@@ -1,0 +1,72 @@
+---
+import "../styles/components/link-lens.scss";
+---
+
+<div class="link-lens" aria-hidden="true">
+	<div class="link-lens-magnifier"></div>
+	<div class="link-lens-filter"></div>
+</div>
+
+<script is:inline>
+	const lens = document.querySelector(".link-lens");
+
+	if (
+		lens instanceof HTMLElement &&
+		window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+		!window.matchMedia("(prefers-reduced-motion: reduce)").matches
+	) {
+		let overLink = false;
+
+		/** @param {number} x @param {number} y */
+		const setPosition = (x, y) => {
+			lens.style.setProperty("--lens-x", `${x}px`);
+			lens.style.setProperty("--lens-y", `${y}px`);
+		};
+
+		/** @param {number} x @param {number} y */
+		const activate = (x, y) => {
+			overLink = true;
+			setPosition(x, y);
+			lens.classList.add("is-active");
+		};
+
+		const deactivate = () => {
+			overLink = false;
+			lens.classList.remove("is-active");
+		};
+
+		document.addEventListener(
+			"pointermove",
+			(event) => {
+				if (!overLink) return;
+				setPosition(event.clientX, event.clientY);
+			},
+			{ passive: true },
+		);
+
+		document.addEventListener(
+			"pointerover",
+			(event) => {
+				const target = event.target;
+				if (!(target instanceof Element)) return;
+				if (!target.closest("a")) return;
+				activate(event.clientX, event.clientY);
+			},
+			true,
+		);
+
+		document.addEventListener(
+			"pointerout",
+			(event) => {
+				const from = event.target;
+				if (!(from instanceof Element) || !from.closest("a")) return;
+
+				const to = event.relatedTarget;
+				if (to instanceof Element && to.closest("a")) return;
+
+				deactivate();
+			},
+			true,
+		);
+	}
+</script>
