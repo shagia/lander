@@ -8,7 +8,9 @@ interface Props {
 
 const { onSlugPage = false } = Astro.props;
 const releases = await getReleaseSlugs();
-const heading = onSlugPage ? "More Releases" : "Releases";
+const heading = onSlugPage ? "More Music" : "Music";
+const initialVisible = 2;
+const canCollapse = onSlugPage && releases.length > initialVisible;
 
 function formatPublishedAt(date: Date) {
 	return date.toLocaleDateString("en-US", {
@@ -22,7 +24,20 @@ function formatPublishedAt(date: Date) {
 {
 	releases.length > 0 && (
 		<section class="releases" aria-labelledby="releases-heading">
-			<h2 id="releases-heading">{heading}</h2>
+			{canCollapse ? (
+				<details class="releases-disclosure">
+					<summary class="releases-summary">
+						<span
+							class="releases-summary-label"
+							id="releases-heading"
+						>
+							{heading}
+						</span>
+					</summary>
+				</details>
+			) : (
+				<h2 id="releases-heading">{heading}</h2>
+			)}
 			<ul class="releases-list">
 				{releases.map((release) => {
 					const src = coverSrc(release.data.cover);
@@ -30,20 +45,13 @@ function formatPublishedAt(date: Date) {
 					return (
 						<li class="releases-item">
 							<a class="releases-card" href={href}>
-								{src ? (
-									<img
-										class="releases-thumb"
-										src={src}
-										alt=""
-										loading="lazy"
-										decoding="async"
-									/>
-								) : (
-									<div
-										class="releases-thumb releases-thumb--empty"
-										aria-hidden="true"
-									/>
-								)}
+								<img
+									class="releases-thumb"
+									src={src}
+									alt=""
+									loading="lazy"
+									decoding="async"
+								/>
 								<span class="releases-title">
 									{release.data.title}
 								</span>
