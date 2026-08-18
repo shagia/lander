@@ -30,13 +30,20 @@ export async function getReleaseSlugs(): Promise<SlugEntry[]> {
 	});
 }
 
-export function coverSrc(cover: unknown): string | undefined {
-	if (!cover) return undefined;
-	if (typeof cover === "string") return cover;
+/** 1:1 fallback when a release has no cover URL. */
+export const PLACEHOLDER_COVER_SRC = "/placeholder-cover.svg";
+
+export function coverSrc(cover: unknown): string {
+	if (typeof cover === "string" && cover.length > 0) return cover;
 	if (typeof cover === "object" && cover !== null && "src" in cover) {
-		return String((cover as { src: string }).src);
+		const src = String((cover as { src: string }).src);
+		if (src) return src;
 	}
-	return undefined;
+	return PLACEHOLDER_COVER_SRC;
+}
+
+export function pageBackgroundImage(cover: unknown): string {
+	return `url(${JSON.stringify(coverSrc(cover))})`;
 }
 
 export async function getSlugByIdOrSlug(value: string): Promise<SlugEntry | undefined> {

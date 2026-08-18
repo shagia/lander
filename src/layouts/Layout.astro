@@ -2,7 +2,15 @@
 import "../styles/global/colors.scss";
 import "../styles/global/layout.scss";
 import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 import LinkLens from "../components/LinkLens.astro";
+import { pageBackgroundImage } from "../lib/landing";
+
+interface Props {
+	cover?: string;
+}
+
+const { cover } = Astro.props;
 ---
 
 <!doctype html>
@@ -15,9 +23,10 @@ import LinkLens from "../components/LinkLens.astro";
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro Basics</title>
 	</head>
-	<body>
+	<body style={`--page-bg: ${pageBackgroundImage(cover)}`}>
 		<Header />
 		<slot />
+		<Footer />
 		<LinkLens />
 	</body>
 </html>
