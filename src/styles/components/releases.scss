@@ -50,11 +50,6 @@
 			var(--link-lens-enter-ease),
 		box-shadow var(--animation-speed)
 			var(--link-lens-enter-ease);
-
-	&--empty {
-		border-style: dashed;
-		border-color: var(--color-border-muted);
-	}
 }
 
 .releases-title {
@@ -71,6 +66,57 @@
 	font-size: 0.75rem;
 	line-height: 1.2;
 	color: var(--color-muted);
+}
+
+.releases:has(.releases-disclosure:not([open])) .releases-item:nth-child(n + 3) {
+	display: none;
+}
+
+.releases-disclosure {
+	margin: 0 0 0.75rem;
+
+	&[open] .releases-summary::before {
+		transform: rotate(45deg);
+		margin-top: 0.15rem;
+	}
+}
+
+.releases-summary {
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem 0.75rem;
+	padding: 0;
+	cursor: pointer;
+	user-select: none;
+
+	&::-webkit-details-marker {
+		display: none;
+	}
+
+	&::before {
+		content: "";
+		display: inline-block;
+		width: 0.5rem;
+		height: 0.5rem;
+		margin-right: 0.5rem;
+		border-right: 2px solid var(--color-muted);
+		border-bottom: 2px solid var(--color-muted);
+		transform: rotate(-45deg);
+		vertical-align: middle;
+		transition: transform 0.15s ease;
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--color-focus);
+		outline-offset: 2px;
+	}
+}
+
+.releases-summary-label {
+	flex: 1 1 auto;
+	min-width: 0;
 }
 
 @media (max-width: 630px) and (orientation: portrait) {

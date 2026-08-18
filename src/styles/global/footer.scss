@@ -1,0 +1,19 @@
+.site-footer {
+	flex-shrink: 0;
+	align-self: flex-start;
+	margin-top: 1rem;
+	margin-left: calc(6px + 3rem);
+	font-size: 0.8rem;
+	line-height: 1.4;
+	color: var(--color-muted);
+
+	p {
+		margin: 0;
+	}
+
+	@media (max-width: 630px) and (orientation: portrait) {
+		align-self: center;
+		margin-left: 0;
+		text-align: center;
+	}
+}

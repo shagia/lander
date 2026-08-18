@@ -1,5 +1,5 @@
 ---
-import type { SlugEntry } from "../lib/landing";
+import { coverSrc, type SlugEntry } from "../lib/landing";
 import {
 	siSoundcloud,
 	siApplemusic,
@@ -59,19 +59,13 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 					<section>
 						<div class="media-container-wrapper">
 							<h2 class="slug-title">{selectedSlug.data.title}</h2>
-							{selectedSlug.data.cover && (
-								<div class="cover-container">
-									{/* I have zero issues with assuming that a string, no matter what, is being passed to the cover key - there's a smarter way for this but oh well */}
-									<img
-										src={
-											selectedSlug.data
-												.cover as unknown as string
-										}
-										alt={selectedSlug.data.title}
-										class="cover-image"
-									/>
-								</div>
-							)}
+							<div class="cover-container">
+								<img
+									src={coverSrc(selectedSlug.data.cover)}
+									alt={selectedSlug.data.title}
+									class="cover-image"
+								/>
+							</div>
 							{selectedSlug.data.music && (
 								<div class="media-container">
 									<audio
