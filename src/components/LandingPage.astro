@@ -58,6 +58,7 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 				selectedSlug && (
 					<section>
 						<div class="media-container-wrapper">
+							<h2 class="slug-title">{selectedSlug.data.title}</h2>
 							{selectedSlug.data.cover && (
 								<div class="cover-container">
 									{/* I have zero issues with assuming that a string, no matter what, is being passed to the cover key - there's a smarter way for this but oh well */}
@@ -145,19 +146,16 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 						<br />
 
 						{selectedSlug.data.featured && (
-							<>
-								<h2>{selectedSlug.data.title}</h2>
-								<section class="default-links-section">
-									<h3>
-										{selectedSlug.data.featured.headline}
-									</h3>
-									{selectedSlug.data.featured.summary.map(
-										(paragraph) => (
-											<p>{paragraph}</p>
-										),
-									)}
-								</section>
-							</>
+							<section class="default-links-section">
+								<h3>
+									{selectedSlug.data.featured.headline}
+								</h3>
+								{selectedSlug.data.featured.summary.map(
+									(paragraph) => (
+										<p>{paragraph}</p>
+									),
+								)}
+							</section>
 						)}
 					</section>
 				)
