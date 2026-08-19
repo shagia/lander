@@ -1,0 +1,66 @@
+---
+import { getReleaseSlugs } from "../lib/landing";
+import "../styles/components/releases-text.scss";
+
+interface Props {
+	onSlugPage?: boolean;
+}
+
+const { onSlugPage = false } = Astro.props;
+const releases = await getReleaseSlugs();
+const heading = onSlugPage ? "More Music" : "Music";
+const initialVisible = 2;
+const canCollapse = onSlugPage && releases.length > initialVisible;
+
+function formatPublishedAt(date: Date) {
+	return date.toLocaleDateString("en-US", {
+		year: "numeric",
+		month: "short",
+		day: "numeric",
+	});
+}
+---
+
+{
+	releases.length > 0 && (
+		<section class="releases-text" aria-labelledby="releases-text-heading">
+			{canCollapse ? (
+				<details class="releases-text-disclosure">
+					<summary class="releases-text-summary">
+						<span
+							class="releases-text-summary-label"
+							id="releases-text-heading"
+						>
+							{heading}
+						</span>
+					</summary>
+				</details>
+			) : (
+				<h2 id="releases-text-heading">{heading}</h2>
+			)}
+			<ul class="releases-text-list">
+				{releases.map((release) => {
+					const href = `/${release.id}`;
+					return (
+						<li class="releases-text-item">
+							<a class="releases-text-card" href={href}>
+								<span class="releases-text-title">
+									{release.data.title}
+								</span>
+								<time
+									class="releases-text-date"
+									datetime={release.data.publishedAt.toISOString()}
+								>
+									{formatPublishedAt(release.data.publishedAt)}
+								</time>
+								<span class="releases-text-record-label">
+									{release.data.recordLabel ?? "Unlisted"}
+								</span>
+							</a>
+						</li>
+					);
+				})}
+			</ul>
+		</section>
+	)
+}

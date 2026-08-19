@@ -8,6 +8,7 @@ const slugs = defineCollection({
 		id: z.string().min(1),
 		title: z.string().min(1),
 		description: z.string().min(1),
+		recordLabel: z.string().min(1).optional(),
 		cover: z.string().url().optional(),
 		priority: z.number().int().nonnegative().default(0),
 		publishedAt: z.coerce.date(),

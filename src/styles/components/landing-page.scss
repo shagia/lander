@@ -22,6 +22,10 @@
 		margin: 0;
 		padding: 0;
 
+		&--default {
+			max-width: min(72vw, 56rem);
+		}
+
 		a:focus-visible {
 			outline: 2px solid var(--color-focus);
 			outline-offset: 2px;
@@ -89,6 +93,7 @@
 
 	.slug-title {
 		margin-bottom: 1rem;
+		width: 200%;
 	}
 
 	section {
@@ -125,7 +130,7 @@
 			box-sizing: border-box;
 			padding: 0.65rem 1rem;
 			text-decoration: none;
-			background: var(--color-surface);
+			background: var(--color-link-large-bg);
 			border-radius: var(--radius);
 			border: 1px solid var(--color-border);
 			font-weight: 500;
@@ -166,7 +171,7 @@
 			padding: 0.25rem 0.5rem;
 			font-size: 1.0125rem;
 			text-decoration: none;
-			background: var(--color-canvas);
+			background: var(--color-link-small-bg);
 			border: 1px solid var(--color-border-muted);
 			border-radius: var(--radius);
 			line-height: 1.2;
@@ -221,6 +226,22 @@
 		margin: 0;
 	}
 
+	.social-links-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+
+		li + li {
+			margin-top: 0.35rem;
+		}
+
+		a {
+			display: inline-block;
+			text-decoration: none;
+			text-transform: lowercase;
+		}
+	}
+
 	audio {
 		width: 100%;
 	}
@@ -273,7 +294,6 @@
 		aspect-ratio: 1;
 		object-fit: cover;
 		border-radius: var(--radius);
-		border: 1px solid var(--color-border-accent);
 		background: var(--color-surface-muted);
 	}
 
@@ -285,9 +305,37 @@
 		}
 	}
 
+	.landing-default-columns {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		gap: 2rem;
+		align-items: start;
+	}
+
+	.landing-default-column {
+		min-width: 0;
+
+		&--music .releases-list {
+			grid-template-columns: 1fr;
+		}
+
+		&--links {
+			justify-self: end;
+			text-align: right;
+		}
+
+		section:last-child {
+			margin-bottom: 0;
+		}
+	}
+
 	@media (max-width: 630px) and (orientation: portrait) {
 		.main-container {
 			max-width: none;
+
+			&--default {
+				max-width: none;
+			}
 		}
 
 		.main-container-scroll {
@@ -300,6 +348,10 @@
 
 		.media-container-wrapper {
 			width: 100%;
+		}
+
+		.landing-default-columns {
+			grid-template-columns: 1fr;
 		}
 	}
 }

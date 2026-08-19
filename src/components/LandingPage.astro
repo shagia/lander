@@ -9,7 +9,9 @@ import {
 } from "simple-icons";
 import "../styles/components/landing-page.scss";
 import DefaultLinksContent from "./DefaultLinksContent.astro";
-import Releases from "./Releases.astro";
+import ReleasesImage from "./ReleasesImage.astro";
+import ReleasesText from "./ReleasesText.astro";
+import SocialLinksContent from "./SocialLinksContent.astro";
 
 const slugLinkSvgById: Record<string, string> = {
 	soundcloud: siSoundcloud.svg,
@@ -51,7 +53,12 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 ---
 
 <div class="landing-shell">
-	<main class="main-container">
+	<main
+		class:list={[
+			"main-container",
+			{ "main-container--default": !selectedSlug },
+		]}
+	>
 		<div class="main-container-fades" aria-hidden="true"></div>
 		<div class="main-container-scroll">
 			{
@@ -157,26 +164,30 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 
 			{
 				selectedSlug ? (
-					<details class="default-links-disclosure">
-						<summary class="default-links-summary">
-							<span class="default-links-summary-label">
-								About {aboutName}
-							</span>
-						</summary>
-						<div class="default-links-disclosure-panel">
-							<DefaultLinksContent
-								linkDestinationHint={linkDestinationHint}
-							/>
-						</div>
-					</details>
+					<>
+						<details class="default-links-disclosure">
+							<summary class="default-links-summary">
+								<span class="default-links-summary-label">
+									About {aboutName}
+								</span>
+							</summary>
+							<div class="default-links-disclosure-panel">
+								<SocialLinksContent />
+							</div>
+						</details>
+						<ReleasesImage onSlugPage />
+					</>
 				) : (
-					<DefaultLinksContent
-						linkDestinationHint={linkDestinationHint}
-					/>
+					<div class="landing-default-columns">
+						<div class="landing-default-column landing-default-column--music">
+							<ReleasesText />
+						</div>
+						<div class="landing-default-column landing-default-column--links">
+							<SocialLinksContent />
+						</div>
+					</div>
 				)
 			}
-
-			<Releases onSlugPage={Boolean(selectedSlug)} />
 		</div>
 	</main>
 </div>
