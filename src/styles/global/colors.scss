@@ -3,6 +3,24 @@
 :root {
 	--radius: 6px;
 
+	--scrollbar-size: 0.5rem;
+	--scrollbar-inset: 2px;
+	--scrollbar-thumb-idle: color-mix(
+		in srgb,
+		var(--color-border-strong) 40%,
+		transparent
+	);
+	--scrollbar-thumb: color-mix(
+		in srgb,
+		var(--color-border-strong) 70%,
+		transparent
+	);
+	--scrollbar-thumb-hover: color-mix(
+		in srgb,
+		var(--color-muted) 85%,
+		transparent
+	);
+
 	--color-canvas: #{$canvas};
 	--color-canvas-rgb: #{$canvas-rgb};
 	--color-text: #{$text};
@@ -10,6 +28,8 @@
 	--color-surface: #{$surface};
 	--color-surface-hover: #{$surface-hover};
 	--color-surface-muted: #{$surface-muted};
+	--color-link-large-bg: #{$link-large-bg};
+	--color-link-small-bg: #{$link-small-bg};
 
 	--color-border: #{$border};
 	--color-border-muted: #{$border-muted};
