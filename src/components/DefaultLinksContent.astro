@@ -8,15 +8,7 @@ interface Props {
 const { linkDestinationHint } = Astro.props;
 ---
 
-<section class="default-links-section">
-	<h1>Link Lander</h1>
-	<p>
-		Default links are always visible. Slug-specific links and featured content
-		append below.
-	</p>
-</section>
 <section>
-	<h2>Default Links</h2>
 	<ul>
 		{defaultLinks.map((link) => (
 			<li>

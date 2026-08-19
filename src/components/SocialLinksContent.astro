@@ -1,0 +1,32 @@
+---
+export interface SocialLink {
+	id: string;
+	label: string;
+	href: string;
+}
+
+interface Props {
+	links?: SocialLink[];
+}
+
+const defaultLinks: SocialLink[] = [
+	{ id: "instagram", label: "instagram", href: "https://www.instagram.com/0devin.sg/" },
+	{ id: "soundcloud", label: "soundcloud", href: "https://soundcloud.com/devin_sg" },
+	{ id: "twitter", label: "twitter", href: "https://x.com/0devinsg" },
+	{ id: "bluesky", label: "bluesky", href: "https://bsky.app/profile/devin.sg" },
+	{ id: "bookings", label: "bookings", href: "mailto:book@devin.sg" },
+];
+
+const { links = defaultLinks } = Astro.props;
+---
+
+<section>
+	<h2>Socials</h2>
+	<ul class="social-links-list">
+		{links.map((link) => (
+			<li>
+				<a href={link.href}>{link.label}</a>
+			</li>
+		))}
+	</ul>
+</section>
