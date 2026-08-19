@@ -2,6 +2,7 @@
 id: bicep-umber-remix
 title: BICEP - CHROMA 006 UMBER (Devin S.G. Remix)
 description: Club-first, driving, and emotional
+recordLabel: Self-release
 priority: 7
 publishedAt: 2026-04-26
 category: remixes

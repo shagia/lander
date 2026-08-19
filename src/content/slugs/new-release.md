@@ -8,7 +8,7 @@ category: releases
 tags:
   - release
   - music
-status: published
+status: draft
 featured:
   headline: New Single Out Now
   summary: Stream the latest single and open the full release links below.

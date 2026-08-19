@@ -1,7 +1,8 @@
 ---
 id: ep2-catsong-audiobambino
-title: Devin S.G. - Cat Song / Sun Up / Singing Machine
+title: Cat Song / Sun Up / Singing Machine
 description: Another venture into visual ideas from 2022-2024
+recordLabel: audio bambino
 priority: 7
 publishedAt: 2026-04-26
 category: release

@@ -2,6 +2,7 @@
 id: daytona-ep
 title: Daytona / Rotary Groove
 description: Double A/B 
+recordLabel: Self-release
 priority: 7
 publishedAt: 2026-07-01
 category: releases
