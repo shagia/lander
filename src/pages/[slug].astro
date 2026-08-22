@@ -2,7 +2,7 @@
 import type { GetStaticPaths } from "astro";
 import LandingPage from "../components/LandingPage.astro";
 import Layout from "../layouts/Layout.astro";
-import { getPublishedSlugs, getSlugByIdOrSlug } from "../lib/landing";
+import { getPublishedSlugs, getSlugByIdOrSlug, getRandomReleaseCover } from "../lib/landing";
 
 export const getStaticPaths = (async () => {
 	const slugs = await getPublishedSlugs();
@@ -16,6 +16,6 @@ const { slugId } = Astro.props;
 const selectedSlug = await getSlugByIdOrSlug(slugId);
 ---
 
-<Layout cover={selectedSlug?.data.cover}>
+<Layout cover={selectedSlug?.data.cover ?? await getRandomReleaseCover()}>
 	<LandingPage selectedSlug={selectedSlug} />
 </Layout>

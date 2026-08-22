@@ -1,8 +1,11 @@
 ---
 import LandingPage from "../components/LandingPage.astro";
 import Layout from "../layouts/Layout.astro";
+import { getRandomReleaseCover } from "../lib/landing";
+
+const cover = await getRandomReleaseCover();
 ---
 
-<Layout>
+<Layout cover={cover}>
 	<LandingPage />
 </Layout>

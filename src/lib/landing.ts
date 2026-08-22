@@ -46,6 +46,16 @@ export function pageBackgroundImage(cover: unknown): string {
 	return `url(${JSON.stringify(coverSrc(cover))})`;
 }
 
+export async function getRandomReleaseCover(): Promise<string | undefined> {
+	const releases = await getReleaseSlugs();
+	const withCovers = releases.filter(
+		(e) => typeof e.data.cover === "string" && e.data.cover.length > 0,
+	);
+	if (withCovers.length === 0) return undefined;
+	const pick = withCovers[Math.floor(Math.random() * withCovers.length)];
+	return pick.data.cover!;
+}
+
 export async function getSlugByIdOrSlug(value: string): Promise<SlugEntry | undefined> {
 	const entries = await getPublishedSlugs();
 	return entries.find((entry) => entry.id === value || entry.data.id === value);
