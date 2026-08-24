@@ -1,6 +1,6 @@
 ---
-import { getReleaseSlugs } from "../lib/landing";
-import "../styles/components/releases-text.scss";
+import { coverSrc, getReleaseSlugs } from "../../../lib/landing";
+import "../../../styles/components/mods/Releases/releases-image.scss";
 
 interface Props {
 	onSlugPage?: boolean;
@@ -23,39 +23,44 @@ function formatPublishedAt(date: Date) {
 
 {
 	releases.length > 0 && (
-		<section class="releases-text" aria-labelledby="releases-text-heading">
+		<section class="releases" aria-labelledby="releases-heading">
 			{canCollapse ? (
-				<details class="releases-text-disclosure">
-					<summary class="releases-text-summary">
+				<details class="releases-disclosure">
+					<summary class="releases-summary">
 						<span
-							class="releases-text-summary-label"
-							id="releases-text-heading"
+							class="releases-summary-label"
+							id="releases-heading"
 						>
 							{heading}
 						</span>
 					</summary>
 				</details>
 			) : (
-				<h2 id="releases-text-heading">{heading}</h2>
+				<h2 id="releases-heading">{heading}</h2>
 			)}
-			<ul class="releases-text-list">
+			<ul class="releases-list">
 				{releases.map((release) => {
+					const src = coverSrc(release.data.cover);
 					const href = `/${release.id}`;
 					return (
-						<li class="releases-text-item">
-							<a class="releases-text-card" href={href}>
-								<span class="releases-text-title">
+						<li class="releases-item">
+							<a class="releases-card" href={href}>
+								<img
+									class="releases-thumb"
+									src={src}
+									alt=""
+									loading="lazy"
+									decoding="async"
+								/>
+								<span class="releases-title">
 									{release.data.title}
 								</span>
 								<time
-									class="releases-text-date"
+									class="releases-date"
 									datetime={release.data.publishedAt.toISOString()}
 								>
 									{formatPublishedAt(release.data.publishedAt)}
 								</time>
-								<span class="releases-text-record-label">
-									{release.data.recordLabel ?? "Unlisted"}
-								</span>
 							</a>
 						</li>
 					);
