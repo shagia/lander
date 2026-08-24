@@ -22,17 +22,32 @@
 		display: block;
 		width: auto;
 		height: 3.5rem;
-		animation-name: logo-animation;
-		animation-duration: 13s;
-		animation-iteration-count: infinite;
-		animation-timing-function: steps(128);
 		outline: 1px solid transparent;
 		transform-style: preserve-3d;
-		animation-fill-mode: forwards;
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		.site-logo {
+			animation-name: logo-animation;
+			animation-duration: 13s;
+			animation-iteration-count: infinite;
+			animation-timing-function: steps(128);
+			animation-fill-mode: forwards;
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			.site-logo {
+				animation: none;
+			}
+		}
 	}
 
 	@media (max-width: 630px) and (orientation: portrait) {
 		align-self: center;
 		margin-left: 0;
+
+		.site-logo {
+			animation: none;
+		}
 	}
 }
