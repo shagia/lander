@@ -42,6 +42,13 @@ export function coverSrc(cover: unknown): string {
 	return PLACEHOLDER_COVER_SRC;
 }
 
+/** Page backdrop: `background` → `cover` → placeholder. */
+export function slugPageBackgroundSrc(
+	data: { background?: string; cover?: string } | undefined,
+): string {
+	return coverSrc(data?.background ?? data?.cover);
+}
+
 export function pageBackgroundImage(cover: unknown): string {
 	return `url(${JSON.stringify(coverSrc(cover))})`;
 }
