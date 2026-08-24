@@ -22,10 +22,6 @@
 		margin: 0;
 		padding: 0;
 
-		&--default {
-			max-width: min(72vw, 56rem);
-		}
-
 		a:focus-visible {
 			outline: 2px solid var(--color-focus);
 			outline-offset: 2px;
@@ -308,7 +304,7 @@
 	.landing-default-columns {
 		display: grid;
 		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-		gap: 2rem;
+		gap: 1rem;
 		align-items: start;
 	}
 
