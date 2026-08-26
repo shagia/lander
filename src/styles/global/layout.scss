@@ -9,6 +9,12 @@ body {
 	color: var(--color-text);
 }
 
+@media not ((max-width: 630px) and (orientation: portrait)) {
+	html {
+		// font-size: 90%;
+	}
+}
+
 a {
 	color: inherit;
 }
