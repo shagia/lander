@@ -52,7 +52,7 @@ export function coverSrc(cover: unknown): string {
 
 /** Page backdrop: `background` → `cover` → placeholder. */
 export function slugPageBackgroundSrc(
-	data: { background?: string; cover?: string } | undefined,
+	data: { background?: unknown; cover?: unknown } | undefined,
 ): string {
 	return coverSrc(data?.background ?? data?.cover);
 }
@@ -63,12 +63,10 @@ export function pageBackgroundImage(cover: unknown): string {
 
 export async function getRandomReleaseCover(): Promise<string | undefined> {
 	const releases = await getReleaseSlugs();
-	const withCovers = releases.filter(
-		(e) => typeof e.data.cover === "string" && e.data.cover.length > 0,
-	);
+	const withCovers = releases.filter((e) => e.data.cover != null);
 	if (withCovers.length === 0) return undefined;
 	const pick = withCovers[Math.floor(Math.random() * withCovers.length)];
-	return pick.data.cover!;
+	return coverSrc(pick.data.cover);
 }
 
 export async function getSlugByIdOrSlug(value: string): Promise<SlugEntry | undefined> {
