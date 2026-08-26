@@ -12,6 +12,7 @@ import {
 } from "simple-icons";
 import "../styles/components/landing-page.scss";
 import DefaultLinksContent from "./DefaultLinksContent.astro";
+import Banner from "./mods/Banner/Banner.astro";
 import ProjectsText from "./mods/Projects/ProjectsText.astro";
 import ReleasesImage from "./mods/Releases/ReleasesImage.astro";
 import ReleasesText from "./mods/Releases/ReleasesText.astro";
@@ -47,10 +48,27 @@ interface Props {
 	selectedSlug?: SlugEntry;
 	/** Full-width home banner image. Defaults to placeholder when omitted. */
 	bannerSrc?: string;
+	/**
+	 * CSS `object-position` for the banner crop (e.g. `"top"`, `"center 20%"`, `"50% 10%"`).
+	 * Defaults to the top of the image.
+	 */
+	bannerPosition?: string;
+	/**
+	 * Banner zoom scale (`1` = fill, `1.25` = 25% zoomed in).
+	 * Defaults to `1`.
+	 */
+	bannerImageSize?: number;
+	/** Optional photo credit shown under the home banner. */
+	bannerCredit?: string;
 }
 
-const { selectedSlug, bannerSrc } = Astro.props;
-const landingBannerSrc = coverSrc(bannerSrc);
+const {
+	selectedSlug,
+	bannerSrc,
+	bannerPosition,
+	bannerImageSize,
+	bannerCredit,
+} = Astro.props;
 
 const aboutName =
 	selectedSlug?.data.music?.artist ?? selectedSlug?.data.title ?? "";
@@ -71,14 +89,12 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 			<div class="main-container-scroll-inner">
 				{
 					!selectedSlug && (
-						<div class="landing-banner">
-							<img
-								class="landing-banner-image"
-								src={landingBannerSrc}
-								alt=""
-								decoding="async"
-							/>
-						</div>
+						<Banner
+							src={bannerSrc}
+							position={bannerPosition}
+							imageSize={bannerImageSize}
+							credit={bannerCredit}
+						/>
 					)
 				}
 				{
