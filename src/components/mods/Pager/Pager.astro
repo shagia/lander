@@ -1,0 +1,46 @@
+---
+import "../../../styles/components/mods/Pager/pager.scss";
+
+interface Props {
+	/** Unique radio group name / id prefix (required when multiple pagers share a page). */
+	id: string;
+	pageCount: number;
+	/** Accessible label for the page-number nav. */
+	label?: string;
+}
+
+const { id, pageCount, label = "Pages" } = Astro.props;
+const pages = Array.from({ length: pageCount }, (_, index) => index);
+---
+
+{
+	pageCount > 1 && (
+		<div class="pager">
+			{pages.map((pageIndex) => (
+				<input
+					class="pager-radio pager-visually-hidden"
+					type="radio"
+					name={id}
+					id={`${id}-${pageIndex}`}
+					data-page={pageIndex}
+					checked={pageIndex === 0}
+					aria-label={`Page ${pageIndex + 1} of ${pageCount}`}
+				/>
+			))}
+			<div class="pager-pages">
+				<slot />
+			</div>
+			<nav class="pager-nav" aria-label={label}>
+				{pages.map((pageIndex) => (
+					<label
+						class="pager-btn"
+						for={`${id}-${pageIndex}`}
+						data-page={pageIndex}
+					>
+						{pageIndex + 1}
+					</label>
+				))}
+			</nav>
+		</div>
+	)
+}

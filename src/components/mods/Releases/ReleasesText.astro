@@ -1,17 +1,34 @@
 ---
 import { getReleaseSlugs } from "../../../lib/landing";
 import "../../../styles/components/mods/Releases/releases-text.scss";
+import Pager from "../Pager/Pager.astro";
 
 interface Props {
 	onSlugPage?: boolean;
 	initialVisible?: number;
+	/** When true, show releases in pages instead of a collapsible list. */
+	paged?: boolean;
 }
 
-const { onSlugPage = false, initialVisible: initialVisibleProp } = Astro.props;
+const {
+	onSlugPage = false,
+	initialVisible: initialVisibleProp,
+	paged = false,
+} = Astro.props;
 const releases = await getReleaseSlugs();
 const heading = onSlugPage ? "More Music" : "Music";
 const initialVisible = initialVisibleProp ?? 3;
-const canCollapse = releases.length > initialVisible;
+const pageSize = initialVisible;
+const pages: (typeof releases)[] = [];
+
+for (let i = 0; i < releases.length; i += pageSize) {
+	pages.push(releases.slice(i, i + pageSize));
+}
+
+const pageCount = pages.length;
+const canPage = paged && pageCount > 1;
+const canCollapse = !paged && releases.length > initialVisible;
+const pagerId = onSlugPage ? "releases-text-slug" : "releases-text";
 
 function formatPublishedAt(date: Date) {
 	return date.toLocaleDateString("en-US", {
@@ -24,7 +41,10 @@ function formatPublishedAt(date: Date) {
 
 {
 	releases.length > 0 && (
-		<section class="releases-text" aria-labelledby="releases-text-heading">
+		<section
+			class="releases-text"
+			aria-labelledby="releases-text-heading"
+		>
 			{canCollapse ? (
 				<details class="releases-text-disclosure">
 					<summary class="releases-text-summary">
@@ -39,34 +59,75 @@ function formatPublishedAt(date: Date) {
 			) : (
 				<h2 id="releases-text-heading">{heading}</h2>
 			)}
-			<ul class="releases-text-list">
-				{releases.map((release, index) => {
-					const href = `/${release.id}`;
-					return (
-						<li
-							class:list={[
-								"releases-text-item",
-								{ "is-extra": index >= initialVisible },
-							]}
-						>
-							<a class="releases-text-card" href={href}>
-								<span class="releases-text-title">
-									{release.data.title}
-								</span>
-								<time
-									class="releases-text-date"
-									datetime={release.data.publishedAt.toISOString()}
-								>
-									{formatPublishedAt(release.data.publishedAt)}
-								</time>
-								<span class="releases-text-record-label">
-									{release.data.recordLabel ?? "Unlisted"}
-								</span>
-							</a>
-						</li>
-					);
-				})}
-			</ul>
+
+			{canPage ? (
+				<Pager id={pagerId} pageCount={pageCount} label="Release pages">
+					{pages.map((page, pageIndex) => (
+						<div class="pager-page" data-page={pageIndex}>
+							<ul class="releases-text-list">
+								{page.map((release) => {
+									const href = `/${release.id}`;
+									return (
+										<li class="releases-text-item">
+											<a
+												class="releases-text-card"
+												href={href}
+											>
+												<span class="releases-text-title">
+													{release.data.title}
+												</span>
+												<time
+													class="releases-text-date"
+													datetime={release.data.publishedAt.toISOString()}
+												>
+													{formatPublishedAt(
+														release.data.publishedAt,
+													)}
+												</time>
+												<span class="releases-text-record-label">
+													{release.data.recordLabel ??
+														"Unlisted"}
+												</span>
+											</a>
+										</li>
+									);
+								})}
+							</ul>
+						</div>
+					))}
+				</Pager>
+			) : (
+				<ul class="releases-text-list">
+					{releases.map((release, index) => {
+						const href = `/${release.id}`;
+						return (
+							<li
+								class:list={[
+									"releases-text-item",
+									{ "is-extra": index >= initialVisible },
+								]}
+							>
+								<a class="releases-text-card" href={href}>
+									<span class="releases-text-title">
+										{release.data.title}
+									</span>
+									<time
+										class="releases-text-date"
+										datetime={release.data.publishedAt.toISOString()}
+									>
+										{formatPublishedAt(
+											release.data.publishedAt,
+										)}
+									</time>
+									<span class="releases-text-record-label">
+										{release.data.recordLabel ?? "Unlisted"}
+									</span>
+								</a>
+							</li>
+						);
+					})}
+				</ul>
+			)}
 		</section>
 	)
 }

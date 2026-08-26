@@ -1,17 +1,34 @@
 ---
 import { coverSrc, getReleaseSlugs } from "../../../lib/landing";
 import "../../../styles/components/mods/Releases/releases-image.scss";
+import Pager from "../Pager/Pager.astro";
 
 interface Props {
 	onSlugPage?: boolean;
 	initialVisible?: number;
+	/** When true, show releases in pages instead of a collapsible list. */
+	paged?: boolean;
 }
 
-const { onSlugPage = false, initialVisible: initialVisibleProp } = Astro.props;
+const {
+	onSlugPage = false,
+	initialVisible: initialVisibleProp,
+	paged = false,
+} = Astro.props;
 const releases = await getReleaseSlugs();
 const heading = onSlugPage ? "More Music" : "Music";
 const initialVisible = initialVisibleProp ?? 2;
-const canCollapse = releases.length > initialVisible;
+const pageSize = initialVisible;
+const pages: (typeof releases)[] = [];
+
+for (let i = 0; i < releases.length; i += pageSize) {
+	pages.push(releases.slice(i, i + pageSize));
+}
+
+const pageCount = pages.length;
+const canPage = paged && pageCount > 1;
+const canCollapse = !paged && releases.length > initialVisible;
+const pagerId = onSlugPage ? "releases-image-slug" : "releases-image";
 
 function formatPublishedAt(date: Date) {
 	return date.toLocaleDateString("en-US", {
@@ -39,39 +56,79 @@ function formatPublishedAt(date: Date) {
 			) : (
 				<h2 id="releases-heading">{heading}</h2>
 			)}
-			<ul class="releases-list">
-				{releases.map((release, index) => {
-					const src = coverSrc(release.data.cover);
-					const href = `/${release.id}`;
-					return (
-						<li
-							class:list={[
-								"releases-item",
-								{ "is-extra": index >= initialVisible },
-							]}
-						>
-							<a class="releases-card" href={href}>
-								<img
-									class="releases-thumb"
-									src={src}
-									alt=""
-									loading="lazy"
-									decoding="async"
-								/>
-								<span class="releases-title">
-									{release.data.title}
-								</span>
-								<time
-									class="releases-date"
-									datetime={release.data.publishedAt.toISOString()}
-								>
-									{formatPublishedAt(release.data.publishedAt)}
-								</time>
-							</a>
-						</li>
-					);
-				})}
-			</ul>
+
+			{canPage ? (
+				<Pager id={pagerId} pageCount={pageCount} label="Release pages">
+					{pages.map((page, pageIndex) => (
+						<div class="pager-page" data-page={pageIndex}>
+							<ul class="releases-list">
+								{page.map((release) => {
+									const src = coverSrc(release.data.cover);
+									const href = `/${release.id}`;
+									return (
+										<li class="releases-item">
+											<a class="releases-card" href={href}>
+												<img
+													class="releases-thumb"
+													src={src}
+													alt=""
+													loading="lazy"
+													decoding="async"
+												/>
+												<span class="releases-title">
+													{release.data.title}
+												</span>
+												<time
+													class="releases-date"
+													datetime={release.data.publishedAt.toISOString()}
+												>
+													{formatPublishedAt(
+														release.data.publishedAt,
+													)}
+												</time>
+											</a>
+										</li>
+									);
+								})}
+							</ul>
+						</div>
+					))}
+				</Pager>
+			) : (
+				<ul class="releases-list">
+					{releases.map((release, index) => {
+						const src = coverSrc(release.data.cover);
+						const href = `/${release.id}`;
+						return (
+							<li
+								class:list={[
+									"releases-item",
+									{ "is-extra": index >= initialVisible },
+								]}
+							>
+								<a class="releases-card" href={href}>
+									<img
+										class="releases-thumb"
+										src={src}
+										alt=""
+										loading="lazy"
+										decoding="async"
+									/>
+									<span class="releases-title">
+										{release.data.title}
+									</span>
+									<time
+										class="releases-date"
+										datetime={release.data.publishedAt.toISOString()}
+									>
+										{formatPublishedAt(release.data.publishedAt)}
+									</time>
+								</a>
+							</li>
+						);
+					})}
+				</ul>
+			)}
 		</section>
 	)
 }
