@@ -6,12 +6,19 @@
 	font-size: 0.8rem;
 	line-height: 1.4;
 	color: var(--color-muted);
+	text-align: left;
 
 	p {
 		margin: 0;
 	}
 
-	@media (max-width: 899px) {
+	@media not ((max-width: 630px) and (orientation: portrait)) {
+		@media (max-width: 899px) {
+			margin-left: calc(6px + 1rem);
+		}
+	}
+
+	@media (max-width: 630px) and (orientation: portrait) {
 		align-self: center;
 		margin-left: 0;
 		text-align: center;
