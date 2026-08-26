@@ -55,7 +55,6 @@ body {
 	flex-direction: column;
 	font-size: 1.2rem;
 	line-height: 1.5;
-	filter: invert(1);
 	timeline-scope: --landing-scroll;
 	background-image: var(--page-overlay), var(--page-bg);
 	background-size: 100% 100%, cover;

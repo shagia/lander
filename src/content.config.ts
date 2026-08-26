@@ -18,6 +18,8 @@ const slugs = defineCollection({
 		tags: z.array(z.string()).default([]),
 		campaign: z.string().optional(),
 		status: z.enum(["draft", "published", "archived"]).default("published"),
+		/** Optional page theme override; omit to follow the system/browser color scheme. */
+		theme: z.enum(["dark", "light"]).optional(),
 		featured: z
 			.object({
 				headline: z.string().min(1),

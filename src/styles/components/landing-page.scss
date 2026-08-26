@@ -1,9 +1,17 @@
 .landing-shell {
 	--main-container-bg: var(--color-panel);
 	--main-container-fade: 4rem;
-	--main-container-fade-from: rgb(var(--color-canvas-rgb));
-	--main-container-fade-mid: rgba(var(--color-canvas-rgb), 0.45);
-	--main-container-fade-to: rgba(var(--color-canvas-rgb), 0);
+	--main-container-fade-from: var(--color-canvas);
+	--main-container-fade-mid: color-mix(
+		in srgb,
+		var(--color-canvas) 45%,
+		transparent
+	);
+	--main-container-fade-to: color-mix(
+		in srgb,
+		var(--color-canvas) 0%,
+		transparent
+	);
 
 	box-sizing: border-box;
 	height: 100%;

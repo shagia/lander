@@ -1,6 +1,12 @@
 @use "abstracts/colors" as *;
 
 :root {
+	/* 0 = light, 1 = dark. Follows prefers-color-scheme unless html[data-theme] is set. */
+	--theme-invert: 0;
+	color-scheme: light;
+	--logo-light-display: block;
+	--logo-dark-display: none;
+
 	--radius: 6px;
 
 	--scrollbar-size: 0.5rem;
@@ -21,27 +27,49 @@
 		transparent
 	);
 
-	--color-canvas: #{$canvas};
-	--color-canvas-rgb: #{$canvas-rgb};
-	--color-text: #{$text};
+	--color-canvas: #{theme-mix($canvas)};
+	--color-text: #{theme-mix($text)};
 
-	--color-surface: #{$surface};
-	--color-surface-hover: #{$surface-hover};
-	--color-surface-muted: #{$surface-muted};
-	--color-link-large-bg: #{$link-large-bg};
-	--color-link-small-bg: #{$link-small-bg};
+	--color-surface: #{theme-mix($surface)};
+	--color-surface-hover: #{theme-mix($surface-hover)};
+	--color-surface-muted: #{theme-mix($surface-muted)};
+	--color-link-large-bg: #{theme-mix($link-large-bg)};
+	--color-link-small-bg: #{theme-mix($link-small-bg)};
 
-	--color-border: #{$border};
-	--color-border-muted: #{$border-muted};
-	--color-border-strong: #{$border-strong};
-	--color-border-accent: #{$border-accent};
+	--color-border: #{theme-mix($border)};
+	--color-border-muted: #{theme-mix($border-muted)};
+	--color-border-strong: #{theme-mix($border-strong)};
+	--color-border-accent: #{theme-mix($border-accent)};
 
-	--color-focus: #{$focus};
-	--color-muted: #{$muted};
+	--color-focus: #{theme-mix($focus)};
+	--color-muted: #{theme-mix($muted)};
 
-	--color-overlay: rgb(var(--color-canvas-rgb));
-	--color-overlay-88: rgba(var(--color-canvas-rgb), 0.88);
-	--color-overlay-78: rgba(var(--color-canvas-rgb), 0.78);
-	--color-panel: rgba(var(--color-canvas-rgb), 0.8);
-	--color-panel-border: rgba(var(--color-canvas-rgb), 0.2);
+	--color-overlay: var(--color-canvas);
+	--color-overlay-88: color-mix(in srgb, var(--color-canvas) 88%, transparent);
+	--color-overlay-78: color-mix(in srgb, var(--color-canvas) 78%, transparent);
+	--color-panel: color-mix(in srgb, var(--color-canvas) 80%, transparent);
+	--color-panel-border: color-mix(in srgb, var(--color-canvas) 20%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]) {
+		--theme-invert: 1;
+		color-scheme: dark;
+		--logo-light-display: none;
+		--logo-dark-display: block;
+	}
+}
+
+html[data-theme="light"] {
+	--theme-invert: 0;
+	color-scheme: light;
+	--logo-light-display: block;
+	--logo-dark-display: none;
+}
+
+html[data-theme="dark"] {
+	--theme-invert: 1;
+	color-scheme: dark;
+	--logo-light-display: none;
+	--logo-dark-display: block;
 }

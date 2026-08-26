@@ -1,8 +1,22 @@
 ---
 import logo from "../assets/logo.svg";
+import logoWhite from "../assets/logo-white.svg";
 import "../styles/global/header.scss";
 ---
 
 <header class="site-header">
-	<img src={logo.src} width="361" height="264" alt="Logo" class="site-logo" />
+	<img
+		src={logo.src}
+		width="361"
+		height="264"
+		alt="Logo"
+		class="site-logo site-logo-light"
+	/>
+	<img
+		src={logoWhite.src}
+		width="361"
+		height="264"
+		alt=""
+		class="site-logo site-logo-dark"
+	/>
 </header>

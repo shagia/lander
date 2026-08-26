@@ -47,7 +47,7 @@
 	}
 
 	.link-lens-filter {
-		background-color: rgba(var(--color-canvas-rgb), 0.16);
+		background-color: color-mix(in srgb, var(--color-canvas) 16%, transparent);
 		backdrop-filter: blur(1px);
 		-webkit-backdrop-filter: blur(1px);
 	}

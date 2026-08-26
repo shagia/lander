@@ -16,6 +16,9 @@ const { slugId } = Astro.props;
 const selectedSlug = await getSlugByIdOrSlug(slugId);
 ---
 
-<Layout cover={slugPageBackgroundSrc(selectedSlug?.data)}>
+<Layout
+	cover={slugPageBackgroundSrc(selectedSlug?.data)}
+	theme={selectedSlug?.data.theme}
+>
 	<LandingPage selectedSlug={selectedSlug} />
 </Layout>

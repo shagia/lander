@@ -1,5 +1,6 @@
+@use "sass:color";
+
 $canvas: #cfcfcf;
-$canvas-rgb: 207, 207, 207;
 $text: #14142c;
 
 $surface: #f3f4f6;
@@ -15,3 +16,17 @@ $border-accent: #95b9ff;
 
 $focus: #2563eb;
 $muted: #6b7280;
+
+/// RGB-invert a Sass color for the dark half of the theme mix.
+@function inverted($value) {
+	@return color.invert($value);
+}
+
+/// Blend light ↔ inverted using `--theme-invert` (0 = light, 1 = dark).
+@function theme-mix($light) {
+	@return color-mix(
+		in srgb,
+		#{inverted($light)} calc(var(--theme-invert) * 100%),
+		#{$light}
+	);
+}

@@ -9,13 +9,15 @@ import { pageBackgroundImage } from "../lib/landing";
 
 interface Props {
 	cover?: string;
+	/** Override theme: `"dark"` | `"light"`. Omit to follow the system/browser color scheme. */
+	theme?: "dark" | "light";
 }
 
-const { cover } = Astro.props;
+const { cover, theme } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme={theme}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
