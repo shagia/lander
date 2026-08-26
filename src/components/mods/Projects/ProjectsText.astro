@@ -29,16 +29,14 @@ function formatProjectDate(date: Date) {
 							<span class="projects-text-title">
 								{project.data.title}
 							</span>
-							<span class="projects-text-meta">
-								<span class="projects-text-type">
-									{project.data.type}
-								</span>
-								<time
-									class="projects-text-date"
-									datetime={project.data.date.toISOString()}
-								>
-									{formatProjectDate(project.data.date)}
-								</time>
+							<time
+								class="projects-text-date"
+								datetime={project.data.date.toISOString()}
+							>
+								{formatProjectDate(project.data.date)}
+							</time>
+							<span class="projects-text-type">
+								{project.data.type}
 							</span>
 						</a>
 					</li>
