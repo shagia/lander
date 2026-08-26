@@ -16,7 +16,7 @@
 .releases-text-card {
 	display: flex;
 	flex-direction: column;
-	align-items: flex-start;
+	align-items: var(--content-inline-align, start);
 	gap: 0.1rem;
 	padding: 0.45rem 0;
 	text-decoration: none;
