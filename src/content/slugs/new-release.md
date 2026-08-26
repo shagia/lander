@@ -12,7 +12,6 @@ status: draft
 featured:
   headline: New Single Out Now
   summary: Stream the latest single and open the full release links below.
-cover: https://placehold.co/300
 music:
   trackId: track-release-001
   title: Launch Sequence

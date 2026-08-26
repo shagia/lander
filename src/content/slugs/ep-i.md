@@ -14,7 +14,7 @@ featured:
   headline: Two big ones 
   summary:
     - these were incredibly ideal for album use, but ultimately I was told by many that it didn't make much sense in the club. A lot of mistakes were made on my own, and eventually I gave it up and singled these awesome three out.
-cover: https://f4.bcbits.com/img/a0489856842_10.jpg
+cover: ../../assets/slugs/ep-i/cover.jpg
 music:
   trackId: ep1-allmylife-audiobambino
   title: All My Life / Fantazia

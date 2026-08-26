@@ -15,7 +15,6 @@ featured:
   - First passage
   - Second passage, a little longer.
   - Still eurphoric. Still hardcore. Still club ready.
-cover: https://placehold.co/300
 music:
   trackId: opera-ep
   title: Opera (Compilation)

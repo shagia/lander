@@ -16,7 +16,7 @@ featured:
   - First passage
   - Second passage, a little longer.
   - Still eurphoric. Still hardcore. Still club ready.
-cover: https://f4.bcbits.com/img/a1597762252_10.jpg
+cover: ../../assets/slugs/daytona/cover.jpg
 music:
   trackId: daytona-ep
   title: Daytona / Rotary Groove

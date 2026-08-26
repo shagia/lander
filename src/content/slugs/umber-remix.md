@@ -15,7 +15,7 @@ featured:
   summary:
     - This remix was meant to drive upward. I usually like making my own parts, but the reese on the original record is straight amazing. I just felt it needed a bit of a diva kick and an additional 8 bars…
     - This is also the mark for where I'm starting to play with my own visuals again. It's been a second since releases, and so it's also been a second since making any art too.
-cover: https://f4.bcbits.com/img/a1503991185_10.jpg
+cover: ../../assets/slugs/umber-remix/cover.jpg
 music:
   trackId: chroma-006-umber-devin-s-g-remix
   title: BICEP - CHROMA 006 UMBER (Devin S.G. Remix)

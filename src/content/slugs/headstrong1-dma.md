@@ -14,7 +14,7 @@ featured:
   headline: Another venture into visual ideas from 2022-2024,
   summary:
     - these were incredibly ideal for album use, but ultimately I was told by many that it didn't make much sense in the club. A lot of mistakes were made on my own, and eventually I gave it up and singled these awesome three out.
-cover: https://f4.bcbits.com/img/a0652405750_10.jpg
+cover: ../../assets/slugs/headstrong1-dma/cover.jpg
 music:
   trackId: headstrong1-dma
   title: headstrong (V1) + Drum Machine Abstraction

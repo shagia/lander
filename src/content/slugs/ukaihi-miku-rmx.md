@@ -18,8 +18,8 @@ featured:
     - Sun Up was originally drafted during a trip at the Santa Monica beach, and you can imagine how that feels. It's nice, bright, exciting.
     - Singing Machine was a very casual soft club record that features what I like to think is the hum from am IBM model 5150 speaker.
     - All three of these were very based off of 'things'. It was extremely fun engaging in that but I decided I just put more focus on mood and groove after this. 
-cover: https://i.discogs.com/4VEC0qRcY9rYzl82QjjQanAGxgJ8owV6atkfq1mu8iY/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1MzI2/NDA4LTE3NjAzNjQw/MDEtNjE0NS5qcGVn.jpeg
-background: https://i.discogs.com/x86mQihuS981T_iF9Ac7wkp-jtK0_slcWDzlLAfb7f8/rs:fit/g:sm/q:90/h:600/w:597/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1MzI2/NDA4LTE3NjAzNjI2/MjItNjkyNy5qcGVn.jpeg
+cover: ../../assets/slugs/ukaihi-miku-rmx/cover.jpg
+background: ../../assets/slugs/ukaihi-miku-rmx/background.jpg
 music:
   trackId: ep2-catsong-audiobambino
   title: ukaihi feat. Hatsune Miku - ＊･ﾟ+｡sonite.ﾟ (Devin S.G. Remix)
