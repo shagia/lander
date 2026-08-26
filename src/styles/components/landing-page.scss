@@ -86,9 +86,30 @@
 
 	.main-container-scroll {
 		box-sizing: border-box;
-		padding: 3rem;
+		padding: 0;
 		position: relative;
 		z-index: 1;
+	}
+
+	.main-container-scroll-inner {
+		box-sizing: border-box;
+		padding: 3rem;
+	}
+
+	.landing-banner {
+		box-sizing: border-box;
+		width: 100%;
+		height: 150px;
+		margin-bottom: 2rem;
+		overflow: hidden;
+		background: var(--color-surface-muted);
+	}
+
+	.landing-banner-image {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
 	}
 
 	.media-container-wrapper {
@@ -341,7 +362,7 @@
 			}
 		}
 
-		.main-container-scroll {
+		.main-container-scroll-inner {
 			padding: 1.25rem 1rem 3rem;
 		}
 

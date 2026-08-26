@@ -1,5 +1,8 @@
 ---
-import { coverSrc, type SlugEntry } from "../lib/landing";
+import {
+	coverSrc,
+	type SlugEntry,
+} from "../lib/landing";
 import {
 	siSoundcloud,
 	siApplemusic,
@@ -42,9 +45,12 @@ function linkDestinationHint(href: string) {
 
 interface Props {
 	selectedSlug?: SlugEntry;
+	/** Full-width home banner image. Defaults to placeholder when omitted. */
+	bannerSrc?: string;
 }
 
-const { selectedSlug } = Astro.props;
+const { selectedSlug, bannerSrc } = Astro.props;
+const landingBannerSrc = coverSrc(bannerSrc);
 
 const aboutName =
 	selectedSlug?.data.music?.artist ?? selectedSlug?.data.title ?? "";
@@ -62,134 +68,148 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 	>
 		<div class="main-container-fades" aria-hidden="true"></div>
 		<div class="main-container-scroll">
-			{
-				selectedSlug && (
-					<section>
-						<div class="media-container-wrapper">
-							<h2 class="slug-title">{selectedSlug.data.title}</h2>
-							<div class="cover-container">
-								<img
-									src={coverSrc(selectedSlug.data.cover)}
-									alt={selectedSlug.data.title}
-									class="cover-image"
-								/>
-							</div>
-							{selectedSlug.data.music && (
-								<div class="media-container">
-									<audio
-										controls
-										src={
-											selectedSlug.data.music.audioUrl
-										}
+			<div class="main-container-scroll-inner">
+				{
+					!selectedSlug && (
+						<div class="landing-banner">
+							<img
+								class="landing-banner-image"
+								src={landingBannerSrc}
+								alt=""
+								decoding="async"
+							/>
+						</div>
+					)
+				}
+				{
+					selectedSlug && (
+						<section>
+							<div class="media-container-wrapper">
+								<h2 class="slug-title">{selectedSlug.data.title}</h2>
+								<div class="cover-container">
+									<img
+										src={coverSrc(selectedSlug.data.cover)}
+										alt={selectedSlug.data.title}
+										class="cover-image"
 									/>
 								</div>
-							)}
-							{(slugSmallLinks.length > 0 ||
-								slugLargeLinks.length > 0) && (
-								<>
-									{slugLargeLinks.length > 0 && (
-										<ul class="links-large-list">
-											{slugLargeLinks.map((link) => (
-												<li>
-													<a
-														href={link.href}
-														class="link-large"
-													>
-														<span
-															class="link-large-icon"
-															aria-hidden="true"
-															set:html={slugLinkSvgMarkup(
-																link.id,
-															)}
-														/>
-														<span class="link-large-label">
-															{link.label}
-														</span>
-														<span class="visually-hidden">
-															{linkDestinationHint(
-																link.href,
-															)}
-														</span>
-													</a>
-												</li>
-											))}
-										</ul>
-									)}
-									{slugSmallLinks.length > 0 && (
-										<ul class="links-small-list">
-											{slugSmallLinks.map((link) => (
-												<li>
-													<a
-														href={link.href}
-														class="link-small"
-													>
-														<span class="visually-hidden">
-															{link.label}
-															{linkDestinationHint(
-																link.href,
-															)}
-														</span>
-														<span
-															class="link-small-icon"
-															aria-hidden="true"
-															set:html={slugLinkSvgMarkup(
-																link.id,
-															)}
-														/>
-													</a>
-												</li>
-											))}
-										</ul>
-									)}
-								</>
-							)}
-						</div>
-
-						<br />
-
-						{selectedSlug.data.featured && (
-							<section class="default-links-section">
-								<h3>
-									{selectedSlug.data.featured.headline}
-								</h3>
-								{selectedSlug.data.featured.summary.map(
-									(paragraph) => (
-										<p>{paragraph}</p>
-									),
+								{selectedSlug.data.music && (
+									<div class="media-container">
+										<audio
+											controls
+											src={
+												selectedSlug.data.music.audioUrl
+											}
+										/>
+									</div>
 								)}
-							</section>
-						)}
-					</section>
-				)
-			}
-
-			{
-				selectedSlug ? (
-					<>
-						<details class="default-links-disclosure">
-							<summary class="default-links-summary">
-								<span class="default-links-summary-label">
-									About {aboutName}
-								</span>
-							</summary>
-							<div class="default-links-disclosure-panel">
-								<SocialLinksContent />
+								{(slugSmallLinks.length > 0 ||
+									slugLargeLinks.length > 0) && (
+									<>
+										{slugLargeLinks.length > 0 && (
+											<ul class="links-large-list">
+												{slugLargeLinks.map((link) => (
+													<li>
+														<a
+															href={link.href}
+															class="link-large"
+														>
+															<span
+																class="link-large-icon"
+																aria-hidden="true"
+																set:html={slugLinkSvgMarkup(
+																	link.id,
+																)}
+															/>
+															<span class="link-large-label">
+																{link.label}
+															</span>
+															<span class="visually-hidden">
+																{linkDestinationHint(
+																	link.href,
+																)}
+															</span>
+														</a>
+													</li>
+												))}
+											</ul>
+										)}
+										{slugSmallLinks.length > 0 && (
+											<ul class="links-small-list">
+												{slugSmallLinks.map((link) => (
+													<li>
+														<a
+															href={link.href}
+															class="link-small"
+														>
+															<span class="visually-hidden">
+																{link.label}
+																{linkDestinationHint(
+																	link.href,
+																)}
+															</span>
+															<span
+																class="link-small-icon"
+																aria-hidden="true"
+																set:html={slugLinkSvgMarkup(
+																	link.id,
+																)}
+															/>
+														</a>
+													</li>
+												))}
+											</ul>
+										)}
+									</>
+								)}
 							</div>
-						</details>
-						<ReleasesImage onSlugPage />
-					</>
-				) : (
-					<div class="landing-default-columns">
-						<div class="landing-default-column landing-default-column--music">
-							<ReleasesText />
+
+							<br />
+
+							{selectedSlug.data.featured && (
+								<section class="default-links-section">
+									<h3>
+										{selectedSlug.data.featured.headline}
+									</h3>
+									{selectedSlug.data.featured.summary.map(
+										(paragraph) => (
+											<p>{paragraph}</p>
+										),
+									)}
+								</section>
+							)}
+						</section>
+					)
+				}
+
+				{
+					selectedSlug ? (
+						<>
+							<details class="default-links-disclosure">
+								<summary class="default-links-summary">
+									<span class="default-links-summary-label">
+										About {aboutName}
+									</span>
+								</summary>
+								<div class="default-links-disclosure-panel">
+									<SocialLinksContent />
+								</div>
+							</details>
+							<ReleasesImage onSlugPage />
+						</>
+					) : (
+						<div class="landing-default-columns">
+							<div class="landing-default-column landing-default-column--music">
+								<ReleasesText />
+							</div>
+							<div class="landing-default-column landing-default-column--links">
+								<SocialLinksContent />
+								<ProjectsText />
+							</div>
 						</div>
-						<div class="landing-default-column landing-default-column--links">
-							<SocialLinksContent />
-							<ProjectsText />
-						</div>
-					</div>
-				)
-			}
+					)
+				}
+			</div>
 		</div>
 	</main>
 </div>
