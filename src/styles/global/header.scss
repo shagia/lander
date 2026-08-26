@@ -16,6 +16,7 @@
 	flex-shrink: 0;
 	align-self: flex-start;
 	margin-bottom: 1rem;
+	/* Desktop: flush with panel border + 3rem content padding */
 	margin-left: calc(6px + 3rem);
 
 	.site-logo {
@@ -34,7 +35,8 @@
 		}
 	}
 
-	@media (hover: hover) and (pointer: fine) {
+	/* Mid + desktop: spin (mobile portrait simply omits animation) */
+	@media not ((max-width: 630px) and (orientation: portrait)) {
 		.site-logo {
 			animation-name: logo-animation;
 			animation-duration: 13s;
@@ -50,12 +52,16 @@
 		}
 	}
 
+	/* Mid / compact: flush with 1rem content padding; match desktop top inset */
+	@media not ((max-width: 630px) and (orientation: portrait)) {
+		@media (max-width: 899px) {
+			margin-left: calc(6px + 1rem);
+			padding-top: 1rem;
+		}
+	}
+
 	@media (max-width: 630px) and (orientation: portrait) {
 		align-self: center;
 		margin-left: 0;
-
-		.site-logo {
-			animation: none;
-		}
 	}
 }

@@ -355,7 +355,7 @@
 		}
 	}
 
-	@media (max-width: 630px) and (orientation: portrait) {
+	@media (max-width: 899px) {
 		.main-container {
 			max-width: none;
 
@@ -375,7 +375,9 @@
 		.media-container-wrapper {
 			width: 100%;
 		}
+	}
 
+	@media (max-width: 630px) and (orientation: portrait) {
 		.landing-default-columns {
 			grid-template-columns: 1fr;
 		}

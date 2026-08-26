@@ -76,7 +76,7 @@ body {
 		background-position: right center, right calc(50% - var(--bg-scroll));
 	}
 
-	@media (max-width: 630px) and (orientation: portrait) {
+	@media (max-width: 899px) {
 		background-image: none;
 		padding: 1rem;
 		animation: none;
