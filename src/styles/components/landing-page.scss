@@ -20,7 +20,7 @@
 	overflow-x: hidden;
 	overflow-y: auto;
 	container-type: size;
-	overscroll-behavior: contain;
+	overscroll-behavior-y: contain;
 
 	.main-container {
 		position: relative;
