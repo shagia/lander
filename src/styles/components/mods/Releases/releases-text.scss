@@ -40,7 +40,7 @@
 	color: var(--color-muted);
 }
 
-.releases-text:has(.releases-text-disclosure:not([open])) .releases-text-item:nth-child(n + 3) {
+.releases-text:has(.releases-text-disclosure:not([open])) .releases-text-item.is-extra {
 	display: none;
 }
 
@@ -89,4 +89,6 @@
 .releases-text-summary-label {
 	flex: 1 1 auto;
 	min-width: 0;
+	font-size: 1.5em;
+	font-weight: 500;
 }

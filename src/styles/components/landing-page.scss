@@ -319,10 +319,6 @@
 	.landing-default-column {
 		min-width: 0;
 
-		&--music .releases-list {
-			grid-template-columns: 1fr;
-		}
-
 		&--links {
 			justify-self: end;
 			text-align: right;

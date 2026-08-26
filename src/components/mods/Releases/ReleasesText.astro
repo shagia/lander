@@ -4,13 +4,14 @@ import "../../../styles/components/mods/Releases/releases-text.scss";
 
 interface Props {
 	onSlugPage?: boolean;
+	initialVisible?: number;
 }
 
-const { onSlugPage = false } = Astro.props;
+const { onSlugPage = false, initialVisible: initialVisibleProp } = Astro.props;
 const releases = await getReleaseSlugs();
 const heading = onSlugPage ? "More Music" : "Music";
-const initialVisible = 2;
-const canCollapse = onSlugPage && releases.length > initialVisible;
+const initialVisible = initialVisibleProp ?? 3;
+const canCollapse = releases.length > initialVisible;
 
 function formatPublishedAt(date: Date) {
 	return date.toLocaleDateString("en-US", {
@@ -39,10 +40,15 @@ function formatPublishedAt(date: Date) {
 				<h2 id="releases-text-heading">{heading}</h2>
 			)}
 			<ul class="releases-text-list">
-				{releases.map((release) => {
+				{releases.map((release, index) => {
 					const href = `/${release.id}`;
 					return (
-						<li class="releases-text-item">
+						<li
+							class:list={[
+								"releases-text-item",
+								{ "is-extra": index >= initialVisible },
+							]}
+						>
 							<a class="releases-text-card" href={href}>
 								<span class="releases-text-title">
 									{release.data.title}

@@ -61,7 +61,7 @@
 	color: var(--color-muted);
 }
 
-.releases:has(.releases-disclosure:not([open])) .releases-item:nth-child(n + 3) {
+.releases:has(.releases-disclosure:not([open])) .releases-item.is-extra {
 	display: none;
 }
 
@@ -110,6 +110,8 @@
 .releases-summary-label {
 	flex: 1 1 auto;
 	min-width: 0;
+	font-size: 1.5em;
+	font-weight: 500;
 }
 
 @media (max-width: 630px) and (orientation: portrait) {
