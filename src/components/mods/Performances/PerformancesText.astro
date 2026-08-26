@@ -1,0 +1,50 @@
+---
+import { getPerformances } from "../../../lib/landing";
+import "../../../styles/components/mods/Performances/performances-text.scss";
+
+const performances = await getPerformances();
+
+function formatPerformanceDate(date: Date) {
+	return date.toLocaleDateString("en-US", {
+		year: "numeric",
+		month: "short",
+		day: "numeric",
+	});
+}
+---
+
+{
+	performances.length > 0 && (
+		<section
+			class="performances-text"
+			aria-labelledby="performances-text-heading"
+		>
+			<h2 id="performances-text-heading">Performances</h2>
+			<ul class="performances-text-list">
+				{performances.map((performance) => (
+					<li class="performances-text-item">
+						<a
+							class="performances-text-card"
+							href={performance.data.href}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<span class="performances-text-title">
+								{performance.data.title}
+							</span>
+							<time
+								class="performances-text-date"
+								datetime={performance.data.date.toISOString()}
+							>
+								{formatPerformanceDate(performance.data.date)}
+							</time>
+							<span class="performances-text-location">
+								{performance.data.location}
+							</span>
+						</a>
+					</li>
+				))}
+			</ul>
+		</section>
+	)
+}

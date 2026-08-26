@@ -1,0 +1,41 @@
+.performances-text {
+	margin-bottom: 2rem;
+
+	h2 {
+		margin: 0 0 0.75rem;
+		font-weight: 500;
+	}
+}
+
+.performances-text-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.performances-text-card {
+	display: flex;
+	flex-direction: column;
+	align-items: var(--content-inline-align, start);
+	gap: 0.1rem;
+	padding: 0.45rem 0;
+	text-decoration: none;
+	color: inherit;
+
+	&:focus-visible {
+		outline: 2px solid var(--color-focus);
+		outline-offset: 2px;
+	}
+}
+
+.performances-text-title {
+	font-weight: 500;
+	line-height: 1.3;
+}
+
+.performances-text-date,
+.performances-text-location {
+	font-size: 0.85rem;
+	line-height: 1.3;
+	color: var(--color-muted);
+}

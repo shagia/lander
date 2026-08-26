@@ -13,6 +13,7 @@ import {
 import "../styles/components/landing-page.scss";
 import DefaultLinksContent from "./DefaultLinksContent.astro";
 import Banner from "./mods/Banner/Banner.astro";
+import PerformancesText from "./mods/Performances/PerformancesText.astro";
 import ProjectsText from "./mods/Projects/ProjectsText.astro";
 import ReleasesImage from "./mods/Releases/ReleasesImage.astro";
 import ReleasesText from "./mods/Releases/ReleasesText.astro";
@@ -217,6 +218,7 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 						<div class="landing-default-columns">
 							<div class="landing-default-column landing-default-column--music">
 								<ReleasesText />
+								<PerformancesText />
 							</div>
 							<div class="landing-default-column landing-default-column--links">
 								<SocialLinksContent />

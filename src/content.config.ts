@@ -101,4 +101,14 @@ const projects = defineCollection({
 		}),
 });
 
-export const collections = { slugs, projects };
+const performances = defineCollection({
+	loader: glob({ pattern: "**/*.md", base: "./src/content/performances" }),
+	schema: z.object({
+		title: z.string().min(1),
+		date: z.coerce.date(),
+		location: z.string().min(1),
+		href: z.string().url(),
+	}),
+});
+
+export const collections = { slugs, projects, performances };
