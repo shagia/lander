@@ -317,9 +317,12 @@
 	}
 
 	.landing-default-column {
+		--content-inline-align: start;
 		min-width: 0;
+		text-align: left;
 
 		&--links {
+			--content-inline-align: end;
 			justify-self: end;
 			text-align: right;
 		}

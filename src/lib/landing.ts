@@ -1,6 +1,7 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 
 export type SlugEntry = CollectionEntry<"slugs">;
+export type ProjectEntry = CollectionEntry<"projects">;
 
 export const defaultLinks = [
 	{ id: "home", label: "Home", href: "https://example.com" },
@@ -28,6 +29,13 @@ export async function getReleaseSlugs(): Promise<SlugEntry[]> {
 			entry.data.tags.some((tag) => tag.toLowerCase() === "release")
 		);
 	});
+}
+
+export async function getProjects(): Promise<ProjectEntry[]> {
+	const entries = await getCollection("projects");
+	return entries.sort(
+		(a, b) => b.data.date.getTime() - a.data.date.getTime(),
+	);
 }
 
 /** 1:1 fallback when a release has no cover URL. */

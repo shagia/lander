@@ -1,0 +1,49 @@
+---
+import { getProjects } from "../../../lib/landing";
+import "../../../styles/components/mods/Projects/projects-text.scss";
+
+const projects = await getProjects();
+
+function formatProjectDate(date: Date) {
+	return date.toLocaleDateString("en-US", {
+		year: "numeric",
+		month: "short",
+		day: "numeric",
+	});
+}
+---
+
+{
+	projects.length > 0 && (
+		<section class="projects-text" aria-labelledby="projects-text-heading">
+			<h2 id="projects-text-heading">Projects</h2>
+			<ul class="projects-text-list">
+				{projects.map((project) => (
+					<li class="projects-text-item">
+						<a
+							class="projects-text-card"
+							href={project.data.href}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<span class="projects-text-title">
+								{project.data.title}
+							</span>
+							<span class="projects-text-meta">
+								<span class="projects-text-type">
+									{project.data.type}
+								</span>
+								<time
+									class="projects-text-date"
+									datetime={project.data.date.toISOString()}
+								>
+									{formatProjectDate(project.data.date)}
+								</time>
+							</span>
+						</a>
+					</li>
+				))}
+			</ul>
+		</section>
+	)
+}

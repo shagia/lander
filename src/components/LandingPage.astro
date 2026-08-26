@@ -9,6 +9,7 @@ import {
 } from "simple-icons";
 import "../styles/components/landing-page.scss";
 import DefaultLinksContent from "./DefaultLinksContent.astro";
+import ProjectsText from "./mods/Projects/ProjectsText.astro";
 import ReleasesImage from "./mods/Releases/ReleasesImage.astro";
 import ReleasesText from "./mods/Releases/ReleasesText.astro";
 import SocialLinksContent from "./mods/SocialLinksContent/SocialLinksContent.astro";
@@ -184,6 +185,7 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 						</div>
 						<div class="landing-default-column landing-default-column--links">
 							<SocialLinksContent />
+							<ProjectsText />
 						</div>
 					</div>
 				)
