@@ -78,7 +78,7 @@ const slugSmallLinks = selectedSlug?.data.links?.small ?? [];
 const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 ---
 
-<div class="landing-shell">
+<div class="landing-shell" transition:name="landing-shell">
 	<main
 		class:list={[
 			"main-container",
@@ -212,13 +212,13 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 									<SocialLinksContent />
 								</div>
 							</details>
-							<ReleasesImage onSlugPage />
+							<ReleasesImage onSlugPage paged />
 						</>
 					) : (
 						<div class="landing-default-columns">
 							<div class="landing-default-column landing-default-column--music">
-								<ReleasesText />
-								<PerformancesText />
+								<ReleasesText paged />
+								<PerformancesText paged />
 							</div>
 							<div class="landing-default-column landing-default-column--links">
 								<SocialLinksContent />
@@ -233,17 +233,30 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 </div>
 
 <script>
-	const firefoxNeedsBgScrollPolyfill = CSS.supports("-moz-appearance: none");
-	const prefersReducedMotion = window.matchMedia(
-		"(prefers-reduced-motion: reduce)",
-	).matches;
-	const scroller = document.querySelector(".landing-shell");
+	let bgScrollAbort: AbortController | null = null;
 
-	if (
-		firefoxNeedsBgScrollPolyfill &&
-		!prefersReducedMotion &&
-		scroller instanceof HTMLElement
-	) {
+	function initLandingBgScroll() {
+		bgScrollAbort?.abort();
+		bgScrollAbort = new AbortController();
+		const { signal } = bgScrollAbort;
+
+		document.body.classList.remove("bg-scroll-js");
+		document.body.style.removeProperty("--bg-scroll");
+
+		const firefoxNeedsBgScrollPolyfill = CSS.supports("-moz-appearance: none");
+		const prefersReducedMotion = window.matchMedia(
+			"(prefers-reduced-motion: reduce)",
+		).matches;
+		const scroller = document.querySelector(".landing-shell");
+
+		if (
+			!firefoxNeedsBgScrollPolyfill ||
+			prefersReducedMotion ||
+			!(scroller instanceof HTMLElement)
+		) {
+			return;
+		}
+
 		document.body.classList.add("bg-scroll-js");
 
 		const bgImage = new Image();
@@ -291,18 +304,24 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 
 		const url = backgroundUrl();
 		if (url) {
-			bgImage.addEventListener("load", recalc);
+			bgImage.addEventListener("load", recalc, { signal });
 			bgImage.src = url;
 			if (bgImage.complete) recalc();
 		}
 
-		scroller.addEventListener("scroll", requestSync, { passive: true });
-		window.addEventListener("resize", recalc);
+		scroller.addEventListener("scroll", requestSync, {
+			passive: true,
+			signal,
+		});
+		window.addEventListener("resize", recalc, { signal });
 
 		const resizeObserver = new ResizeObserver(recalc);
 		resizeObserver.observe(scroller);
 		for (const child of scroller.children) {
 			resizeObserver.observe(child);
 		}
+		signal.addEventListener("abort", () => resizeObserver.disconnect());
 	}
+
+	document.addEventListener("astro:page-load", initLandingBgScroll);
 </script>

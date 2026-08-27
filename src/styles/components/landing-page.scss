@@ -58,8 +58,9 @@
 		position: sticky;
 		top: 0;
 		box-sizing: border-box;
-		height: 100cqh;
-		margin-bottom: -100cqh;
+		/* +1px covers subpixel shortfall vs the sticky panel edge */
+		height: calc(100cqh + 1px);
+		margin-bottom: calc(-100cqh - 1px);
 		border: 6px solid transparent;
 		border-top-width: 0;
 		border-bottom-width: 0;
@@ -77,10 +78,11 @@
 			linear-gradient(
 					to top,
 					var(--main-container-fade-from) 0%,
+					var(--main-container-fade-from) 1px,
 					var(--main-container-fade-mid) 55%,
 					var(--main-container-fade-to) 100%
 				)
-				bottom / 100% var(--main-container-fade) no-repeat;
+				bottom / 100% calc(var(--main-container-fade) + 1px) no-repeat;
 		background-clip: padding-box;
 	}
 
