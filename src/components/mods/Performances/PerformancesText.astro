@@ -1,8 +1,31 @@
 ---
 import { getPerformances } from "../../../lib/landing";
 import "../../../styles/components/mods/Performances/performances-text.scss";
+import Pager from "../Pager/Pager.astro";
 
+interface Props {
+	initialVisible?: number;
+	/** When true, show performances in pages instead of a collapsible list. */
+	paged?: boolean;
+}
+
+const {
+	initialVisible: initialVisibleProp,
+	paged = false,
+} = Astro.props;
 const performances = await getPerformances();
+const initialVisible = initialVisibleProp ?? 3;
+const pageSize = initialVisible;
+const pages: (typeof performances)[] = [];
+
+for (let i = 0; i < performances.length; i += pageSize) {
+	pages.push(performances.slice(i, i + pageSize));
+}
+
+const pageCount = pages.length;
+const canPage = paged && pageCount > 1;
+const canCollapse = !paged && performances.length > initialVisible;
+const pagerId = "performances-text";
 
 function formatPerformanceDate(date: Date) {
 	return date.toLocaleDateString("en-US", {
@@ -19,32 +42,91 @@ function formatPerformanceDate(date: Date) {
 			class="performances-text"
 			aria-labelledby="performances-text-heading"
 		>
-			<h2 id="performances-text-heading">Performances</h2>
-			<ul class="performances-text-list">
-				{performances.map((performance) => (
-					<li class="performances-text-item">
-						<a
-							class="performances-text-card"
-							href={performance.data.href}
-							target="_blank"
-							rel="noopener noreferrer"
+			{canCollapse ? (
+				<details class="performances-text-disclosure">
+					<summary class="performances-text-summary">
+						<span
+							class="performances-text-summary-label"
+							id="performances-text-heading"
 						>
-							<span class="performances-text-title">
-								{performance.data.title}
-							</span>
-							<time
-								class="performances-text-date"
-								datetime={performance.data.date.toISOString()}
+							Performances
+						</span>
+					</summary>
+				</details>
+			) : (
+				<h2 id="performances-text-heading">Performances</h2>
+			)}
+
+			{canPage ? (
+				<Pager
+					id={pagerId}
+					pageCount={pageCount}
+					label="Performance pages"
+				>
+					{pages.map((page, pageIndex) => (
+						<div class="pager-page" data-page={pageIndex}>
+							<ul class="performances-text-list">
+								{page.map((performance) => (
+									<li class="performances-text-item">
+										<a
+											class="performances-text-card"
+											href={performance.data.href}
+											target="_blank"
+											rel="noopener noreferrer"
+										>
+											<span class="performances-text-title">
+												{performance.data.title}
+											</span>
+											<time
+												class="performances-text-date"
+												datetime={performance.data.date.toISOString()}
+											>
+												{formatPerformanceDate(
+													performance.data.date,
+												)}
+											</time>
+											<span class="performances-text-location">
+												{performance.data.location}
+											</span>
+										</a>
+									</li>
+								))}
+							</ul>
+						</div>
+					))}
+				</Pager>
+			) : (
+				<ul class="performances-text-list">
+					{performances.map((performance, index) => (
+						<li
+							class:list={[
+								"performances-text-item",
+								{ "is-extra": index >= initialVisible },
+							]}
+						>
+							<a
+								class="performances-text-card"
+								href={performance.data.href}
+								target="_blank"
+								rel="noopener noreferrer"
 							>
-								{formatPerformanceDate(performance.data.date)}
-							</time>
-							<span class="performances-text-location">
-								{performance.data.location}
-							</span>
-						</a>
-					</li>
-				))}
-			</ul>
+								<span class="performances-text-title">
+									{performance.data.title}
+								</span>
+								<time
+									class="performances-text-date"
+									datetime={performance.data.date.toISOString()}
+								>
+									{formatPerformanceDate(performance.data.date)}
+								</time>
+								<span class="performances-text-location">
+									{performance.data.location}
+								</span>
+							</a>
+						</li>
+					))}
+				</ul>
+			)}
 		</section>
 	)
 }
