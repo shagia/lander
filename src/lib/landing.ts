@@ -11,7 +11,10 @@ export const defaultLinks = [
 ];
 
 export async function getPublishedSlugs(): Promise<SlugEntry[]> {
-	const entries = await getCollection("slugs", ({ data }) => data.status === "published");
+	const entries = await getCollection(
+		"slugs",
+		({ data }) => data.status === "published" || data.status === "unlisted",
+	);
 	return entries.sort((a, b) => {
 		if (a.data.priority !== b.data.priority) {
 			return b.data.priority - a.data.priority;
@@ -23,6 +26,7 @@ export async function getPublishedSlugs(): Promise<SlugEntry[]> {
 export async function getReleaseSlugs(): Promise<SlugEntry[]> {
 	const entries = await getPublishedSlugs();
 	return entries.filter((entry) => {
+		if (entry.data.status === "unlisted") return false;
 		const category = entry.data.category.toLowerCase();
 		return (
 			category === "release" ||

@@ -19,7 +19,9 @@ const slugs = defineCollection({
 			category: z.string().default("general"),
 			tags: z.array(z.string()).default([]),
 			campaign: z.string().optional(),
-			status: z.enum(["draft", "published", "archived"]).default("published"),
+			status: z
+				.enum(["draft", "published", "unlisted", "archived"])
+				.default("published"),
 			theme: z.enum(["dark", "light"]).optional(),
 			featured: z
 				.object({
