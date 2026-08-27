@@ -4,7 +4,7 @@ title: All My Life / Fantazia
 description: Test
 recordLabel: audio bambino
 priority: 7
-publishedAt: 2026-04-26
+publishedAt: 2024-11-15
 category: release
 tags:
   - release

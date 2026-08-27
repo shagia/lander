@@ -9,7 +9,7 @@ category: remixes
 tags:
   - release
   - music
-status: published
+status: unlisted
 featured:
   headline: Club-first, driving, and emotional,
   summary:

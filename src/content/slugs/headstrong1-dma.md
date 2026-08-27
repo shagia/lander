@@ -4,7 +4,7 @@ title: headstrong (V1) + Drum Machine Abstraction
 description: Another venture into visual ideas from 2022-2024
 recordLabel: Self-released
 priority: 7
-publishedAt: 2026-04-26
+publishedAt: 2024-07-15
 category: release
 tags:
   - release

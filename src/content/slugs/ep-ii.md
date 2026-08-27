@@ -4,7 +4,7 @@ title: Cat Song / Sun Up / Singing Machine
 description: Another venture into visual ideas from 2022-2024
 recordLabel: audio bambino
 priority: 7
-publishedAt: 2026-04-26
+publishedAt: 2025-05-23
 category: release
 tags:
   - release

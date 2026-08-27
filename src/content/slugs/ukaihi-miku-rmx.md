@@ -4,7 +4,7 @@ title: ukaihi feat. Hatsune Miku - ＊･ﾟ+｡sonite.ﾟ (Devin S.G. Remix)
 description: Another venture into visual ideas from 2022-2024
 recordLabel: Crypton Future Media
 priority: 7
-publishedAt: 2026-04-26
+publishedAt: 2025-09-05
 category: release
 tags:
   - release
