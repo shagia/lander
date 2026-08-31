@@ -2,6 +2,9 @@ import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 import { defineCollection } from "astro:content";
 
+/** Site-wide content files live in `src/content/site/` (e.g. `About.md`). */
+const SITE_CONTENT_BASE = "./src/content/site";
+
 const slugs = defineCollection({
 	loader: glob({ pattern: "**/*.md", base: "./src/content/slugs" }),
 	schema: ({ image }) => {
@@ -113,4 +116,35 @@ const performances = defineCollection({
 	}),
 });
 
-export const collections = { slugs, projects, performances };
+const about = defineCollection({
+	loader: glob({
+		pattern: "About.md",
+		base: SITE_CONTENT_BASE,
+		generateId: () => "about",
+	}),
+	schema: z.object({}),
+});
+
+const site = defineCollection({
+	loader: glob({
+		pattern: "Site.yaml",
+		base: SITE_CONTENT_BASE,
+		generateId: () => "site",
+	}),
+	schema: ({ image }) => {
+		const coverImage = z.union([image(), z.string().url()]);
+		return z.object({
+			artist: z.string().min(1),
+			banner: z
+				.object({
+					image: coverImage.optional(),
+					position: z.string().min(1).optional(),
+					imageSize: z.number().positive().optional(),
+					credit: z.string().min(1).optional(),
+				})
+				.optional(),
+		});
+	},
+});
+
+export const collections = { slugs, projects, performances, about, site };
