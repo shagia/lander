@@ -1,25 +1,33 @@
 ---
-import { coverSrc } from "../../../lib/landing";
+import { coverSrc, getSiteConfig } from "../../../lib/landing";
 import "../../../styles/components/mods/Banner/banner.scss";
 
 interface Props {
-	/** Banner image URL. Defaults to placeholder when omitted. */
+	/** Banner image URL. Defaults to `Site.yaml` banner.image, then placeholder. */
 	src?: string;
 	/**
 	 * CSS `object-position` for the crop (e.g. `"top"`, `"center 20%"`, `"50% 10%"`).
-	 * Defaults to the top of the image.
+	 * Defaults to `Site.yaml` banner.position, then the top of the image.
 	 */
 	position?: string;
 	/**
 	 * Zoom scale for the image (`1` = fill the banner, `1.25` = 25% zoomed in).
-	 * Defaults to `1`.
+	 * Defaults to `Site.yaml` banner.imageSize, then `1`.
 	 */
 	imageSize?: number;
-	/** Optional photo credit shown under the banner. */
+	/** Optional photo credit shown under the banner. Defaults to `Site.yaml` banner.credit. */
 	credit?: string;
 }
 
-const { src, position = "top", imageSize = 1, credit } = Astro.props;
+const site = await getSiteConfig();
+const banner = site?.data.banner;
+
+const {
+	src = coverSrc(banner?.image),
+	position = banner?.position ?? "top",
+	imageSize = banner?.imageSize ?? 1,
+	credit = banner?.credit,
+} = Astro.props;
 const imageSrc = coverSrc(src);
 const scale = Number.isFinite(imageSize) && imageSize > 0 ? imageSize : 1;
 ---
