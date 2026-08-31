@@ -1,8 +1,5 @@
 ---
-import {
-	coverSrc,
-	type SlugEntry,
-} from "../lib/landing";
+import { coverSrc, type SlugEntry } from "../lib/landing";
 import {
 	siSoundcloud,
 	siApplemusic,
@@ -89,6 +86,7 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 		<div class="main-container-scroll">
 			<div class="main-container-scroll-inner">
 				{
+					/* {
 					!selectedSlug && (
 						<Banner
 							src={bannerSrc}
@@ -97,12 +95,17 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 							credit={bannerCredit}
 						/>
 					)
+				} 
+				*/
 				}
+				{/* Banner disabled for now */}
 				{
 					selectedSlug && (
 						<section>
 							<div class="media-container-wrapper">
-								<h2 class="slug-title">{selectedSlug.data.title}</h2>
+								<h2 class="slug-title">
+									{selectedSlug.data.title}
+								</h2>
 								<div class="cover-container">
 									<img
 										src={coverSrc(selectedSlug.data.cover)}
@@ -218,7 +221,7 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 						<div class="landing-default-columns">
 							<div class="landing-default-column landing-default-column--music">
 								<ReleasesText paged />
-								<PerformancesText paged />
+								{/*<PerformancesText paged />*/}
 							</div>
 							<div class="landing-default-column landing-default-column--links">
 								<SocialLinksContent />
@@ -243,7 +246,9 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 		document.body.classList.remove("bg-scroll-js");
 		document.body.style.removeProperty("--bg-scroll");
 
-		const firefoxNeedsBgScrollPolyfill = CSS.supports("-moz-appearance: none");
+		const firefoxNeedsBgScrollPolyfill = CSS.supports(
+			"-moz-appearance: none",
+		);
 		const prefersReducedMotion = window.matchMedia(
 			"(prefers-reduced-motion: reduce)",
 		).matches;

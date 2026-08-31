@@ -58,9 +58,8 @@
 		position: sticky;
 		top: 0;
 		box-sizing: border-box;
-		/* +1px covers subpixel shortfall vs the sticky panel edge */
-		height: calc(100cqh + 1px);
-		margin-bottom: calc(-100cqh - 1px);
+		height: 100cqh;
+		margin-bottom: -100cqh;
 		border: 6px solid transparent;
 		border-top-width: 0;
 		border-bottom-width: 0;
