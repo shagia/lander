@@ -1,5 +1,5 @@
 ---
-import banner from "../assets/ui/banner.jpg";
+import banner from "../assets/ui/banner.jpeg";
 import LandingPage from "../components/LandingPage.astro";
 import Layout from "../layouts/Layout.astro";
 import { getRandomReleaseCover } from "../lib/landing";
@@ -10,8 +10,8 @@ const cover = await getRandomReleaseCover();
 <Layout cover={cover}>
 	<LandingPage
 		bannerSrc={banner.src}
-		bannerPosition="center 44%"
-		bannerImageSize={1}
+		bannerPosition="center 27%"
+		bannerImageSize={1.6}
 		bannerCredit="Photo credit: Devin S.G."
 	/>
 </Layout>
