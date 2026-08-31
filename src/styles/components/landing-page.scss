@@ -256,48 +256,6 @@
 		width: 100%;
 	}
 
-	.default-links-disclosure {
-		margin-bottom: 2rem;
-
-		&[open] .default-links-summary::before {
-			transform: rotate(45deg);
-			margin-top: 0.15rem;
-		}
-	}
-
-	.default-links-summary {
-		list-style: none;
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 0.5rem 0.75rem;
-		padding: 0;
-		cursor: pointer;
-		user-select: none;
-
-		&::-webkit-details-marker {
-			display: none;
-		}
-
-		&::before {
-			content: "";
-			display: inline-block;
-			width: 0.5rem;
-			height: 0.5rem;
-			margin-right: 0.5rem;
-			border-right: 2px solid var(--color-muted);
-			border-bottom: 2px solid var(--color-muted);
-			transform: rotate(-45deg);
-			vertical-align: middle;
-			transition: transform 0.15s ease;
-		}
-	}
-
-	.default-links-summary-label {
-		flex: 1 1 auto;
-		min-width: 0;
-	}
-
 	.cover-image {
 		display: block;
 		width: 100%;
@@ -305,14 +263,6 @@
 		object-fit: cover;
 		border-radius: var(--radius);
 		background: var(--color-surface-muted);
-	}
-
-	.default-links-disclosure-panel {
-		padding: 0;
-
-		section:last-child {
-			margin-bottom: 0;
-		}
 	}
 
 	.landing-default-columns {
