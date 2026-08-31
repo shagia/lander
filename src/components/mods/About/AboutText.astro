@@ -1,0 +1,31 @@
+---
+import { render } from "astro:content";
+import { getSiteAbout, getSiteConfig } from "../../../lib/landing";
+import "../../../styles/components/mods/About/about-text.scss";
+
+const about = await getSiteAbout();
+const site = await getSiteConfig();
+const artistName = site?.data.artist;
+const heading = artistName ? `About ${artistName}` : "About";
+const { Content } =
+	about != null ? await render(about) : { Content: () => null };
+---
+
+{
+	about != null && (
+		<section class="about-text" aria-labelledby="about-text-heading">
+			<details class="default-links-disclosure">
+				<summary class="default-links-summary">
+					<h2 class="default-links-summary-label" id="about-text-heading">
+						{heading}
+					</h2>
+				</summary>
+				<div class="default-links-disclosure-panel">
+					<div class="about-text-body">
+						<Content />
+					</div>
+				</div>
+			</details>
+		</section>
+	)
+}

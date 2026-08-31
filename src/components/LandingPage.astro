@@ -8,7 +8,7 @@ import {
 	siTidal,
 } from "simple-icons";
 import "../styles/components/landing-page.scss";
-import DefaultLinksContent from "./DefaultLinksContent.astro";
+import AboutText from "./mods/About/AboutText.astro";
 import Banner from "./mods/Banner/Banner.astro";
 import PerformancesText from "./mods/Performances/PerformancesText.astro";
 import ProjectsText from "./mods/Projects/ProjectsText.astro";
@@ -44,32 +44,9 @@ function linkDestinationHint(href: string) {
 
 interface Props {
 	selectedSlug?: SlugEntry;
-	/** Full-width home banner image. Defaults to placeholder when omitted. */
-	bannerSrc?: string;
-	/**
-	 * CSS `object-position` for the banner crop (e.g. `"top"`, `"center 20%"`, `"50% 10%"`).
-	 * Defaults to the top of the image.
-	 */
-	bannerPosition?: string;
-	/**
-	 * Banner zoom scale (`1` = fill, `1.25` = 25% zoomed in).
-	 * Defaults to `1`.
-	 */
-	bannerImageSize?: number;
-	/** Optional photo credit shown under the home banner. */
-	bannerCredit?: string;
 }
 
-const {
-	selectedSlug,
-	bannerSrc,
-	bannerPosition,
-	bannerImageSize,
-	bannerCredit,
-} = Astro.props;
-
-const aboutName =
-	selectedSlug?.data.music?.artist ?? selectedSlug?.data.title ?? "";
+const { selectedSlug } = Astro.props;
 
 const slugSmallLinks = selectedSlug?.data.links?.small ?? [];
 const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
@@ -87,15 +64,8 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 			<div class="main-container-scroll-inner">
 				{
 					/* {
-					!selectedSlug && (
-						<Banner
-							src={bannerSrc}
-							position={bannerPosition}
-							imageSize={bannerImageSize}
-							credit={bannerCredit}
-						/>
-					)
-				} 
+					!selectedSlug && <Banner />
+				}
 				*/
 				}
 				{/* Banner disabled for now */}
@@ -184,8 +154,6 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 								)}
 							</div>
 
-							<br />
-
 							{selectedSlug.data.featured && (
 								<section class="default-links-section">
 									<h3>
@@ -205,16 +173,7 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 				{
 					selectedSlug ? (
 						<>
-							<details class="default-links-disclosure">
-								<summary class="default-links-summary">
-									<span class="default-links-summary-label">
-										About {aboutName}
-									</span>
-								</summary>
-								<div class="default-links-disclosure-panel">
-									<SocialLinksContent />
-								</div>
-							</details>
+							<AboutText />
 							<ReleasesImage onSlugPage paged />
 						</>
 					) : (
@@ -222,6 +181,7 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 							<div class="landing-default-column landing-default-column--music">
 								<ReleasesText paged />
 								{/*<PerformancesText paged />*/}
+								{/*<AboutText />*/}
 							</div>
 							<div class="landing-default-column landing-default-column--links">
 								<SocialLinksContent />
