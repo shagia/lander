@@ -2,7 +2,12 @@
 import type { GetStaticPaths } from "astro";
 import LandingPage from "../components/LandingPage.astro";
 import Layout from "../layouts/Layout.astro";
-import { getPublishedSlugs, getSlugByIdOrSlug, slugPageBackgroundSrc } from "../lib/landing";
+import {
+	coverSrc,
+	getPublishedSlugs,
+	getSlugByIdOrSlug,
+	slugPageBackgroundSrc,
+} from "../lib/landing";
 
 export const getStaticPaths = (async () => {
 	const slugs = await getPublishedSlugs();
@@ -19,6 +24,13 @@ const selectedSlug = await getSlugByIdOrSlug(slugId);
 <Layout
 	cover={slugPageBackgroundSrc(selectedSlug?.data)}
 	theme={selectedSlug?.data.theme}
+	title={selectedSlug?.data.title}
+	description={selectedSlug?.data.description}
+	image={
+		selectedSlug?.data.cover != null
+			? coverSrc(selectedSlug.data.cover)
+			: undefined
+	}
 >
 	<LandingPage selectedSlug={selectedSlug} />
 </Layout>

@@ -1,4 +1,9 @@
 artist: Devin S.G.
+title: Devin S.G.
+description: Music, engineering, and multimedia from Devin S.G.
+url: https://devin.sg
+icon: ../../assets/ui/logo.svg
+avatar: ../../assets/ui/banner.jpeg
 banner:
   image: ../../assets/ui/banner.jpeg
   position: center 27%

@@ -7,15 +7,47 @@ import "../styles/global/scrollbar.scss";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import LinkLens from "../components/mods/LinkLens/LinkLens.astro";
-import { pageBackgroundImage } from "../lib/landing";
+import { coverSrc, getSiteConfig, pageBackgroundImage } from "../lib/landing";
 
 interface Props {
 	cover?: string;
 	/** Override theme: `"dark"` | `"light"`. Omit to follow the system/browser color scheme. */
 	theme?: "dark" | "light";
+	/** Page title before the site name (e.g. a release title). */
+	title?: string;
+	/** Page-specific meta description. Falls back to `Site.yaml` description. */
+	description?: string;
+	/** Open Graph / Twitter image URL. Falls back to the page cover, then site banner. */
+	image?: string;
 }
 
-const { cover, theme } = Astro.props;
+const {
+	cover,
+	theme,
+	title: pageTitle,
+	description: pageDescription,
+	image: pageImage,
+} = Astro.props;
+
+const site = await getSiteConfig();
+const siteTitle = site?.data.title ?? site?.data.artist ?? "Site";
+const siteDescription = site?.data.description ?? "";
+const documentTitle = pageTitle ? `${pageTitle} | ${siteTitle}` : siteTitle;
+const metaDescription = pageDescription ?? siteDescription;
+const iconSrc = site?.data.icon ? coverSrc(site.data.icon) : "/favicon.svg";
+const iconType = iconSrc.endsWith(".svg") ? "image/svg+xml" : undefined;
+const shareImageSrc =
+	pageImage ??
+	cover ??
+	(site?.data.banner?.image ? coverSrc(site.data.banner.image) : undefined);
+const siteUrl = site?.data.url;
+const canonicalUrl = siteUrl
+	? new URL(Astro.url.pathname, siteUrl).href
+	: Astro.url.href;
+const shareImageUrl =
+	shareImageSrc && siteUrl
+		? new URL(shareImageSrc, siteUrl).href
+		: shareImageSrc;
 ---
 
 <!doctype html>
@@ -23,10 +55,29 @@ const { cover, theme } = Astro.props;
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<link
+			rel="icon"
+			type={iconType}
+			href={iconSrc}
+		/>
+		<link rel="apple-touch-icon" href={iconSrc} />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{documentTitle}</title>
+		{metaDescription && <meta name="description" content={metaDescription} />}
+		<link rel="canonical" href={canonicalUrl} />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={documentTitle} />
+		{metaDescription && (
+			<meta property="og:description" content={metaDescription} />
+		)}
+		<meta property="og:url" content={canonicalUrl} />
+		{shareImageUrl && <meta property="og:image" content={shareImageUrl} />}
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={documentTitle} />
+		{metaDescription && (
+			<meta name="twitter:description" content={metaDescription} />
+		)}
+		{shareImageUrl && <meta name="twitter:image" content={shareImageUrl} />}
 		<ClientRouter fallback="swap" />
 	</head>
 	<body style={`--page-bg: ${pageBackgroundImage(cover)}`}>

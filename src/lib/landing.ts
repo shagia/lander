@@ -74,9 +74,11 @@ export const PLACEHOLDER_COVER_SRC = "/placeholder-cover.svg";
 
 export function coverSrc(cover: unknown): string {
 	if (typeof cover === "string" && cover.length > 0) return cover;
-	if (typeof cover === "object" && cover !== null && "src" in cover) {
-		const src = String((cover as { src: string }).src);
-		if (src) return src;
+	if (cover != null && (typeof cover === "object" || typeof cover === "function")) {
+		if ("src" in cover) {
+			const src = String((cover as { src: string }).src);
+			if (src) return src;
+		}
 	}
 	return PLACEHOLDER_COVER_SRC;
 }

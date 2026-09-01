@@ -1,0 +1,7 @@
+How do you find a center in your influences? Devin S.G., born Devin Joseph Glover, has been asking himself that for years and continues to find a new answer.
+
+Growing up on the internet with trance, computers, cars, and anime in rotation has been the norm for the last two decades, but defining your own sound to all or any of your favorite things altogether can be a difficult play for any incoming artist. After spending time learning in Los Angeles, each thing in the rotation has taken turns being louder than the rest on a fresh beat, pushing a sound built on deep expression, tricky patterns, wailing cloudy synths, and hard, groovy drums.
+
+Over time, that rotation has spilled into collaborative sessions, support sets, and the occasional URL night where half the crowd is the world. He's worked alongside artists Tomu DJ and onlytom, opened for Leonce and ANAMANAGUCHI, appeared on streams like SPF420 and AEL: MetalEvergreen, and ended 2025 with a spot on HATSUNE MIKU Digital Stars 2025, an on-brand detour for him.
+
+Alongside his music is a set of engineering and design skills that draw a finished picture: bombastic sentimental techno, computer graphics, and fun multimedia, all meant for today and himself. His center is still forming, but that's always going to be the point.
