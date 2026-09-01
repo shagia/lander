@@ -15,12 +15,6 @@ export const SITE_CONTENT_FILES = {
 export const SITE_ABOUT_ENTRY_ID = "about";
 export const SITE_CONFIG_ENTRY_ID = "site";
 
-export const defaultLinks = [
-	{ id: "home", label: "Home", href: "https://example.com" },
-	{ id: "newsletter", label: "Newsletter", href: "https://example.com/newsletter" },
-	{ id: "community", label: "Community", href: "https://example.com/community" },
-];
-
 export async function getPublishedSlugs(): Promise<SlugEntry[]> {
 	const entries = await getCollection(
 		"slugs",
