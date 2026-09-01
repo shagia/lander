@@ -14,6 +14,7 @@ import PerformancesText from "./mods/Performances/PerformancesText.astro";
 import ProjectsText from "./mods/Projects/ProjectsText.astro";
 import ReleasesImage from "./mods/Releases/ReleasesImage.astro";
 import ReleasesText from "./mods/Releases/ReleasesText.astro";
+import AudioPlayer from "./mods/AudioPlayer/AudioPlayer.astro";
 import SocialLinksContent from "./mods/SocialLinksContent/SocialLinksContent.astro";
 
 const slugLinkSvgById: Record<string, string> = {
@@ -83,16 +84,7 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 										class="cover-image"
 									/>
 								</div>
-								{selectedSlug.data.music && (
-									<div class="media-container">
-										<audio
-											controls
-											src={
-												selectedSlug.data.music.audioUrl
-											}
-										/>
-									</div>
-								)}
+								<AudioPlayer selectedSlug={selectedSlug} />
 								{(slugSmallLinks.length > 0 ||
 									slugLargeLinks.length > 0) && (
 									<>

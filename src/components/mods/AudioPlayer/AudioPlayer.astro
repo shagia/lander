@@ -1,0 +1,46 @@
+---
+import {
+	getSlugByIdOrSlug,
+	type SlugEntry,
+} from "../../../lib/landing";
+import "../../../styles/components/mods/AudioPlayer/audio-player.scss";
+
+interface Props {
+	/** Route slug id; resolves music from content when `selectedSlug` is omitted. */
+	slugId?: string;
+	/** Preloaded slug entry; avoids a second lookup when the parent already has it. */
+	selectedSlug?: SlugEntry;
+}
+
+const { slugId, selectedSlug } = Astro.props;
+
+const slug =
+	selectedSlug ?? (slugId ? await getSlugByIdOrSlug(slugId) : undefined);
+const music = slug?.data.music;
+---
+
+{
+	music && (
+		<div class="audio-player media-container">
+			<audio
+				controls
+				preload="metadata"
+				src={music.audioUrl}
+				data-track-id={music.trackId}
+				aria-label={`${music.title} by ${music.artist}`}
+			/>
+		</div>
+	)
+}
+
+<script>
+	function pauseLandingAudio() {
+		for (const el of document.querySelectorAll(".audio-player audio")) {
+			if (el instanceof HTMLAudioElement && !el.paused) {
+				el.pause();
+			}
+		}
+	}
+
+	document.addEventListener("astro:before-swap", pauseLandingAudio);
+</script>
