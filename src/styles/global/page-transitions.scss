@@ -4,25 +4,21 @@ $page-transitions-animated: true;
 @keyframes landing-fade-out {
 	from {
 		opacity: 1;
-		filter: blur(0);
 	}
 
 	to {
 		opacity: 0;
-		filter: blur(2px);
 	}
 }
 
 @keyframes landing-fade-in {
 	from {
 		opacity: 0;
-		filter: blur(2px);
 		transform: translateY(0.4rem);
 	}
 
 	to {
 		opacity: 1;
-		filter: blur(0);
 		transform: translateY(0);
 	}
 }
