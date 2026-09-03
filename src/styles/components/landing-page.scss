@@ -93,7 +93,7 @@
 
 	.slug-title {
 		margin-bottom: 1rem;
-		width: 200%;
+		width: 100%;
 	}
 
 	section {
@@ -313,8 +313,11 @@
 		}
 	}
 
-	/* Slug mid: media column is half the page */
 	@media not ((max-width: 630px) and (orientation: portrait)) {
+		.slug-title {
+			width: 200%;
+		}
+
 		@media (max-width: 899px) {
 			.media-container-wrapper {
 				width: 50%;
