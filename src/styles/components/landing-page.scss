@@ -42,9 +42,6 @@
 			background-color: var(--main-container-bg);
 			border-radius: var(--radius);
 			border: 6px solid var(--color-panel-border);
-			backdrop-filter: blur(10px);
-			isolation: isolate;
-			transform: rotate(-0.02deg);
 			pointer-events: none;
 			z-index: 0;
 		}
