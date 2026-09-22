@@ -55,6 +55,8 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 
 <div class="landing-shell" transition:name="landing-shell">
 	<main
+		id="main-content"
+		tabindex="-1"
 		class:list={[
 			"main-container",
 			{ "main-container--default": !selectedSlug },

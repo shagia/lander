@@ -19,6 +19,42 @@ a {
 	color: inherit;
 }
 
+.skip-link {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	padding: 0.65rem 1rem;
+	background: var(--color-surface);
+	color: var(--color-text);
+	border: 2px solid var(--color-focus);
+	border-radius: var(--radius);
+	font-weight: 500;
+	text-decoration: none;
+	/* Visually hidden until focused — first Tab stop for keyboard users. */
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+
+	&:focus,
+	&:focus-visible {
+		width: auto;
+		height: auto;
+		margin: 0.75rem;
+		overflow: visible;
+		clip: auto;
+		outline: 2px solid var(--color-focus);
+		outline-offset: 2px;
+	}
+}
+
+#main-content:focus {
+	outline: none;
+}
+
 img {
 	display: block;
 	max-width: 100%;
