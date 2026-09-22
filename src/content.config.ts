@@ -28,13 +28,20 @@ const slugs = defineCollection({
 			theme: z.enum(["dark", "light"]).optional(),
 			featured: z
 				.object({
-					headline: z.string().min(1),
+					headline: z
+						.string()
+						.nullish()
+						.transform((v) => v?.trim() || undefined),
 					summary: z
-						.union([
-							z.string().min(1),
-							z.array(z.string().min(1)).min(1),
-						])
-						.transform((v) => (Array.isArray(v) ? v : [v])),
+						.union([z.string(), z.array(z.string().nullish())])
+						.nullish()
+						.transform((v) => {
+							if (v == null) return [];
+							const items = Array.isArray(v) ? v : [v];
+							return items
+								.map((s) => s?.trim() ?? "")
+								.filter((s) => s.length > 0);
+						}),
 				})
 				.optional(),
 			music: z

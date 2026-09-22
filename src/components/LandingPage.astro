@@ -51,6 +51,9 @@ const { selectedSlug } = Astro.props;
 
 const slugSmallLinks = selectedSlug?.data.links?.small ?? [];
 const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
+const featuredHeadline = selectedSlug?.data.featured?.headline;
+const featuredSummary = selectedSlug?.data.featured?.summary ?? [];
+const showFeatured = Boolean(featuredHeadline || featuredSummary.length > 0);
 ---
 
 <div class="landing-shell" transition:name="landing-shell">
@@ -144,16 +147,14 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 								)}
 							</div>
 
-							{selectedSlug.data.featured && (
+							{showFeatured && (
 								<section class="default-links-section">
-									<h3>
-										{selectedSlug.data.featured.headline}
-									</h3>
-									{selectedSlug.data.featured.summary.map(
-										(paragraph) => (
-											<p>{paragraph}</p>
-										),
+									{featuredHeadline && (
+										<h3>{featuredHeadline}</h3>
 									)}
+									{featuredSummary.map((paragraph) => (
+										<p>{paragraph}</p>
+									))}
 								</section>
 							)}
 						</section>
@@ -165,7 +166,7 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 						<>
 							{isModEnabled("aboutText") && <AboutText />}
 							{isModEnabled("releases") && (
-								<Releases onSlugPage paged />
+								<Releases variant="image" onSlugPage paged />
 							)}
 						</>
 					) : (
