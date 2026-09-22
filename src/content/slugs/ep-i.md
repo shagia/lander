@@ -11,9 +11,11 @@ tags:
   - music
 status: published
 featured:
-  headline: Two big ones 
-  summary:
-    - these were incredibly ideal for album use, but ultimately I was told by many that it didn't make much sense in the club. A lot of mistakes were made on my own, and eventually I gave it up and singled these awesome three out.
+  headline: Two big lush ones 
+  summary: 
+    - "'All my Life' is a groovy breaks record with a vocal sample from a very obvious song as the hook, I couldn't help myself there unfortunately. The sound of two CS-80s duel as the lead to a swingy breaks loop and snare I made in VCV Rack"
+    - "'Fantazia' is a lush, animated techno record that builds up to one of my most favorite arps I've ever designed. It's really just a lead synth from Spire, but I tossed a gate onto it for the purpose of making it a monophonic arp."
+    - Great thanks to audio bambino for picking these two records up from me. 'All my life' was initially an album cut that I blew up after I couldn't get that figured out, and it landed here after sharing some music with Ugent who hooked me up with Bruno, and so this record happened.
 cover: ../../assets/slugs/ep-i/cover.jpg
 music:
   trackId: ep1-allmylife-audiobambino
