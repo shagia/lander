@@ -13,9 +13,9 @@ status: published
 featured:
   headline: 
   summary:
-    - "I was commissioned by Crypton Future Media to remix ukaihi's original Hatsune Miku song, '＊･ﾟ+｡Sono nite.' and believed I wanted to make a *really* trancy, pop breaks Miku. At the time of making this I was without most of my studio on a couch, I had a fairly minimal setup at the time: A thinkpad running Linux, Bitwig Studio, and a Deckard's Dream."
+    - "I was commissioned by Crypton Future Media to remix ukaihi's original Hatsune Miku song, '＊･ﾟ+｡Sono nite.' and believed I wanted to make a *really* trancy, pop breaks Miku. At the time of making this I was without most of my studio and on a couch, I had a fairly minimal setup at the time: A Thinkpad running Linux, Bitwig Studio, and a Deckard's Dream."
     
-    - "On one hand, the timing was very hard, but I'm super happy about the turn out and grateful that I was brought on board for this compilation, especially to remix this particular song by ukaihi. I've loved Miku a ton since a teen having used to browse NND for original songs, I'd mostly go crazy over 'Melody.exe', so this was a full circle moment for me. Enjoy"
+    - "On one hand, the timing was hard, but I'm super happy about how it turned out and grateful that I was brought on board for this compilation, especially to remix this particular song by ukaihi. I've loved Miku a ton since a teen having used to browse NND for original songs, I'd mostly go crazy over 'Melody.exe', so this was a full circle moment for me. Enjoy"
 cover: ../../assets/slugs/ukaihi-miku-rmx/cover.jpg
 background: ../../assets/slugs/ukaihi-miku-rmx/background.jpg
 music:
