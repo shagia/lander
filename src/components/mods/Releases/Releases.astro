@@ -1,0 +1,209 @@
+---
+import { coverSrc, getReleaseSlugs } from "../../../lib/landing";
+import { RELEASES_VARIANT, type ReleasesVariant } from "../../../lib/mods";
+import "../../../styles/components/mods/Releases/releases-image.scss";
+import "../../../styles/components/mods/Releases/releases-text.scss";
+import Pager from "../Pager/Pager.astro";
+
+interface Props {
+	/** Cover grid (`image`) or text list (`text`). Defaults to `RELEASES_VARIANT` in `src/lib/mods.ts`. */
+	variant?: ReleasesVariant;
+	onSlugPage?: boolean;
+	initialVisible?: number;
+	/** When true, show releases in pages instead of a collapsible list. */
+	paged?: boolean;
+}
+
+const {
+	variant = RELEASES_VARIANT,
+	onSlugPage = false,
+	initialVisible: initialVisibleProp,
+	paged = false,
+} = Astro.props;
+
+const isImage = variant === "image";
+const releases = await getReleaseSlugs();
+const heading = onSlugPage ? "More Music" : "Music";
+const initialVisible = initialVisibleProp ?? (isImage ? 2 : 3);
+const pageSize = initialVisible;
+const pages: (typeof releases)[] = [];
+
+for (let i = 0; i < releases.length; i += pageSize) {
+	pages.push(releases.slice(i, i + pageSize));
+}
+
+const pageCount = pages.length;
+const canPage = paged && pageCount > 1;
+const canCollapse = !paged && releases.length > initialVisible;
+const pagerId = onSlugPage
+	? `releases-${variant}-slug`
+	: `releases-${variant}`;
+const sectionClass = isImage ? "releases" : "releases-text";
+const headingId = isImage ? "releases-heading" : "releases-text-heading";
+
+function formatPublishedAt(date: Date) {
+	return date.toLocaleDateString("en-US", {
+		year: "numeric",
+		month: "short",
+		day: "numeric",
+	});
+}
+---
+
+{
+	releases.length > 0 && (
+		<section class={sectionClass} aria-labelledby={headingId}>
+			{canCollapse ? (
+				<details
+					class={isImage ? "releases-disclosure" : "releases-text-disclosure"}
+				>
+					<summary
+						class={isImage ? "releases-summary" : "releases-text-summary"}
+					>
+						<span
+							class={
+								isImage
+									? "releases-summary-label"
+									: "releases-text-summary-label"
+							}
+							id={headingId}
+						>
+							{heading}
+						</span>
+					</summary>
+				</details>
+			) : (
+				<h2 id={headingId}>{heading}</h2>
+			)}
+
+			{canPage ? (
+				<Pager id={pagerId} pageCount={pageCount} label="Release pages">
+					{pages.map((page, pageIndex) => (
+						<div class="pager-page" data-page={pageIndex}>
+							<ul
+								class={
+									isImage ? "releases-list" : "releases-text-list"
+								}
+							>
+								{page.map((release) => {
+									const href = `/${release.id}`;
+									if (isImage) {
+										const src = coverSrc(release.data.cover);
+										return (
+											<li class="releases-item">
+												<a class="releases-card" href={href}>
+													<img
+														class="releases-thumb"
+														src={src}
+														alt=""
+														loading="lazy"
+														decoding="async"
+													/>
+													<span class="releases-title">
+														{release.data.title}
+													</span>
+													<time
+														class="releases-date"
+														datetime={release.data.publishedAt.toISOString()}
+													>
+														{formatPublishedAt(
+															release.data.publishedAt,
+														)}
+													</time>
+												</a>
+											</li>
+										);
+									}
+									return (
+										<li class="releases-text-item">
+											<a class="releases-text-card" href={href}>
+												<span class="releases-text-title">
+													{release.data.title}
+												</span>
+												<time
+													class="releases-text-date"
+													datetime={release.data.publishedAt.toISOString()}
+												>
+													{formatPublishedAt(
+														release.data.publishedAt,
+													)}
+												</time>
+												<span class="releases-text-record-label">
+													{release.data.recordLabel ??
+														"Unlisted"}
+												</span>
+											</a>
+										</li>
+									);
+								})}
+							</ul>
+						</div>
+					))}
+				</Pager>
+			) : (
+				<ul class={isImage ? "releases-list" : "releases-text-list"}>
+					{releases.map((release, index) => {
+						const href = `/${release.id}`;
+						if (isImage) {
+							const src = coverSrc(release.data.cover);
+							return (
+								<li
+									class:list={[
+										"releases-item",
+										{ "is-extra": index >= initialVisible },
+									]}
+								>
+									<a class="releases-card" href={href}>
+										<img
+											class="releases-thumb"
+											src={src}
+											alt=""
+											loading="lazy"
+											decoding="async"
+										/>
+										<span class="releases-title">
+											{release.data.title}
+										</span>
+										<time
+											class="releases-date"
+											datetime={release.data.publishedAt.toISOString()}
+										>
+											{formatPublishedAt(
+												release.data.publishedAt,
+											)}
+										</time>
+									</a>
+								</li>
+							);
+						}
+						return (
+							<li
+								class:list={[
+									"releases-text-item",
+									{ "is-extra": index >= initialVisible },
+								]}
+							>
+								<a class="releases-text-card" href={href}>
+									<span class="releases-text-title">
+										{release.data.title}
+									</span>
+									<time
+										class="releases-text-date"
+										datetime={release.data.publishedAt.toISOString()}
+									>
+										{formatPublishedAt(
+											release.data.publishedAt,
+										)}
+									</time>
+									<span class="releases-text-record-label">
+										{release.data.recordLabel ?? "Unlisted"}
+									</span>
+								</a>
+							</li>
+						);
+					})}
+				</ul>
+			)}
+		</section>
+	)
+}
