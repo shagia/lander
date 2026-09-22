@@ -1,5 +1,6 @@
 ---
 import { coverSrc, type SlugEntry } from "../lib/landing";
+import { isModEnabled } from "../lib/mods";
 import {
 	siSoundcloud,
 	siApplemusic,
@@ -12,8 +13,7 @@ import AboutText from "./mods/About/AboutText.astro";
 import Banner from "./mods/Banner/Banner.astro";
 import PerformancesText from "./mods/Performances/PerformancesText.astro";
 import ProjectsText from "./mods/Projects/ProjectsText.astro";
-import ReleasesImage from "./mods/Releases/ReleasesImage.astro";
-import ReleasesText from "./mods/Releases/ReleasesText.astro";
+import Releases from "./mods/Releases/Releases.astro";
 import AudioPlayer from "./mods/AudioPlayer/AudioPlayer.astro";
 import SocialLinksContent from "./mods/SocialLinksContent/SocialLinksContent.astro";
 
@@ -63,13 +63,7 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 		<div class="main-container-fades" aria-hidden="true"></div>
 		<div class="main-container-scroll">
 			<div class="main-container-scroll-inner">
-				{
-					/* {
-					!selectedSlug && <Banner />
-				}
-				*/
-				}
-				{/* Banner disabled for now */}
+				{!selectedSlug && isModEnabled("banner") && <Banner />}
 				{
 					selectedSlug && (
 						<section>
@@ -84,7 +78,9 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 										class="cover-image"
 									/>
 								</div>
-								<AudioPlayer selectedSlug={selectedSlug} />
+								{isModEnabled("audioPlayer") && (
+									<AudioPlayer selectedSlug={selectedSlug} />
+								)}
 								{(slugSmallLinks.length > 0 ||
 									slugLargeLinks.length > 0) && (
 									<>
@@ -165,21 +161,29 @@ const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
 				{
 					selectedSlug ? (
 						<>
-							<AboutText />
-							<ReleasesImage onSlugPage paged />
+							{isModEnabled("aboutText") && <AboutText />}
+							{isModEnabled("releases") && (
+								<Releases onSlugPage paged />
+							)}
 						</>
 					) : (
 						<div class="landing-default-columns">
 							<div class="landing-default-column landing-default-column--music">
-								<ReleasesText paged />
-								{/*<PerformancesText paged />*/}
+								{isModEnabled("releases") && <Releases variant="text" paged />}
+								{isModEnabled("performancesText") && (
+									<PerformancesText paged />
+								)}
 							</div>
 							<div class="landing-default-column landing-default-column--links">
-								<SocialLinksContent />
-								<ProjectsText />
+								{isModEnabled("socialLinksContent") && (
+									<SocialLinksContent />
+								)}
+								{isModEnabled("projectsText") && (
+									<ProjectsText />
+								)}
 							</div>
 							<div class="landing-default-column landing-default-column--about">
-								<AboutText />
+								{isModEnabled("aboutText") && <AboutText />}
 							</div>
 						</div>
 					)

@@ -8,6 +8,7 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import LinkLens from "../components/mods/LinkLens/LinkLens.astro";
 import { coverSrc, getSiteConfig, pageBackgroundImage } from "../lib/landing";
+import { isModEnabled } from "../lib/mods";
 
 interface Props {
 	cover?: string;
@@ -84,7 +85,7 @@ const shareImageUrl =
 		<Header />
 		<slot />
 		<Footer />
-		<LinkLens />
+		{isModEnabled("linkLens") && <LinkLens />}
 	</body>
 </html>
 
