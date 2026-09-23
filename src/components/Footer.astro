@@ -1,9 +1,15 @@
 ---
 import "../styles/global/footer.scss";
 
+interface Props {
+	legalName: string;
+	email: string;
+}
+
+const { legalName, email } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer" transition:persist="site-footer">
-	<p>© {year} Devin S.G. All rights reserved | <a href="mailto:devin@devin.sg">devin@devin.sg</a> </p>
+	<p>© {year} {legalName} All rights reserved | <a href={`mailto:${email}`}>{email}</a></p>
 </footer>

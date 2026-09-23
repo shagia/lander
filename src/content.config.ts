@@ -142,9 +142,11 @@ const site = defineCollection({
 		const coverImage = z.union([image(), z.string().url()]);
 		return z.object({
 			artist: z.string().min(1),
+			legalName: z.string().min(1),
 			title: z.string().min(1),
 			description: z.string().min(1),
 			url: z.string().url().optional(),
+			email: z.string().email(),
 			/** Favicon and browser chrome (not shown in page UI). */
 			icon: coverImage.optional(),
 			/** Profile image shown on the site (not used for browser/search metadata). */

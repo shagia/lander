@@ -85,7 +85,10 @@ const shareImageUrl =
 		<a class="skip-link" href="#main-content">Skip to main content</a>
 		<Header />
 		<slot />
-		<Footer />
+		<Footer
+			legalName={site?.data.legalName ?? ""}
+			email={site?.data.email ?? ""}
+		/>
 		{isModEnabled("linkLens") && <LinkLens />}
 	</body>
 </html>
