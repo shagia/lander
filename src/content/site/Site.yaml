@@ -22,3 +22,15 @@ socials:
   bluesky: devin.sg
   twitter:
   email: devin@devin.sg
+
+# Mods are your site's configuration. Read more about 'mods', 'releasesVariant', and their defaults in src/components/mods/README.md
+mods:
+  aboutText: true
+  audioPlayer: false
+  banner: false
+  linkLens: true
+  performancesText: false
+  projectsText: true
+  releases: true
+  socialLinksContent: true
+  releasesVariant: text

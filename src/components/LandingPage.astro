@@ -1,6 +1,5 @@
 ---
-import { coverSrc, type SlugEntry } from "../lib/landing";
-import { isModEnabled } from "../lib/mods";
+import { coverSrc, getMods, type SlugEntry } from "../lib/landing";
 import {
 	siSoundcloud,
 	siApplemusic,
@@ -16,6 +15,8 @@ import ProjectsText from "./mods/Projects/ProjectsText.astro";
 import Releases from "./mods/Releases/Releases.astro";
 import AudioPlayer from "./mods/AudioPlayer/AudioPlayer.astro";
 import SocialLinksContent from "./mods/SocialLinksContent/SocialLinksContent.astro";
+
+const mods = await getMods();
 
 const slugLinkSvgById: Record<string, string> = {
 	soundcloud: siSoundcloud.svg,
@@ -68,14 +69,14 @@ const showFeatured = Boolean(featuredHeadline || featuredSummary.length > 0);
 		<div class="main-container-fades" aria-hidden="true"></div>
 		<div class="main-container-scroll">
 			<div class="main-container-scroll-inner">
-				{!selectedSlug && isModEnabled("banner") && <Banner />}
+				{!selectedSlug && mods.banner && <Banner />}
 				{
 					selectedSlug && (
-						<section>
+						<section class="slug-section">
+							<h2 class="slug-title">
+								{selectedSlug.data.title}
+							</h2>
 							<div class="media-container-wrapper">
-								<h2 class="slug-title">
-									{selectedSlug.data.title}
-								</h2>
 								<div class="cover-container">
 									<img
 										src={coverSrc(selectedSlug.data.cover)}
@@ -83,7 +84,7 @@ const showFeatured = Boolean(featuredHeadline || featuredSummary.length > 0);
 										class="cover-image"
 									/>
 								</div>
-								{isModEnabled("audioPlayer") && (
+								{mods.audioPlayer && (
 									<AudioPlayer selectedSlug={selectedSlug} />
 								)}
 								{(slugSmallLinks.length > 0 ||
@@ -148,7 +149,7 @@ const showFeatured = Boolean(featuredHeadline || featuredSummary.length > 0);
 							</div>
 
 							{showFeatured && (
-								<section class="default-links-section">
+								<section class="slug-featured">
 									{featuredHeadline && (
 										<h3>{featuredHeadline}</h3>
 									)}
@@ -164,29 +165,29 @@ const showFeatured = Boolean(featuredHeadline || featuredSummary.length > 0);
 				{
 					selectedSlug ? (
 						<>
-							{isModEnabled("aboutText") && <AboutText />}
-							{isModEnabled("releases") && (
+							{mods.aboutText && <AboutText />}
+							{mods.releases && (
 								<Releases variant="image" onSlugPage paged />
 							)}
 						</>
 					) : (
 						<div class="landing-default-columns">
 							<div class="landing-default-column landing-default-column--music">
-								{isModEnabled("releases") && <Releases variant="text" paged />}
-								{isModEnabled("performancesText") && (
+								{mods.releases && <Releases variant="text" paged />}
+								{mods.performancesText && (
 									<PerformancesText paged />
 								)}
 							</div>
 							<div class="landing-default-column landing-default-column--links">
-								{isModEnabled("socialLinksContent") && (
+								{mods.socialLinksContent && (
 									<SocialLinksContent />
 								)}
-								{isModEnabled("projectsText") && (
+								{mods.projectsText && (
 									<ProjectsText />
 								)}
 							</div>
 							<div class="landing-default-column landing-default-column--about">
-								{isModEnabled("aboutText") && <AboutText />}
+								{mods.aboutText && <AboutText />}
 							</div>
 						</div>
 					)

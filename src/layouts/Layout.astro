@@ -8,7 +8,7 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import LinkLens from "../components/mods/LinkLens/LinkLens.astro";
 import { coverSrc, getSiteConfig, pageBackgroundImage } from "../lib/landing";
-import { isModEnabled } from "../lib/mods";
+import { resolveMods } from "../lib/mods";
 
 interface Props {
 	cover?: string;
@@ -31,6 +31,7 @@ const {
 } = Astro.props;
 
 const site = await getSiteConfig();
+const mods = resolveMods(site?.data.mods);
 const siteTitle = site?.data.title ?? site?.data.artist ?? "Site";
 const siteDescription = site?.data.description ?? "";
 const documentTitle = pageTitle ? `${pageTitle} | ${siteTitle}` : siteTitle;
@@ -89,7 +90,7 @@ const shareImageUrl =
 			legalName={site?.data.legalName ?? ""}
 			email={site?.data.email ?? ""}
 		/>
-		{isModEnabled("linkLens") && <LinkLens />}
+		{mods.linkLens && <LinkLens />}
 	</body>
 </html>
 

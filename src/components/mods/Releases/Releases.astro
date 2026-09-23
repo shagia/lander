@@ -1,12 +1,12 @@
 ---
-import { coverSrc, getReleaseSlugs } from "../../../lib/landing";
-import { RELEASES_VARIANT, type ReleasesVariant } from "../../../lib/mods";
+import { coverSrc, getMods, getReleaseSlugs } from "../../../lib/landing";
+import type { ReleasesVariant } from "../../../lib/mods";
 import "../../../styles/components/mods/Releases/releases-image.scss";
 import "../../../styles/components/mods/Releases/releases-text.scss";
 import Pager from "../Pager/Pager.astro";
 
 interface Props {
-	/** Cover grid (`image`) or text list (`text`). Defaults to `RELEASES_VARIANT` in `src/lib/mods.ts`. */
+	/** Cover grid (`image`) or text list (`text`). Defaults to `mods.releasesVariant` in Site.yaml. */
 	variant?: ReleasesVariant;
 	onSlugPage?: boolean;
 	initialVisible?: number;
@@ -14,8 +14,9 @@ interface Props {
 	paged?: boolean;
 }
 
+const mods = await getMods();
 const {
-	variant = RELEASES_VARIANT,
+	variant = mods.releasesVariant,
 	onSlugPage = false,
 	initialVisible: initialVisibleProp,
 	paged = false,
