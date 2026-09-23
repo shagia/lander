@@ -4,13 +4,13 @@ title: Devin S.G.
 description: Music, engineering, and multimedia from Devin S.G.
 url: https://devin.sg
 email: devin@devin.sg
-icon: ../../assets/ui/logo.svg
-avatar: ../../assets/ui/banner.jpeg
+icon: ./assets/ui/logo.svg
+avatar: ./assets/ui/banner.jpeg
 logo:
-  light: ../../assets/ui/logo.svg
-  dark: ../../assets/ui/logo-white.svg
+  light: ./assets/ui/logo.svg
+  dark: ./assets/ui/logo-white.svg
 banner:
-  image: ../../assets/ui/banner.jpeg
+  image: ./assets/ui/banner.jpeg
   position: center 27%
   imageSize: 1.6
   credit: "Photo credit: Devin S.G."

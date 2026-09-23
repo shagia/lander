@@ -7,7 +7,7 @@ export type PerformanceEntry = CollectionEntry<"performances">;
 export type SiteAboutEntry = CollectionEntry<"about">;
 export type SiteConfigEntry = CollectionEntry<"site">;
 
-/** Standard filenames for site-wide content in `src/content/site/`. */
+/** Site config lives at `src/Site.yaml` */
 export const SITE_CONTENT_FILES = {
 	about: "About.md",
 	site: "Site.yaml",
@@ -37,7 +37,7 @@ export async function getReleaseSlugs(): Promise<SlugEntry[]> {
 		return (
 			category === "release" ||
 			category === "releases" ||
-			entry.data.tags.some((tag) => tag.toLowerCase() === "release")
+			entry.data.tags.some((tag: string) => tag.toLowerCase() === "release")
 		);
 	});
 }
