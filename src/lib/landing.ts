@@ -1,4 +1,5 @@
 import { getCollection, getEntry, type CollectionEntry } from "astro:content";
+import { resolveMods, type ModsConfig } from "./mods";
 
 export type SlugEntry = CollectionEntry<"slugs">;
 export type ProjectEntry = CollectionEntry<"projects">;
@@ -61,6 +62,11 @@ export async function getSiteAbout(): Promise<SiteAboutEntry | undefined> {
 
 export async function getSiteConfig(): Promise<SiteConfigEntry | undefined> {
 	return getEntry("site", SITE_CONFIG_ENTRY_ID);
+}
+
+export async function getMods(): Promise<ModsConfig> {
+	const site = await getSiteConfig();
+	return resolveMods(site?.data.mods);
 }
 
 /** 1:1 fallback when a release has no cover URL. */

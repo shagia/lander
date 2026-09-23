@@ -156,6 +156,22 @@ const optionalSocialEmail = z
 		return parsed.data;
 	});
 
+/** Optional landing Mods; omitted keys use defaults from `src/lib/mods.ts`. */
+const modsSchema = z
+	.object({
+		aboutText: z.boolean().optional(),
+		audioPlayer: z.boolean().optional(),
+		banner: z.boolean().optional(),
+		linkLens: z.boolean().optional(),
+		performancesText: z.boolean().optional(),
+		projectsText: z.boolean().optional(),
+		releases: z.boolean().optional(),
+		socialLinksContent: z.boolean().optional(),
+		/** Default Releases layout when the component omits `variant`. */
+		releasesVariant: z.enum(["image", "text"]).optional(),
+	})
+	.optional();
+
 const site = defineCollection({
 	loader: glob({
 		pattern: "Site.yaml",
@@ -196,6 +212,7 @@ const site = defineCollection({
 					email: optionalSocialEmail,
 				})
 				.optional(),
+			mods: modsSchema,
 		});
 	},
 });
