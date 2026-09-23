@@ -1,6 +1,8 @@
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 import { defineCollection } from "astro:content";
+import { themeSchema } from "./lib/theme";
+import { modsSchema } from "./lib/mods";
 
 const SITE_CONTENT_BASE = "./src/content/site";
 
@@ -156,22 +158,6 @@ const optionalSocialEmail = z
 		return parsed.data;
 	});
 
-/** Optional landing Mods; omitted keys use defaults from `src/lib/mods.ts`. */
-const modsSchema = z
-	.object({
-		aboutText: z.boolean().optional(),
-		audioPlayer: z.boolean().optional(),
-		banner: z.boolean().optional(),
-		linkLens: z.boolean().optional(),
-		performancesText: z.boolean().optional(),
-		projectsText: z.boolean().optional(),
-		releases: z.boolean().optional(),
-		socialLinksContent: z.boolean().optional(),
-		/** Default Releases layout when the component omits `variant`. */
-		releasesVariant: z.enum(["image", "text"]).optional(),
-	})
-	.optional();
-
 const site = defineCollection({
 	loader: glob({
 		pattern: "Site.yaml",
@@ -203,6 +189,7 @@ const site = defineCollection({
 					credit: z.string().min(1).optional(),
 				})
 				.optional(),
+			theme: themeSchema,
 			socials: z
 				.object({
 					soundcloud: optionalSocialHandle,

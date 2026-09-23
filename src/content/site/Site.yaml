@@ -15,6 +15,23 @@ banner:
   imageSize: 1.6
   credit: "Photo credit: Devin S.G."
 
+# Omitting a key keeps the Sass default in src/styles/global/abstracts/_colors.scss.
+theme:
+  colors:
+    canvas: "#cfcfcf"
+    text: "#14142c"
+    surface: "#f3f4f6"
+    surfaceHover: "#e5e7eb"
+    surfaceMuted: "#f9fafb"
+    linkLargeBg: "#f3f4f6"
+    linkSmallBg: "#bcbcbc"
+    border: "#e5e7eb"
+    borderMuted: "#d1d5db"
+    borderStrong: "#9ca3af"
+    borderAccent: "#95b9ff"
+    focus: "#2563eb"
+    muted: "#6b7280"
+
 # social handles are optional: blank, null, or omitted social handles are ignored
 socials:
   soundcloud: devin_sg

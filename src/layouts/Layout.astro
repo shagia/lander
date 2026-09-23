@@ -9,6 +9,7 @@ import Footer from "../components/Footer.astro";
 import LinkLens from "../components/mods/LinkLens/LinkLens.astro";
 import { coverSrc, getSiteConfig, pageBackgroundImage } from "../lib/landing";
 import { resolveMods } from "../lib/mods";
+import { themePaletteStyle } from "../lib/theme";
 
 interface Props {
 	cover?: string;
@@ -50,10 +51,11 @@ const shareImageUrl =
 	shareImageSrc && siteUrl
 		? new URL(shareImageSrc, siteUrl).href
 		: shareImageSrc;
+const paletteStyle = themePaletteStyle(site?.data.theme?.colors);
 ---
 
 <!doctype html>
-<html lang="en" data-theme={theme}>
+<html lang="en" data-theme={theme} style={paletteStyle}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />

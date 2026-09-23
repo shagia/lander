@@ -1,32 +1,30 @@
-@use "sass:color";
+/// Fallback light palette when Site.yaml omits `theme.colors`.
+/// Plain black/white — like an unstyled document. Site.yaml overrides take priority.
+$canvas: #ffffff;
+$text: #000000;
 
-$canvas: #cfcfcf;
-$text: #14142c;
-
-$surface: #f3f4f6;
-$surface-hover: #e5e7eb;
-$surface-muted: #f9fafb;
+$surface: #ffffff;
+$surface-hover: #f0f0f0;
+$surface-muted: #f5f5f5;
 $link-large-bg: $surface;
-$link-small-bg: #bcbcbc;
+$link-small-bg: #e0e0e0;
 
-$border: #e5e7eb;
-$border-muted: #d1d5db;
-$border-strong: #9ca3af;
-$border-accent: #95b9ff;
+$border: #cccccc;
+$border-muted: #dddddd;
+$border-strong: #999999;
+$border-accent: #000000;
 
-$focus: #2563eb;
-$muted: #6b7280;
+$focus: #000000;
+$muted: #767676;
 
-/// RGB-invert a Sass color for the dark half of the theme mix.
-@function inverted($value) {
-	@return color.invert($value);
-}
-
-/// Blend light ↔ inverted using `--theme-invert` (0 = light, 1 = dark).
-@function theme-mix($light) {
+/// Blend a light palette token ↔ its RGB invert using `--theme-invert` (0 = light, 1 = dark).
+@function theme-mix($palette-var) {
 	@return color-mix(
 		in srgb,
-		#{inverted($light)} calc(var(--theme-invert) * 100%),
-		#{$light}
+		rgb(
+			from var(#{$palette-var}) calc(255 - r) calc(255 - g) calc(255 - b)
+		)
+			calc(var(--theme-invert) * 100%),
+		var(#{$palette-var})
 	);
 }

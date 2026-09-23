@@ -27,22 +27,37 @@
 		transparent
 	);
 
-	--color-canvas: #{theme-mix($canvas)};
-	--color-text: #{theme-mix($text)};
+	/* Light palette defaults (Site.yaml `theme.colors` overrides these on <html>). */
+	--palette-canvas: #{$canvas};
+	--palette-text: #{$text};
+	--palette-surface: #{$surface};
+	--palette-surface-hover: #{$surface-hover};
+	--palette-surface-muted: #{$surface-muted};
+	--palette-link-large-bg: #{$link-large-bg};
+	--palette-link-small-bg: #{$link-small-bg};
+	--palette-border: #{$border};
+	--palette-border-muted: #{$border-muted};
+	--palette-border-strong: #{$border-strong};
+	--palette-border-accent: #{$border-accent};
+	--palette-focus: #{$focus};
+	--palette-muted: #{$muted};
 
-	--color-surface: #{theme-mix($surface)};
-	--color-surface-hover: #{theme-mix($surface-hover)};
-	--color-surface-muted: #{theme-mix($surface-muted)};
-	--color-link-large-bg: #{theme-mix($link-large-bg)};
-	--color-link-small-bg: #{theme-mix($link-small-bg)};
+	--color-canvas: #{theme-mix("--palette-canvas")};
+	--color-text: #{theme-mix("--palette-text")};
 
-	--color-border: #{theme-mix($border)};
-	--color-border-muted: #{theme-mix($border-muted)};
-	--color-border-strong: #{theme-mix($border-strong)};
-	--color-border-accent: #{theme-mix($border-accent)};
+	--color-surface: #{theme-mix("--palette-surface")};
+	--color-surface-hover: #{theme-mix("--palette-surface-hover")};
+	--color-surface-muted: #{theme-mix("--palette-surface-muted")};
+	--color-link-large-bg: #{theme-mix("--palette-link-large-bg")};
+	--color-link-small-bg: #{theme-mix("--palette-link-small-bg")};
 
-	--color-focus: #{theme-mix($focus)};
-	--color-muted: #{theme-mix($muted)};
+	--color-border: #{theme-mix("--palette-border")};
+	--color-border-muted: #{theme-mix("--palette-border-muted")};
+	--color-border-strong: #{theme-mix("--palette-border-strong")};
+	--color-border-accent: #{theme-mix("--palette-border-accent")};
+
+	--color-focus: #{theme-mix("--palette-focus")};
+	--color-muted: #{theme-mix("--palette-muted")};
 
 	--color-overlay: var(--color-canvas);
 	--color-overlay-88: color-mix(in srgb, var(--color-canvas) 88%, transparent);
