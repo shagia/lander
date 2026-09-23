@@ -173,6 +173,12 @@ const site = defineCollection({
 			email: z.string().email(),
 			icon: coverImage.optional(),
 			avatar: coverImage.optional(),
+			logo: z
+				.object({
+					light: coverImage.optional(),
+					dark: coverImage.optional(),
+				})
+				.optional(),
 			banner: z
 				.object({
 					image: coverImage.optional(),
