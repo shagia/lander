@@ -30,7 +30,7 @@ const optionalSocialEmail = z
 		return parsed.data;
 	});
 
-/** Site-wide config from `src/Site.yaml`. */
+/** Site-wide config from `src/Site.yaml` **/
 export const site = defineCollection({
 	loader: glob({
 		pattern: "Site.yaml",
