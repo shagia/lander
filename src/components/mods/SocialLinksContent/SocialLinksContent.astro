@@ -1,31 +1,38 @@
 ---
-export interface SocialLink {
-	id: string;
-	label: string;
-	href: string;
-}
+import { getSiteConfig } from "../../../lib/landing";
 
-interface Props {
-	links?: SocialLink[];
-}
+const socials = {
+	soundcloud: "https://soundcloud.com/",
+	instagram: "https://www.instagram.com/",
+	bluesky: "https://bsky.app/profile/",
+	twitter: "https://x.com/",
+	email: "mailto:",
+} as const;
 
-const defaultLinks: SocialLink[] = [
-	{ id: "soundcloud", label: "soundcloud", href: "https://soundcloud.com/devin_sg" },
-	{ id: "instagram", label: "instagram", href: "https://www.instagram.com/0devin.sg/" },
-	{ id: "bluesky", label: "bluesky", href: "https://bsky.app/profile/devin.sg" },
-	{ id: "email", label: "email", href: "mailto:devin@devin.sg" },
-];
+type SocialId = keyof typeof socials;
 
-const { links = defaultLinks } = Astro.props;
+const site = await getSiteConfig();
+const handles = site?.data.socials;
+
+const links = (Object.keys(socials) as SocialId[]).flatMap((id) => {
+	const raw = handles?.[id]?.trim() ?? "";
+	const value = id === "email" ? raw : raw.replace(/^@/, "");
+	if (!value) return [];
+	return [{ id, label: id, href: `${socials[id]}${value}` }];
+});
 ---
 
-<section>
-	<h2>Socials</h2>
-	<ul class="social-links-list">
-		{links.map((link) => (
-			<li>
-				<a href={link.href}>{link.label}</a>
-			</li>
-		))}
-	</ul>
-</section>
+{
+	links.length > 0 && (
+		<section>
+			<h2>Socials</h2>
+			<ul class="social-links-list">
+				{links.map((link) => (
+					<li>
+						<a href={link.href}>{link.label}</a>
+					</li>
+				))}
+			</ul>
+		</section>
+	)
+}

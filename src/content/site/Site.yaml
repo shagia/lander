@@ -11,3 +11,11 @@ banner:
   position: center 27%
   imageSize: 1.6
   credit: "Photo credit: Devin S.G."
+
+# social handles are optional: blank, null, or omitted social handles are ignored
+socials:
+  soundcloud: devin_sg
+  instagram: 0devin.sg
+  bluesky: devin.sg
+  twitter:
+  email: devin@devin.sg

@@ -2,13 +2,11 @@ import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 import { defineCollection } from "astro:content";
 
-/** Site-wide content files live in `src/content/site/` (e.g. `About.md`). */
 const SITE_CONTENT_BASE = "./src/content/site";
 
 const slugs = defineCollection({
 	loader: glob({ pattern: "**/*.md", base: "./src/content/slugs" }),
 	schema: ({ image }) => {
-		/** Local Astro image, or a remote URL. */
 		const coverImage = z.union([image(), z.string().url()]);
 		return z.object({
 			id: z.string().min(1),
@@ -132,6 +130,32 @@ const about = defineCollection({
 	schema: z.object({}),
 });
 
+/** blank, null, or omitted social handles get dropped through here */
+const optionalSocialHandle = z
+	.string()
+	.nullish()
+	.transform((value) => {
+		const handle = value?.trim().replace(/^@/, "") ?? "";
+		return handle || undefined;
+	});
+
+const optionalSocialEmail = z
+	.string()
+	.nullish()
+	.transform((value, ctx) => {
+		const email = value?.trim() ?? "";
+		if (!email) return undefined;
+		const parsed = z.string().email().safeParse(email);
+		if (!parsed.success) {
+			ctx.addIssue({
+				code: "custom",
+				message: "Invalid email address",
+			});
+			return z.NEVER;
+		}
+		return parsed.data;
+	});
+
 const site = defineCollection({
 	loader: glob({
 		pattern: "Site.yaml",
@@ -147,9 +171,7 @@ const site = defineCollection({
 			description: z.string().min(1),
 			url: z.string().url().optional(),
 			email: z.string().email(),
-			/** Favicon and browser chrome (not shown in page UI). */
 			icon: coverImage.optional(),
-			/** Profile image shown on the site (not used for browser/search metadata). */
 			avatar: coverImage.optional(),
 			banner: z
 				.object({
@@ -157,6 +179,15 @@ const site = defineCollection({
 					position: z.string().min(1).optional(),
 					imageSize: z.number().positive().optional(),
 					credit: z.string().min(1).optional(),
+				})
+				.optional(),
+			socials: z
+				.object({
+					soundcloud: optionalSocialHandle,
+					instagram: optionalSocialHandle,
+					bluesky: optionalSocialHandle,
+					twitter: optionalSocialHandle,
+					email: optionalSocialEmail,
 				})
 				.optional(),
 		});
