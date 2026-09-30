@@ -5,8 +5,10 @@ import { site } from "./site.collection";
 
 const SITE_CONTENT_BASE = "./src/content/site";
 
+const mdPattern = "**/[^_]*.md"; // matches all markdown files except those starting with an underscore
+
 const releases = defineCollection({
-	loader: glob({ pattern: "**/*.md", base: "./src/content/releases" }),
+	loader: glob({ pattern: mdPattern, base: "./src/content/releases" }),
 	schema: ({ image }) => {
 		const coverImage = z.union([image(), z.string().url()]);
 		return z.object({
@@ -101,7 +103,7 @@ const releases = defineCollection({
 });
 
 const projects = defineCollection({
-	loader: glob({ pattern: "**/*.md", base: "./src/content/projects" }),
+	loader: glob({ pattern: mdPattern, base: "./src/content/projects" }),
 	schema: ({ image }) =>
 		z.object({
 			title: z.string().min(1),
@@ -113,7 +115,7 @@ const projects = defineCollection({
 });
 
 const performances = defineCollection({
-	loader: glob({ pattern: "**/*.md", base: "./src/content/performances" }),
+	loader: glob({ pattern: mdPattern, base: "./src/content/performances" }),
 	schema: z.object({
 		title: z.string().min(1),
 		date: z.coerce.date(),
