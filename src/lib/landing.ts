@@ -1,7 +1,7 @@
 import { getCollection, getEntry, type CollectionEntry } from "astro:content";
 import { resolveMods, type ModsConfig } from "./mods";
 
-export type SlugEntry = CollectionEntry<"slugs">;
+export type ReleaseEntry = CollectionEntry<"releases">;
 export type ProjectEntry = CollectionEntry<"projects">;
 export type PerformanceEntry = CollectionEntry<"performances">;
 export type SiteAboutEntry = CollectionEntry<"about">;
@@ -16,9 +16,9 @@ export const SITE_CONTENT_FILES = {
 export const SITE_ABOUT_ENTRY_ID = "about";
 export const SITE_CONFIG_ENTRY_ID = "site";
 
-export async function getPublishedSlugs(): Promise<SlugEntry[]> {
+export async function getPublishedReleases(): Promise<ReleaseEntry[]> {
 	const entries = await getCollection(
-		"slugs",
+		"releases",
 		({ data }) => data.status === "published" || data.status === "unlisted",
 	);
 	return entries.sort((a, b) => {
@@ -29,8 +29,8 @@ export async function getPublishedSlugs(): Promise<SlugEntry[]> {
 	});
 }
 
-export async function getReleaseSlugs(): Promise<SlugEntry[]> {
-	const entries = await getPublishedSlugs();
+export async function getReleases(): Promise<ReleaseEntry[]> {
+	const entries = await getPublishedReleases();
 	return entries.filter((entry) => {
 		if (entry.data.status === "unlisted") return false;
 		const category = entry.data.category.toLowerCase();
@@ -84,7 +84,7 @@ export function coverSrc(cover: unknown): string {
 }
 
 /** Page backdrop: `background` → `cover` → placeholder. */
-export function slugPageBackgroundSrc(
+export function releasePageBackgroundSrc(
 	data: { background?: unknown; cover?: unknown } | undefined,
 ): string {
 	return coverSrc(data?.background ?? data?.cover);
@@ -95,14 +95,14 @@ export function pageBackgroundImage(cover: unknown): string {
 }
 
 export async function getRandomReleaseCover(): Promise<string | undefined> {
-	const releases = await getReleaseSlugs();
+	const releases = await getReleases();
 	const withCovers = releases.filter((e) => e.data.cover != null);
 	if (withCovers.length === 0) return undefined;
 	const pick = withCovers[Math.floor(Math.random() * withCovers.length)];
 	return coverSrc(pick.data.cover);
 }
 
-export async function getSlugByIdOrSlug(value: string): Promise<SlugEntry | undefined> {
-	const entries = await getPublishedSlugs();
+export async function getReleaseById(value: string): Promise<ReleaseEntry | undefined> {
+	const entries = await getPublishedReleases();
 	return entries.find((entry) => entry.id === value || entry.data.id === value);
 }

@@ -36,4 +36,4 @@ links:
       label: Download MP3
       href: https://example.com/bts
 ---
-Use this slug for campaigns that should append release-focused content after the default links.
+Use this release for campaigns that should append release-focused content after the default links.

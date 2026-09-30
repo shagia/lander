@@ -1,22 +1,23 @@
 ---
 import {
-	getSlugByIdOrSlug,
-	type SlugEntry,
+	getReleaseById,
+	type ReleaseEntry,
 } from "../../../lib/landing";
 import "../../../styles/components/mods/AudioPlayer/audio-player.scss";
 
 interface Props {
-	/** Route slug id; resolves music from content when `selectedSlug` is omitted. */
-	slugId?: string;
-	/** Preloaded slug entry; avoids a second lookup when the parent already has it. */
-	selectedSlug?: SlugEntry;
+	/** Release id; resolves music from content when `selectedRelease` is omitted. */
+	releaseId?: string;
+	/** Preloaded release entry; avoids a second lookup when the parent already has it. */
+	selectedRelease?: ReleaseEntry;
 }
 
-const { slugId, selectedSlug } = Astro.props;
+const { releaseId, selectedRelease } = Astro.props;
 
-const slug =
-	selectedSlug ?? (slugId ? await getSlugByIdOrSlug(slugId) : undefined);
-const music = slug?.data.music;
+const release =
+	selectedRelease ??
+	(releaseId ? await getReleaseById(releaseId) : undefined);
+const music = release?.data.music;
 ---
 
 {

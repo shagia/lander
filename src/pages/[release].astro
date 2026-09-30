@@ -1,0 +1,36 @@
+---
+import type { GetStaticPaths } from "astro";
+import LandingPage from "../components/LandingPage.astro";
+import Layout from "../layouts/Layout.astro";
+import {
+	coverSrc,
+	getPublishedReleases,
+	getReleaseById,
+	releasePageBackgroundSrc,
+} from "../lib/landing";
+
+export const getStaticPaths = (async () => {
+	const releases = await getPublishedReleases();
+	return releases.map((entry) => ({
+		params: { release: entry.id },
+		props: { releaseId: entry.id },
+	}));
+}) satisfies GetStaticPaths;
+
+const { releaseId } = Astro.props;
+const selectedRelease = await getReleaseById(releaseId);
+---
+
+<Layout
+	cover={releasePageBackgroundSrc(selectedRelease?.data)}
+	theme={selectedRelease?.data.theme}
+	title={selectedRelease?.data.title}
+	description={selectedRelease?.data.description}
+	image={
+		selectedRelease?.data.cover != null
+			? coverSrc(selectedRelease.data.cover)
+			: undefined
+	}
+>
+	<LandingPage selectedRelease={selectedRelease} />
+</Layout>

@@ -1,5 +1,5 @@
 ---
-import { coverSrc, getMods, type SlugEntry } from "../lib/landing";
+import { coverSrc, getMods, type ReleaseEntry } from "../lib/landing";
 import {
 	siSoundcloud,
 	siApplemusic,
@@ -18,17 +18,17 @@ import SocialLinksContent from "./mods/SocialLinksContent/SocialLinksContent.ast
 
 const mods = await getMods();
 
-const slugLinkSvgById: Record<string, string> = {
+const releaseLinkSvgById: Record<string, string> = {
 	soundcloud: siSoundcloud.svg,
 	"apple-music": siApplemusic.svg,
 	spotify: siSpotify.svg,
 	bandcamp: siBandcamp.svg,
 	tidal: siTidal.svg,
 };
-const slugLinkSvgFallback = siBandcamp.svg;
+const releaseLinkSvgFallback = siBandcamp.svg;
 
-function slugLinkSvgMarkup(id: string) {
-	const svg = slugLinkSvgById[id] ?? slugLinkSvgFallback;
+function releaseLinkSvgMarkup(id: string) {
+	const svg = releaseLinkSvgById[id] ?? releaseLinkSvgFallback;
 	// Simple Icons fill the 24×24 canvas (some paths even spill past it).
 	// Expand the viewBox so SVG overflow:hidden does not clip the marks.
 	return svg.replace('viewBox="0 0 24 24"', 'viewBox="-2 -2 28 28"');
@@ -45,15 +45,15 @@ function linkDestinationHint(href: string) {
 }
 
 interface Props {
-	selectedSlug?: SlugEntry;
+	selectedRelease?: ReleaseEntry;
 }
 
-const { selectedSlug } = Astro.props;
+const { selectedRelease } = Astro.props;
 
-const slugSmallLinks = selectedSlug?.data.links?.small ?? [];
-const slugLargeLinks = selectedSlug?.data.links?.large ?? [];
-const featuredHeadline = selectedSlug?.data.featured?.headline;
-const featuredSummary = selectedSlug?.data.featured?.summary ?? [];
+const releaseSmallLinks = selectedRelease?.data.links?.small ?? [];
+const releaseLargeLinks = selectedRelease?.data.links?.large ?? [];
+const featuredHeadline = selectedRelease?.data.featured?.headline;
+const featuredSummary = selectedRelease?.data.featured?.summary ?? [];
 const showFeatured = Boolean(featuredHeadline || featuredSummary.length > 0);
 ---
 
@@ -63,36 +63,36 @@ const showFeatured = Boolean(featuredHeadline || featuredSummary.length > 0);
 		tabindex="-1"
 		class:list={[
 			"main-container",
-			{ "main-container--default": !selectedSlug },
+			{ "main-container--default": !selectedRelease },
 		]}
 	>
 		<div class="main-container-fades" aria-hidden="true"></div>
 		<div class="main-container-scroll">
 			<div class="main-container-scroll-inner">
-				{!selectedSlug && mods.banner && <Banner />}
+				{!selectedRelease && mods.banner && <Banner />}
 				{
-					selectedSlug && (
-						<section class="slug-section">
-							<h2 class="slug-title">
-								{selectedSlug.data.title}
+					selectedRelease && (
+						<section class="release-section">
+							<h2 class="release-title">
+								{selectedRelease.data.title}
 							</h2>
 							<div class="media-container-wrapper">
 								<div class="cover-container">
 									<img
-										src={coverSrc(selectedSlug.data.cover)}
-										alt={selectedSlug.data.title}
+										src={coverSrc(selectedRelease.data.cover)}
+										alt={selectedRelease.data.title}
 										class="cover-image"
 									/>
 								</div>
 								{mods.audioPlayer && (
-									<AudioPlayer selectedSlug={selectedSlug} />
+									<AudioPlayer selectedRelease={selectedRelease} />
 								)}
-								{(slugSmallLinks.length > 0 ||
-									slugLargeLinks.length > 0) && (
+								{(releaseSmallLinks.length > 0 ||
+									releaseLargeLinks.length > 0) && (
 									<>
-										{slugLargeLinks.length > 0 && (
+										{releaseLargeLinks.length > 0 && (
 											<ul class="links-large-list">
-												{slugLargeLinks.map((link) => (
+												{releaseLargeLinks.map((link) => (
 													<li>
 														<a
 															href={link.href}
@@ -101,7 +101,7 @@ const showFeatured = Boolean(featuredHeadline || featuredSummary.length > 0);
 															<span
 																class="link-large-icon"
 																aria-hidden="true"
-																set:html={slugLinkSvgMarkup(
+																set:html={releaseLinkSvgMarkup(
 																	link.id,
 																)}
 															/>
@@ -118,9 +118,9 @@ const showFeatured = Boolean(featuredHeadline || featuredSummary.length > 0);
 												))}
 											</ul>
 										)}
-										{slugSmallLinks.length > 0 && (
+										{releaseSmallLinks.length > 0 && (
 											<ul class="links-small-list">
-												{slugSmallLinks.map((link) => (
+												{releaseSmallLinks.map((link) => (
 													<li>
 														<a
 															href={link.href}
@@ -135,7 +135,7 @@ const showFeatured = Boolean(featuredHeadline || featuredSummary.length > 0);
 															<span
 																class="link-small-icon"
 																aria-hidden="true"
-																set:html={slugLinkSvgMarkup(
+																set:html={releaseLinkSvgMarkup(
 																	link.id,
 																)}
 															/>
@@ -149,7 +149,7 @@ const showFeatured = Boolean(featuredHeadline || featuredSummary.length > 0);
 							</div>
 
 							{showFeatured && (
-								<section class="slug-featured">
+								<section class="release-featured">
 									{featuredHeadline && (
 										<h3>{featuredHeadline}</h3>
 									)}
@@ -163,11 +163,11 @@ const showFeatured = Boolean(featuredHeadline || featuredSummary.length > 0);
 				}
 
 				{
-					selectedSlug ? (
+					selectedRelease ? (
 						<>
 							{mods.aboutText && <AboutText />}
 							{mods.releases && (
-								<Releases variant="image" onSlugPage paged />
+								<Releases variant="image" onReleasePage paged />
 							)}
 						</>
 					) : (

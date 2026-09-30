@@ -18,7 +18,7 @@ featured:
     - Sun Up was originally drafted during a trip at the Santa Monica beach, and you can imagine how that feels. It's nice, bright, exciting.
     - Singing Machine was a very casual soft club record that features what I like to think is the hum from am IBM model 5150 speaker.
     - All three of these were very based off of 'things'. It was extremely fun engaging in that but I decided I just put more focus on mood and groove after this. 
-cover: ../../assets/slugs/ep-ii/cover.jpg
+cover: ../../assets/releases/ep-ii/cover.jpg
 music:
   trackId: ep2-catsong-audiobambino
   title: Cat Song / Sun Up / Singing Machine)
@@ -43,4 +43,4 @@ links:
       label: Bandcamp
       href: https://audiobambino.bandcamp.com/album/cat-song-sun-up-singing-machine
 ---
-Use this slug for campaigns that should append release-focused content after the default links.
+Use this release for campaigns that should append release-focused content after the default links.

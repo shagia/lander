@@ -93,4 +93,10 @@
 			display: none;
 		}
 	}
+
+	@media (max-width: 630px) and (orientation: portrait) {
+		.link-lens {
+			display: none;
+		}
+	}
 }

@@ -13,6 +13,8 @@ import "../../../styles/components/mods/LinkLens/link-lens.scss";
 	if (
 		lens instanceof HTMLElement &&
 		window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+		!window.matchMedia("(max-width: 630px) and (orientation: portrait)")
+			.matches &&
 		!window.matchMedia("(prefers-reduced-motion: reduce)").matches
 	) {
 		let overLink = false;

@@ -1,5 +1,5 @@
 ---
-import { coverSrc, getMods, getReleaseSlugs } from "../../../lib/landing";
+import { coverSrc, getMods, getReleases } from "../../../lib/landing";
 import type { ReleasesVariant } from "../../../lib/mods";
 import "../../../styles/components/mods/Releases/releases-image.scss";
 import "../../../styles/components/mods/Releases/releases-text.scss";
@@ -8,7 +8,7 @@ import Pager from "../Pager/Pager.astro";
 interface Props {
 	/** Cover grid (`image`) or text list (`text`). Defaults to `mods.releasesVariant` in Site.yaml. */
 	variant?: ReleasesVariant;
-	onSlugPage?: boolean;
+	onReleasePage?: boolean;
 	initialVisible?: number;
 	/** When true, show releases in pages instead of a collapsible list. */
 	paged?: boolean;
@@ -17,14 +17,14 @@ interface Props {
 const mods = await getMods();
 const {
 	variant = mods.releasesVariant,
-	onSlugPage = false,
+	onReleasePage = false,
 	initialVisible: initialVisibleProp,
 	paged = false,
 } = Astro.props;
 
 const isImage = variant === "image";
-const releases = await getReleaseSlugs();
-const heading = onSlugPage ? "More Music" : "Music";
+const releases = await getReleases();
+const heading = onReleasePage ? "More Music" : "Music";
 const initialVisible = initialVisibleProp ?? (isImage ? 2 : 3);
 const pageSize = initialVisible;
 const pages: (typeof releases)[] = [];
@@ -36,8 +36,8 @@ for (let i = 0; i < releases.length; i += pageSize) {
 const pageCount = pages.length;
 const canPage = paged && pageCount > 1;
 const canCollapse = !paged && releases.length > initialVisible;
-const pagerId = onSlugPage
-	? `releases-${variant}-slug`
+const pagerId = onReleasePage
+	? `releases-${variant}-release`
 	: `releases-${variant}`;
 const sectionClass = isImage ? "releases" : "releases-text";
 const headingId = isImage ? "releases-heading" : "releases-text-heading";

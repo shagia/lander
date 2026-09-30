@@ -88,16 +88,16 @@
 		width: 100%;
 	}
 
-	.slug-section {
+	.release-section {
 		margin-bottom: 2rem;
 	}
 
-	.slug-title {
+	.release-title {
 		margin-bottom: 1rem;
 		width: 100%;
 	}
 
-	.slug-featured {
+	.release-featured {
 		p {
 			margin: 0 0 0.75rem;
 
@@ -326,13 +326,13 @@
 
 	@media not ((max-width: 630px) and (orientation: portrait)) {
 		@media (min-width: 1200px) {
-			.slug-title {
+			.release-title {
 				width: 200%;
 			}
 		}
 
 		@media (max-width: 1199px) {
-			.slug-section {
+			.release-section {
 				&::after {
 					content: "";
 					display: table;

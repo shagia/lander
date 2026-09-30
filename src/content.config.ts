@@ -5,8 +5,8 @@ import { site } from "./site.collection";
 
 const SITE_CONTENT_BASE = "./src/content/site";
 
-const slugs = defineCollection({
-	loader: glob({ pattern: "**/*.md", base: "./src/content/slugs" }),
+const releases = defineCollection({
+	loader: glob({ pattern: "**/*.md", base: "./src/content/releases" }),
 	schema: ({ image }) => {
 		const coverImage = z.union([image(), z.string().url()]);
 		return z.object({
@@ -131,4 +131,4 @@ const about = defineCollection({
 	schema: z.object({}),
 });
 
-export const collections = { slugs, projects, performances, about, site };
+export const collections = { releases, projects, performances, about, site };

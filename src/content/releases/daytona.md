@@ -16,7 +16,7 @@ status: published
 #   - 
 #   - 
 #   - 
-cover: ../../assets/slugs/daytona/cover.jpg
+cover: ../../assets/releases/daytona/cover.jpg
 music:
   trackId: daytona-ep
   title: Daytona / Rotary Groove

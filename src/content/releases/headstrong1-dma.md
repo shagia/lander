@@ -10,7 +10,7 @@ tags:
   - release
   - music
 status: published
-cover: ../../assets/slugs/headstrong1-dma/cover.jpg
+cover: ../../assets/releases/headstrong1-dma/cover.jpg
 music:
   trackId: headstrong1-dma
   title: headstrong (V1) + Drum Machine Abstraction
@@ -26,4 +26,4 @@ links:
       label: Bandcamp
       href: https://devinsg.bandcamp.com/album/headstrong-v1-drum-machine-abstraction
 ---
-Use this slug for campaigns that should append release-focused content after the default links.
+Use this release for campaigns that should append release-focused content after the default links.
