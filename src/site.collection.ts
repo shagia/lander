@@ -64,14 +64,34 @@ export const site = defineCollection({
 				.optional(),
 			theme: themeSchema,
 			socials: z
-				.object({
-					soundcloud: optionalSocialHandle,
-					instagram: optionalSocialHandle,
-					bluesky: optionalSocialHandle,
-					twitter: optionalSocialHandle,
-					email: optionalSocialEmail,
-				})
-				.optional(),
+				.record(z.string().min(1), z.string().nullish())
+				.optional()
+				.transform((socials, ctx) => {
+					if (!socials) return undefined;
+					const out: Record<string, string | undefined> = {};
+					for (const [key, raw] of Object.entries(socials)) {
+						if (key === "email") {
+							const email = optionalSocialEmail.safeParse(raw);
+							if (!email.success) {
+								for (const issue of email.error.issues) {
+									ctx.addIssue({ ...issue, path: ["email"] });
+								}
+								return z.NEVER;
+							}
+							out[key] = email.data;
+							continue;
+						}
+						const handle = optionalSocialHandle.safeParse(raw);
+						if (!handle.success) {
+							for (const issue of handle.error.issues) {
+								ctx.addIssue({ ...issue, path: [key] });
+							}
+							return z.NEVER;
+						}
+						out[key] = handle.data;
+					}
+					return out;
+				}),
 			mods: modsSchema,
 		});
 	},

@@ -1,24 +1,15 @@
 ---
 import { getSiteConfig } from "../../../lib/landing";
-
-const socials = {
-	soundcloud: "https://soundcloud.com/",
-	instagram: "https://www.instagram.com/",
-	bluesky: "https://bsky.app/profile/",
-	twitter: "https://x.com/",
-	email: "mailto:",
-} as const;
-
-type SocialId = keyof typeof socials;
+import { socialHref } from "../../../lib/socials";
 
 const site = await getSiteConfig();
 const handles = site?.data.socials;
 
-const links = (Object.keys(socials) as SocialId[]).flatMap((id) => {
-	const raw = handles?.[id]?.trim() ?? "";
-	const value = id === "email" ? raw : raw.replace(/^@/, "");
+const links = Object.entries(handles ?? {}).flatMap(([id, raw]) => {
+	const value = raw?.trim() ?? "";
 	if (!value) return [];
-	return [{ id, label: id, href: `${socials[id]}${value}` }];
+	const href = socialHref(id, value);
+	return [{ id, label: id, href }];
 });
 ---
 
@@ -29,7 +20,11 @@ const links = (Object.keys(socials) as SocialId[]).flatMap((id) => {
 			<ul class="social-links-list">
 				{links.map((link) => (
 					<li>
-						<a href={link.href}>{link.label}</a>
+						{link.href ? (
+							<a href={link.href}>{link.label}</a>
+						) : (
+							<span>{link.label}</span>
+						)}
 					</li>
 				))}
 			</ul>
