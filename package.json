@@ -12,10 +12,18 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^6.1.9",
-    "pg": "^8.20.0",
-    "sass": "^1.102.0",
-    "simple-icons": "^16.18.1",
-    "zod": "^4.3.6"
+    "@astrojs/markdoc": "^2.0.9",
+    "@astrojs/react": "^7.0.0",
+    "@keystatic/astro": "^6.0.0",
+    "@keystatic/core": "^0.6.9",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "astro": "^7.3.5",
+    "pg": "^8.23.1",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "sass": "^1.105.1",
+    "simple-icons": "^16.33.0",
+    "zod": "^4.6.5"
   }
 }

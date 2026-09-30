@@ -26,7 +26,10 @@ const releases = defineCollection({
 			status: z
 				.enum(["draft", "published", "unlisted", "archived"])
 				.default("published"),
-			theme: z.enum(["dark", "light"]).optional(),
+			theme: z
+				.union([z.enum(["dark", "light"]), z.literal("")])
+				.optional()
+				.transform((v) => (v === "" || v == null ? undefined : v)),
 			featured: z
 				.object({
 					headline: z
