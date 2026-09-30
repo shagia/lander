@@ -22,3 +22,27 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+## Remove replacable content ##
+# Content
+src/content/releases/*
+!src/content/releases/.gitkeep
+!src/content/releases/template.md
+
+src/content/performances/*
+!src/content/performances/.gitkeep
+
+src/content/projects/*
+!src/content/projects/.gitkeep
+
+# Assets
+src/assets/releases/*
+!src/assets/releases/.gitkeep
+!src/assets/releases/template/
+!src/assets/releases/template/**
+
+src/assets/performances/*
+!src/assets/performances/.gitkeep
+
+src/assets/projects/*
+!src/assets/projects/.gitkeep
