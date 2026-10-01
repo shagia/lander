@@ -1,5 +1,6 @@
 # build output
 dist/
+.vercel/
 
 # generated types
 .astro/
@@ -27,5 +28,9 @@ pnpm-debug.log*
 # src/assets/{releases,performances,projects} here. Keystatic local mode skips
 # gitignored files, so collection entries would disappear from the Admin UI.
 #
-# To keep private/local entries out of commits on this machine, the same
-# patterns live in .git/info/exclude (not shared with the repo).
+# End users: deploy with GitHub mode (see docs/deploy-vercel.md). Content lives
+# in their fork — no sibling repo required.
+#
+# Maintainers: private catalog may live in a sibling repo and be symlinked in.
+# See docs/private-content.md. On this machine, .git/info/exclude can still keep
+# those symlinks out of `git add .` without breaking Keystatic.

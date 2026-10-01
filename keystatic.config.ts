@@ -6,10 +6,29 @@ const linkItem = fields.object({
 	href: fields.url({ label: 'URL', validation: { isRequired: true } }),
 });
 
+function readEnv(name: string): string | undefined {
+	if (typeof process !== 'undefined' && process.env?.[name]) {
+		return process.env[name];
+	}
+	const viteEnv = import.meta.env as Record<string, string | undefined>;
+	return viteEnv[name];
+}
+
+// Prefer PUBLIC_ so the Admin UI (browser) can see the repo. Server also accepts
+// KEYSTATIC_GITHUB_REPO. GitHub mode is selected by repo alone so the first-run
+// "Create GitHub App" wizard works before CLIENT_ID exists.
+const githubRepo =
+	readEnv('PUBLIC_KEYSTATIC_GITHUB_REPO') || readEnv('KEYSTATIC_GITHUB_REPO');
+
 export default config({
-	storage: {
-		kind: 'local',
-	},
+	storage: githubRepo
+		? {
+				kind: 'github',
+				repo: githubRepo,
+			}
+		: {
+				kind: 'local',
+			},
 	collections: {
 		releases: collection({
 			label: 'Releases',
@@ -21,7 +40,8 @@ export default config({
 				title: fields.slug({ name: { label: 'Title' } }),
 				id: fields.text({
 					label: 'ID',
-					description: 'Stable release id used for routing and lookups (can differ from the filename slug).',
+					description:
+						'Stable release id used for routing and lookups (can differ from the filename slug).',
 					validation: { isRequired: true },
 				}),
 				description: fields.text({
@@ -89,10 +109,13 @@ export default config({
 				featured: fields.object(
 					{
 						headline: fields.text({ label: 'Headline' }),
-						summary: fields.array(fields.text({ label: 'Passage', multiline: true }), {
-							label: 'Summary',
-							itemLabel: (props) => props.value || 'Passage',
-						}),
+						summary: fields.array(
+							fields.text({ label: 'Passage', multiline: true }),
+							{
+								label: 'Summary',
+								itemLabel: (props) => props.value || 'Passage',
+							},
+						),
 					},
 					{
 						label: 'Featured',
@@ -117,12 +140,16 @@ export default config({
 						small: fields.array(linkItem, {
 							label: 'Small links',
 							itemLabel: (props) =>
-								props.fields.label.value || props.fields.id.value || 'Link',
+								props.fields.label.value ||
+								props.fields.id.value ||
+								'Link',
 						}),
 						large: fields.array(linkItem, {
 							label: 'Large links',
 							itemLabel: (props) =>
-								props.fields.label.value || props.fields.id.value || 'Link',
+								props.fields.label.value ||
+								props.fields.id.value ||
+								'Link',
 						}),
 					},
 					{ label: 'Links' },
