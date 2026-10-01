@@ -8,10 +8,14 @@ category: releases
 tags: []
 status: draft
 theme: ''
-cover: ../../assets/releases/template/cover.jpg
 featured:
   summary: []
-music: {}
+music:
+  trackId: template
+  title: template
+  artist: template
+  audioUrl: https://cdn.pixabay.com/download/audio/2022/03/10/audio_7f41f11795.mp3
+  coverUrl: https://cdn.pixabay.com/download/audio/2022/03/10/audio_7f41f11795.mp3
 links:
   small: []
   large: []

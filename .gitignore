@@ -23,26 +23,9 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-## Remove replacable content ##
-# Content
-src/content/releases/*
-!src/content/releases/.gitkeep
-!src/content/releases/template.md
-
-src/content/performances/*
-!src/content/performances/.gitkeep
-
-src/content/projects/*
-!src/content/projects/.gitkeep
-
-# Assets
-src/assets/releases/*
-!src/assets/releases/.gitkeep
-!src/assets/releases/template/
-!src/assets/releases/template/**
-
-src/assets/performances/*
-!src/assets/performances/.gitkeep
-
-src/assets/projects/*
-!src/assets/projects/.gitkeep
+# NOTE: Do not gitignore src/content/{releases,performances,projects} or
+# src/assets/{releases,performances,projects} here. Keystatic local mode skips
+# gitignored files, so collection entries would disappear from the Admin UI.
+#
+# To keep private/local entries out of commits on this machine, the same
+# patterns live in .git/info/exclude (not shared with the repo).
