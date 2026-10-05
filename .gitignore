@@ -27,3 +27,7 @@ pnpm-debug.log*
 # NOTE: Do not gitignore src/content/{releases,performances,projects} or
 # src/assets/{releases,performances,projects} here. Keystatic local mode skips
 # gitignored files, so collection entries would disappear from the Admin UI.
+
+# Maintainer-only document for testing local content, could be public soon
+docs/private-content.md
+scripts/link-private-content.sh

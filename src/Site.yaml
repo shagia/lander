@@ -37,7 +37,7 @@ socials:
   soundcloud: devin_sg
   instagram: 0devin.sg
   bluesky: devin.sg
-  twitter:
+  # twitter:
   email: devin@devin.sg
 
 # Mods are your site's configuration. Read more about 'mods', 'releasesVariant', and their defaults in src/components/mods/README.md

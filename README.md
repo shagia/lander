@@ -1,46 +1,32 @@
-# Astro Starter Kit: Basics
+# Lander (Working name)
+
+Lander is a link aggregator and landing page for artists, built with Astro and Keystatic.
+
+## Quick start (local)
 
 ```sh
-npm create astro@latest -- --template basics
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Open `http://localhost:4321` and the admin at `http://localhost:4321/keystatic`.  
 
-## 🚀 Project Structure
+Without any Keystatic GitHub environment variables, you'll be expected to provide content locally.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Deploy on Vercel
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+Fork this repo, create a Keystatic GitHub App, set your environment variables, deploy. Then edit at `/keystatic`.
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+Full walkthrough: **[docs/deploy-vercel.md](./docs/deploy-vercel.md)**
 
-## 🧞 Commands
+Copy [`.env.example`](./.env.example) for the variable list.
 
-All commands are run from the root of the project, from a terminal:
+## Commands
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+| Command | Action |
+| :------ | :----- |
+| `npm install` | Install dependencies |
+| `npm run dev` | Astro + Keystatic (local storage) |
+| `npm run build` | Production build (Vercel / Node) |
+| `npm run preview` | Preview the production build |
+| `npm run astro ...` | Astro CLI |
