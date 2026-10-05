@@ -14,11 +14,21 @@ function readEnv(name: string): string | undefined {
 	return viteEnv[name];
 }
 
+function parseGithubRepo(
+	value: string | undefined,
+): { owner: string; name: string } | undefined {
+	if (!value) return undefined;
+	const [owner, name, ...rest] = value.split('/');
+	if (!owner || !name || rest.length > 0) return undefined;
+	return { owner, name };
+}
+
 // Prefer PUBLIC_ so the Admin UI (browser) can see the repo. Server also accepts
 // KEYSTATIC_GITHUB_REPO. GitHub mode is selected by repo alone so the first-run
 // "Create GitHub App" wizard works before CLIENT_ID exists.
-const githubRepo =
-	readEnv('PUBLIC_KEYSTATIC_GITHUB_REPO') || readEnv('KEYSTATIC_GITHUB_REPO');
+const githubRepo = parseGithubRepo(
+	readEnv('PUBLIC_KEYSTATIC_GITHUB_REPO') || readEnv('KEYSTATIC_GITHUB_REPO'),
+);
 
 export default config({
 	storage: githubRepo

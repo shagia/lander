@@ -27,10 +27,3 @@ pnpm-debug.log*
 # NOTE: Do not gitignore src/content/{releases,performances,projects} or
 # src/assets/{releases,performances,projects} here. Keystatic local mode skips
 # gitignored files, so collection entries would disappear from the Admin UI.
-#
-# End users: deploy with GitHub mode (see docs/deploy-vercel.md). Content lives
-# in their fork — no sibling repo required.
-#
-# Maintainers: private catalog may live in a sibling repo and be symlinked in.
-# See docs/private-content.md. On this machine, .git/info/exclude can still keep
-# those symlinks out of `git add .` without breaking Keystatic.
