@@ -31,24 +31,29 @@ Environment:
 EOF
 }
 
+# Sibling repo mirrors the app paths Keystatic writes:
+#   lander-concept-content/src/content/{releases,performances,projects}
+#   lander-concept-content/src/assets/{releases,performances,projects}
+CONTENT_SRC="$CONTENT_REPO/src"
+
 ensure_content_repo() {
 	mkdir -p \
-		"$CONTENT_REPO/releases" \
-		"$CONTENT_REPO/performances" \
-		"$CONTENT_REPO/projects" \
-		"$CONTENT_REPO/assets/releases" \
-		"$CONTENT_REPO/assets/performances" \
-		"$CONTENT_REPO/assets/projects"
+		"$CONTENT_SRC/content/releases" \
+		"$CONTENT_SRC/content/performances" \
+		"$CONTENT_SRC/content/projects" \
+		"$CONTENT_SRC/assets/releases" \
+		"$CONTENT_SRC/assets/performances" \
+		"$CONTENT_SRC/assets/projects"
 
 	if [[ ! -d "$CONTENT_REPO/.git" ]]; then
 		git -C "$CONTENT_REPO" init -b main
 		printf '%s\n' '.DS_Store' >"$CONTENT_REPO/.gitignore"
 		touch \
-			"$CONTENT_REPO/releases/.gitkeep" \
-			"$CONTENT_REPO/performances/.gitkeep" \
-			"$CONTENT_REPO/projects/.gitkeep" \
-			"$CONTENT_REPO/assets/performances/.gitkeep" \
-			"$CONTENT_REPO/assets/projects/.gitkeep"
+			"$CONTENT_SRC/content/releases/.gitkeep" \
+			"$CONTENT_SRC/content/performances/.gitkeep" \
+			"$CONTENT_SRC/content/projects/.gitkeep" \
+			"$CONTENT_SRC/assets/performances/.gitkeep" \
+			"$CONTENT_SRC/assets/projects/.gitkeep"
 		echo "Initialized private content repo at $CONTENT_REPO"
 	fi
 }
@@ -74,7 +79,7 @@ is_public_asset_entry() {
 migrate_collection_files() {
 	local collection=$1
 	local src="$APP_ROOT/src/content/$collection"
-	local dest="$CONTENT_REPO/$collection"
+	local dest="$CONTENT_SRC/content/$collection"
 	mkdir -p "$dest"
 	[[ -d "$src" ]] || return 0
 
@@ -94,7 +99,7 @@ migrate_collection_files() {
 			if [[ -e "$dest/$base" || -L "$dest/$base" ]]; then
 				rm -rf "$dest/$base"
 			fi
-			echo "migrate  $collection/$base"
+			echo "migrate  src/content/$collection/$base"
 			mv "$path" "$dest/$base"
 		fi
 	done
@@ -104,7 +109,7 @@ migrate_collection_files() {
 migrate_asset_entries() {
 	local collection=$1
 	local src="$APP_ROOT/src/assets/$collection"
-	local dest="$CONTENT_REPO/assets/$collection"
+	local dest="$CONTENT_SRC/assets/$collection"
 	mkdir -p "$dest"
 	[[ -d "$src" ]] || return 0
 
@@ -122,7 +127,7 @@ migrate_asset_entries() {
 		if [[ -e "$dest/$base" || -L "$dest/$base" ]]; then
 			rm -rf "$dest/$base"
 		fi
-		echo "migrate  assets/$collection/$base"
+		echo "migrate  src/assets/$collection/$base"
 		mv "$path" "$dest/$base"
 	done
 	shopt -u nullglob
@@ -147,7 +152,7 @@ link_path() {
 link_collection_files() {
 	local collection=$1
 	local quiet=${2:-false}
-	local src="$CONTENT_REPO/$collection"
+	local src="$CONTENT_SRC/content/$collection"
 	local dest="$APP_ROOT/src/content/$collection"
 	mkdir -p "$dest"
 	[[ -d "$src" ]] || return 0
@@ -161,7 +166,7 @@ link_collection_files() {
 		if [[ "$collection" == "releases" ]] && is_public_release_file "$base"; then
 			continue
 		fi
-		link_path "$rel/$collection/$base" "$dest/$base" "$quiet"
+		link_path "$rel/src/content/$collection/$base" "$dest/$base" "$quiet"
 	done
 	shopt -u nullglob
 }
@@ -169,7 +174,7 @@ link_collection_files() {
 link_asset_entries() {
 	local collection=$1
 	local quiet=${2:-false}
-	local src="$CONTENT_REPO/assets/$collection"
+	local src="$CONTENT_SRC/assets/$collection"
 	local dest="$APP_ROOT/src/assets/$collection"
 	mkdir -p "$dest"
 	[[ -d "$src" ]] || return 0
@@ -183,7 +188,7 @@ link_asset_entries() {
 		if [[ "$collection" == "releases" ]] && is_public_asset_entry "$base"; then
 			continue
 		fi
-		link_path "$rel/assets/$collection/$base" "$dest/$base" "$quiet"
+		link_path "$rel/src/assets/$collection/$base" "$dest/$base" "$quiet"
 	done
 	shopt -u nullglob
 }
