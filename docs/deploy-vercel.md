@@ -1,4 +1,4 @@
-# Deploy on Vercel (end users)
+# Deploy on Vercel
 
 Lander is designed to use Vercel to deploy builds after any commits are made in a public or private GitHub repo that hosts your content. By deploying with Vercel + Keystatic in Github Mode, you get an easy workflow that doesn't need to be maintained locally, making your admin panel (`/keystatic`) the place where you review, edit, and create new posts for your site.
 
