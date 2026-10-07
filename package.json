@@ -8,9 +8,10 @@
   "scripts": {
     "dev": "astro dev",
     "dev:private": "node scripts/dev.mjs",
-    "build": "astro build",
+    "build": "npm run content:pull && astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "content:pull": "node scripts/pull-content.mjs",
     "content:link": "bash scripts/link-private-content.sh",
     "content:migrate": "bash scripts/link-private-content.sh --migrate",
     "content:watch": "bash scripts/link-private-content.sh --watch",
