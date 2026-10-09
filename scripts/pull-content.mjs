@@ -25,6 +25,15 @@ const PUBLIC_PROJECT_FILES = new Set([".gitkeep", "sample.md"]);
 const PUBLIC_PERFORMANCE_FILES = new Set([".gitkeep", "sample.md"]);
 const PUBLIC_ASSET_ENTRIES = new Set([".gitkeep", "template", "sample-cover.svg"]);
 
+const SAMPLE_CONTENT_FILES = {
+	releases: ["sample.md"],
+	projects: ["sample.md"],
+	performances: ["sample.md"],
+};
+const SAMPLE_ASSET_ENTRIES = {
+	releases: ["sample-cover.svg"],
+};
+
 /** Optional brand overlay paths mirrored from the content repo. */
 const BRAND_PATHS = [
 	"src/site/artist.yaml",
@@ -126,6 +135,25 @@ function copyBrandOverlay(cloneRoot) {
 	return count;
 }
 
+function removeSampleContent() {
+	let removed = 0;
+	for (const collection of COLLECTIONS) {
+		for (const name of SAMPLE_CONTENT_FILES[collection] ?? []) {
+			const file = path.join(APP_ROOT, "src", "content", collection, name);
+			if (!existsSync(file)) continue;
+			rmSync(file, { force: true });
+			removed += 1;
+		}
+		for (const name of SAMPLE_ASSET_ENTRIES[collection] ?? []) {
+			const entry = path.join(APP_ROOT, "src", "assets", collection, name);
+			if (!existsSync(entry)) continue;
+			rmSync(entry, { recursive: true, force: true });
+			removed += 1;
+		}
+	}
+	return removed;
+}
+
 function copyTreeEntries(srcDir, destDir, collection, kind) {
 	if (!existsSync(srcDir)) return 0;
 	let count = 0;
@@ -184,31 +212,41 @@ function main() {
 		log(`cloning ${contentRepo.full}`);
 		shallowClone(contentRepo, token, tmp);
 
-		let copied = 0;
+		let catalogCopied = 0;
 		for (const collection of COLLECTIONS) {
 			const contentSrc = path.join(tmp, "src", "content", collection);
 			const contentDest = path.join(APP_ROOT, "src", "content", collection);
 			const assetsSrc = path.join(tmp, "src", "assets", collection);
 			const assetsDest = path.join(APP_ROOT, "src", "assets", collection);
 
-			copied += copyTreeEntries(
+			catalogCopied += copyTreeEntries(
 				contentSrc,
 				contentDest,
 				collection,
 				"content",
 			);
-			copied += copyTreeEntries(assetsSrc, assetsDest, collection, "assets");
+			catalogCopied += copyTreeEntries(
+				assetsSrc,
+				assetsDest,
+				collection,
+				"assets",
+			);
 		}
 		const brandCopied = copyBrandOverlay(tmp);
-		copied += brandCopied;
+		const copied = catalogCopied + brandCopied;
 
 		log(
-			`copied ${copied} entries from ${contentRepo.full} (${brandCopied} brand overlays)`,
+			`copied ${copied} entries from ${contentRepo.full} (${catalogCopied} catalog, ${brandCopied} brand overlays)`,
 		);
 		if (copied === 0) {
 			log(
 				"warning: no files found — check that the content repo mirrors src/ and public/favicon*",
 			);
+		} else if (catalogCopied > 0) {
+			const removed = removeSampleContent();
+			if (removed > 0) {
+				log(`removed ${removed} template sample entries`);
+			}
 		}
 	} finally {
 		rmSync(tmp, { recursive: true, force: true });
