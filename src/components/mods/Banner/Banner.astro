@@ -3,19 +3,19 @@ import { coverSrc, getSiteConfig } from "../../../lib/landing";
 import "../../../styles/components/mods/Banner/banner.scss";
 
 interface Props {
-	/** Banner image URL. Defaults to `Site.yaml` banner.image, then placeholder. */
+	/** Banner image URL. Defaults to site images banner.image, then placeholder. */
 	src?: string;
 	/**
 	 * CSS `object-position` for the crop (e.g. `"top"`, `"center 20%"`, `"50% 10%"`).
-	 * Defaults to `Site.yaml` banner.position, then the top of the image.
+	 * Defaults to site images banner.position, then the top of the image.
 	 */
 	position?: string;
 	/**
 	 * Zoom scale for the image (`1` = fill the banner, `1.25` = 25% zoomed in).
-	 * Defaults to `Site.yaml` banner.imageSize, then `1`.
+	 * Defaults to site images banner.imageSize, then `1`.
 	 */
 	imageSize?: number;
-	/** Optional photo credit shown under the banner. Defaults to `Site.yaml` banner.credit. */
+	/** Optional photo credit shown under the banner. Defaults to site images banner.credit. */
 	credit?: string;
 }
 
