@@ -17,14 +17,13 @@ This document is for the **template author**: keep a public template remote that
 ```
 Development/
   lander-concept/                 ← public template remote (site)
-    src/Site.yaml                 ← neutral placeholder (overlaid when linked)
+    src/site/*.yaml               ← placeholder Site Settings (overlaid when linked)
     src/assets/ui/                ← placeholder logos/banner
     src/content/releases/
       sample.md / template.md     ← tracked in the app
       daytona-rotary-groove.md    ← symlink → sibling (local only)
   lander-concept-content/         ← private brand + catalog git repo
-    src/Site.yaml                 ← your identity / theme / mods
-    src/content/site/About.md
+    src/site/*.yaml               ← artist / images / theme / socials / mods
     src/assets/ui/                ← your logos / banner / icon
     public/favicon.*
     src/content/releases/         ← mirrors Keystatic paths
@@ -38,7 +37,7 @@ Override with `CONTENT_REPO=/absolute/path`.
 
 On GitHub, the catalog remote is whatever you set as `PUBLIC_KEYSTATIC_GITHUB_REPO` (example: `shagia/devin-sg-content`). That repo should mirror the same `src/*` and `public/favicon*` paths used above.
 
-`npm run content:link` overlays brand files from the sibling when they exist (replacing template placeholders with symlinks). `npm run content:unlink` removes those overlays and restores tracked template defaults from git when possible.
+`npm run content:link` overlays brand files from the sibling when they exist (replacing template placeholders with symlinks, after saving a local backup under `.lander/brand-backup/`). `npm run content:unlink` removes those overlays and restores the backed-up template files (falling back to `git restore` per path). Overlay-only files that are not part of the template (for example a personal `logo-white.svg`) are simply removed.
 
 ## Local author workflow
 

@@ -93,6 +93,8 @@ export default config({
 				}),
 				description: fields.text({
 					label: 'Description',
+					description:
+						'Shown in the About section and used as the default meta description.',
 					multiline: true,
 					validation: { isRequired: true },
 				}),

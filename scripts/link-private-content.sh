@@ -24,7 +24,6 @@ BRAND_APP_PATHS=(
 	src/site/theme.yaml
 	src/site/socials.yaml
 	src/site/mods.yaml
-	src/content/site/About.md
 	src/assets/ui/logo.svg
 	src/assets/ui/logo-dark.svg
 	src/assets/ui/logo-white.svg
@@ -57,7 +56,6 @@ Environment:
 
 Brand overlay (optional files in the content repo):
   src/site/{artist,images,theme,socials,mods}.yaml
-  src/content/site/About.md
   src/assets/ui/*   (logos, banner, icon)
   public/favicon.svg, public/favicon.ico
 EOF
@@ -65,7 +63,7 @@ EOF
 
 # Sibling repo mirrors the app paths Keystatic writes, plus optional brand:
 #   lander-concept-content/src/site/{artist,images,theme,socials,mods}.yaml
-#   lander-concept-content/src/content/{site,releases,performances,projects}
+#   lander-concept-content/src/content/{releases,performances,projects}
 #   lander-concept-content/src/assets/{ui,releases,performances,projects}
 #   lander-concept-content/public/favicon.*
 CONTENT_SRC="$CONTENT_REPO/src"
@@ -73,7 +71,6 @@ CONTENT_SRC="$CONTENT_REPO/src"
 ensure_content_repo() {
 	mkdir -p \
 		"$CONTENT_SRC/site" \
-		"$CONTENT_SRC/content/site" \
 		"$CONTENT_SRC/content/releases" \
 		"$CONTENT_SRC/content/performances" \
 		"$CONTENT_SRC/content/projects" \

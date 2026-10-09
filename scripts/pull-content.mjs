@@ -32,7 +32,6 @@ const BRAND_PATHS = [
 	"src/site/theme.yaml",
 	"src/site/socials.yaml",
 	"src/site/mods.yaml",
-	"src/content/site/About.md",
 	"src/assets/ui/logo.svg",
 	"src/assets/ui/logo-dark.svg",
 	"src/assets/ui/logo-white.svg",

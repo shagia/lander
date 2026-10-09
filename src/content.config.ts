@@ -9,8 +9,6 @@ import {
 	siteTheme,
 } from "./site.collection";
 
-const SITE_CONTENT_BASE = "./src/content/site";
-
 const mdPattern = "**/[^_]*.md"; // matches all markdown files except those starting with an underscore
 
 const releases = defineCollection({
@@ -133,20 +131,10 @@ const performances = defineCollection({
 	}),
 });
 
-const about = defineCollection({
-	loader: glob({
-		pattern: "About.md",
-		base: SITE_CONTENT_BASE,
-		generateId: () => "about",
-	}),
-	schema: z.object({}),
-});
-
 export const collections = {
 	releases,
 	projects,
 	performances,
-	about,
 	siteArtist,
 	siteImages,
 	siteTheme,

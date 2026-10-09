@@ -5,7 +5,6 @@ import type { ThemeColors } from "./theme";
 export type ReleaseEntry = CollectionEntry<"releases">;
 export type ProjectEntry = CollectionEntry<"projects">;
 export type PerformanceEntry = CollectionEntry<"performances">;
-export type SiteAboutEntry = CollectionEntry<"about">;
 
 /** Merged site settings **/
 export type SiteConfigData = {
@@ -29,9 +28,8 @@ export type SiteConfigEntry = {
 	data: SiteConfigData;
 };
 
-/** About copy + split site settings **/
+/** Split site settings **/
 export const SITE_CONTENT_FILES = {
-	about: "About.md",
 	artist: "artist.yaml",
 	images: "images.yaml",
 	theme: "theme.yaml",
@@ -39,7 +37,6 @@ export const SITE_CONTENT_FILES = {
 	mods: "mods.yaml",
 } as const;
 
-export const SITE_ABOUT_ENTRY_ID = "about";
 export const SITE_CONFIG_ENTRY_ID = "site";
 
 export async function getPublishedReleases(): Promise<ReleaseEntry[]> {
@@ -80,10 +77,6 @@ export async function getPerformances(): Promise<PerformanceEntry[]> {
 	return entries.sort(
 		(a, b) => b.data.date.getTime() - a.data.date.getTime(),
 	);
-}
-
-export async function getSiteAbout(): Promise<SiteAboutEntry | undefined> {
-	return getEntry("about", SITE_ABOUT_ENTRY_ID);
 }
 
 export async function getSiteConfig(): Promise<SiteConfigEntry | undefined> {

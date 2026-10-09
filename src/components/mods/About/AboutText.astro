@@ -1,18 +1,18 @@
 ---
-import { render } from "astro:content";
-import { getSiteAbout, getSiteConfig } from "../../../lib/landing";
+import { getSiteConfig } from "../../../lib/landing";
 import "../../../styles/components/mods/About/about-text.scss";
 
-const about = await getSiteAbout();
 const site = await getSiteConfig();
 const artistName = site?.data.artist;
 const heading = artistName ? `About ${artistName}` : "About";
-const { Content } =
-	about != null ? await render(about) : { Content: () => null };
+const paragraphs = (site?.data.description ?? "")
+	.split(/\n\s*\n/)
+	.map((p) => p.trim())
+	.filter(Boolean);
 ---
 
 {
-	about != null && (
+	paragraphs.length > 0 && (
 		<section class="about-text" aria-labelledby="about-text-heading">
 			<details class="default-links-disclosure">
 				<summary class="default-links-summary">
@@ -22,7 +22,9 @@ const { Content } =
 				</summary>
 				<div class="default-links-disclosure-panel">
 					<div class="about-text-body">
-						<Content />
+						{paragraphs.map((paragraph) => (
+							<p>{paragraph}</p>
+						))}
 					</div>
 				</div>
 			</details>
