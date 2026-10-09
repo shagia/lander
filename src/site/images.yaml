@@ -1,0 +1,13 @@
+# Brand assets
+icon: ../assets/ui/icon.svg
+avatar: ../assets/ui/banner.svg
+logo:
+  light: ../assets/ui/logo.svg
+  dark: ../assets/ui/logo-dark.svg
+
+# Hero banner (requires mods.banner)
+banner:
+  image: ../assets/ui/banner.svg
+  position: center center
+  imageSize: 1.2
+  credit: "Replace this banner in src/assets/ui/"

@@ -27,17 +27,39 @@ export const hexColor = z
 		"Expected a hex color like #cfcfcf",
 	);
 
+/** Blank / omitted values keep the Sass default (Keystatic may write ""). */
+const optionalThemeColor = z
+	.string()
+	.nullish()
+	.transform((value, ctx) => {
+		const trimmed = value?.trim() ?? "";
+		if (!trimmed) return undefined;
+		const parsed = hexColor.safeParse(trimmed);
+		if (!parsed.success) {
+			ctx.addIssue({
+				code: "custom",
+				message: "Expected a hex color like #cfcfcf",
+			});
+			return z.NEVER;
+		}
+		return parsed.data;
+	});
+
 const themeColorFields = Object.fromEntries(
-	THEME_COLOR_KEYS.map((key) => [key, hexColor.optional()]),
-) as { [K in ThemeColorKey]: z.ZodOptional<typeof hexColor> };
+	THEME_COLOR_KEYS.map((key) => [key, optionalThemeColor]),
+) as { [K in ThemeColorKey]: typeof optionalThemeColor };
 
-export const themeColorsSchema = z.object(themeColorFields).optional();
+export const themeColorsSchema = z
+	.object(themeColorFields)
+	.nullish()
+	.transform((value) => value ?? undefined);
 
-export const themeSchema = z
-	.object({
+export const themeSchema = z.preprocess(
+	(value) => value ?? {},
+	z.object({
 		colors: themeColorsSchema,
-	})
-	.optional();
+	}),
+);
 
 /** Maps camel cased YAML keys to kebab cased `--palette-*` CSS custom properties. */
 const THEME_COLOR_CSS_VARS: Record<ThemeColorKey, string> = {
@@ -56,7 +78,7 @@ const THEME_COLOR_CSS_VARS: Record<ThemeColorKey, string> = {
 	muted: "--palette-muted",
 };
 
-/** Set theme.colors from Site.yaml as an override to the default palette, this is where a custom theme gets applied **/
+/** Set theme.colors from site theme YAML as an override to the default palette **/
 export function themePaletteStyle(
 	colors: ThemeColors | undefined | null,
 ): string | undefined {

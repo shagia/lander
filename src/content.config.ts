@@ -1,9 +1,13 @@
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 import { defineCollection } from "astro:content";
-import { site } from "./site.collection";
-
-const SITE_CONTENT_BASE = "./src/content/site";
+import {
+	siteArtist,
+	siteImages,
+	siteMods,
+	siteSocials,
+	siteTheme,
+} from "./site.collection";
 
 const mdPattern = "**/[^_]*.md"; // matches all markdown files except those starting with an underscore
 
@@ -127,13 +131,13 @@ const performances = defineCollection({
 	}),
 });
 
-const about = defineCollection({
-	loader: glob({
-		pattern: "About.md",
-		base: SITE_CONTENT_BASE,
-		generateId: () => "about",
-	}),
-	schema: z.object({}),
-});
-
-export const collections = { releases, projects, performances, about, site };
+export const collections = {
+	releases,
+	projects,
+	performances,
+	siteArtist,
+	siteImages,
+	siteTheme,
+	siteSocials,
+	siteMods,
+};

@@ -1,0 +1,10 @@
+# Landing-page and site-wide components
+aboutText: true
+audioPlayer: true
+banner: true
+linkLens: true
+performancesText: true
+projectsText: true
+releases: true
+socialLinksContent: true
+releasesVariant: image

@@ -20,8 +20,29 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const APP_ROOT = path.resolve(__dirname, "..");
 
 const COLLECTIONS = ["releases", "performances", "projects"];
-const PUBLIC_RELEASE_FILES = new Set([".gitkeep", "template.md"]);
-const PUBLIC_ASSET_ENTRIES = new Set([".gitkeep", "template"]);
+const PUBLIC_RELEASE_FILES = new Set([".gitkeep", "template.md", "sample.md"]);
+const PUBLIC_PROJECT_FILES = new Set([".gitkeep", "sample.md"]);
+const PUBLIC_PERFORMANCE_FILES = new Set([".gitkeep", "sample.md"]);
+const PUBLIC_ASSET_ENTRIES = new Set([".gitkeep", "template", "sample-cover.svg"]);
+
+/** Optional brand overlay paths mirrored from the content repo. */
+const BRAND_PATHS = [
+	"src/site/artist.yaml",
+	"src/site/images.yaml",
+	"src/site/theme.yaml",
+	"src/site/socials.yaml",
+	"src/site/mods.yaml",
+	"src/assets/ui/logo.svg",
+	"src/assets/ui/logo-dark.svg",
+	"src/assets/ui/logo-white.svg",
+	"src/assets/ui/banner.svg",
+	"src/assets/ui/banner.jpeg",
+	"src/assets/ui/banner2.jpeg",
+	"src/assets/ui/icon.svg",
+	"src/assets/ui/icon.png",
+	"public/favicon.svg",
+	"public/favicon.ico",
+];
 
 function log(msg) {
 	console.log(`[content:pull] ${msg}`);
@@ -80,8 +101,10 @@ function shouldSkip(contentRepo, siteRepo) {
 function isPublicEntry(collection, name, kind) {
 	if (name.startsWith(".")) return true;
 	if (kind === "content") {
-		if (collection === "releases" && PUBLIC_RELEASE_FILES.has(name)) {
-			return true;
+		if (collection === "releases") return PUBLIC_RELEASE_FILES.has(name);
+		if (collection === "projects") return PUBLIC_PROJECT_FILES.has(name);
+		if (collection === "performances") {
+			return PUBLIC_PERFORMANCE_FILES.has(name);
 		}
 		return name === ".gitkeep";
 	}
@@ -89,6 +112,18 @@ function isPublicEntry(collection, name, kind) {
 		return true;
 	}
 	return name === ".gitkeep";
+}
+
+function copyBrandOverlay(cloneRoot) {
+	let count = 0;
+	for (const rel of BRAND_PATHS) {
+		const from = path.join(cloneRoot, rel);
+		if (!existsSync(from)) continue;
+		const to = path.join(APP_ROOT, rel);
+		cpSync(from, to, { recursive: true, force: true });
+		count += 1;
+	}
+	return count;
 }
 
 function copyTreeEntries(srcDir, destDir, collection, kind) {
@@ -164,11 +199,15 @@ function main() {
 			);
 			copied += copyTreeEntries(assetsSrc, assetsDest, collection, "assets");
 		}
+		const brandCopied = copyBrandOverlay(tmp);
+		copied += brandCopied;
 
-		log(`copied ${copied} entries from ${contentRepo.full}`);
+		log(
+			`copied ${copied} entries from ${contentRepo.full} (${brandCopied} brand overlays)`,
+		);
 		if (copied === 0) {
 			log(
-				"warning: no collection files found — check that the content repo mirrors src/content/* and src/assets/*",
+				"warning: no files found — check that the content repo mirrors src/ and public/favicon*",
 			);
 		}
 	} finally {

@@ -13,7 +13,7 @@ export const MOD_DEFAULTS = {
 
 export type ModId = keyof typeof MOD_DEFAULTS;
 
-/** Cover grid (`image`) or text list (`text`) for the Releases mod. */
+/** Cover grid (`image`) or text list (`text`) for future mods **/
 export type ReleasesVariant = "image" | "text";
 
 export const RELEASES_VARIANTS = ["image", "text"] as const satisfies ReadonlyArray<ReleasesVariant>;
@@ -26,7 +26,7 @@ export type ModsConfig = {
 	releasesVariant: ReleasesVariant;
 };
 
-/** Partial / raw shape accepted from Site.yaml (all keys optional). */
+/** Partial / raw shape accepted from the site mods YAML file*/
 export type ModsConfigInput = Partial<ModsConfig>;
 
 const modToggleFields = Object.fromEntries(
@@ -36,14 +36,15 @@ const modToggleFields = Object.fromEntries(
 	]),
 ) as { [K in ModId]: z.ZodOptional<z.ZodBoolean> };
 
-/** Optional landing Mods; omitted keys use defaults from `resolveMods`. */
-export const modsSchema = z
-	.object({
-		...modToggleFields,
-		/** Default Releases layout when the component omits `variant`. */
-		releasesVariant: z.enum(RELEASES_VARIANTS).optional(),
-	})
-	.optional();
+/** Mods object shape **/
+export const modsObjectSchema = z.object({
+	...modToggleFields,
+	/** Default Releases layout when the component omits `variant`. */
+	releasesVariant: z.enum(RELEASES_VARIANTS).optional(),
+});
+
+/** Optional landing Mods; omitted keys use defaults from `resolveMods` **/
+export const modsSchema = modsObjectSchema.optional();
 
 export function resolveMods(input?: ModsConfigInput | null): ModsConfig {
 	return {

@@ -28,6 +28,5 @@ pnpm-debug.log*
 # src/assets/{releases,performances,projects} here. Keystatic local mode skips
 # gitignored files, so collection entries would disappear from the Admin UI.
 
-# Maintainer-only document for testing local content, could be public soon
-docs/private-content.md
-scripts/link-private-content.sh
+# Local backups taken when content:link overlays template brand files
+.lander/

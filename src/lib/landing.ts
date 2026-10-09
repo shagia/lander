@@ -1,19 +1,42 @@
 import { getCollection, getEntry, type CollectionEntry } from "astro:content";
-import { resolveMods, type ModsConfig } from "./mods";
+import { resolveMods, type ModsConfig, type ModsConfigInput } from "./mods";
+import type { ThemeColors } from "./theme";
 
 export type ReleaseEntry = CollectionEntry<"releases">;
 export type ProjectEntry = CollectionEntry<"projects">;
 export type PerformanceEntry = CollectionEntry<"performances">;
-export type SiteAboutEntry = CollectionEntry<"about">;
-export type SiteConfigEntry = CollectionEntry<"site">;
 
-/** Site config lives at `src/Site.yaml` */
+/** Merged site settings **/
+export type SiteConfigData = {
+	artist: string;
+	legalName: string;
+	title: string;
+	description: string;
+	url?: string;
+	email: string;
+	icon?: CollectionEntry<"siteImages">["data"]["icon"];
+	avatar?: CollectionEntry<"siteImages">["data"]["avatar"];
+	logo?: CollectionEntry<"siteImages">["data"]["logo"];
+	banner?: CollectionEntry<"siteImages">["data"]["banner"];
+	theme?: { colors?: ThemeColors };
+	socials?: Record<string, string | undefined>;
+	mods?: ModsConfigInput;
+};
+
+export type SiteConfigEntry = {
+	id: "site";
+	data: SiteConfigData;
+};
+
+/** Split site settings **/
 export const SITE_CONTENT_FILES = {
-	about: "About.md",
-	site: "Site.yaml",
+	artist: "artist.yaml",
+	images: "images.yaml",
+	theme: "theme.yaml",
+	socials: "socials.yaml",
+	mods: "mods.yaml",
 } as const;
 
-export const SITE_ABOUT_ENTRY_ID = "about";
 export const SITE_CONFIG_ENTRY_ID = "site";
 
 export async function getPublishedReleases(): Promise<ReleaseEntry[]> {
@@ -56,12 +79,27 @@ export async function getPerformances(): Promise<PerformanceEntry[]> {
 	);
 }
 
-export async function getSiteAbout(): Promise<SiteAboutEntry | undefined> {
-	return getEntry("about", SITE_ABOUT_ENTRY_ID);
-}
-
 export async function getSiteConfig(): Promise<SiteConfigEntry | undefined> {
-	return getEntry("site", SITE_CONFIG_ENTRY_ID);
+	const artist = await getEntry("siteArtist", "artist");
+	if (!artist) return undefined;
+
+	const [images, theme, socials, mods] = await Promise.all([
+		getEntry("siteImages", "images"),
+		getEntry("siteTheme", "theme"),
+		getEntry("siteSocials", "socials"),
+		getEntry("siteMods", "mods"),
+	]);
+
+	return {
+		id: SITE_CONFIG_ENTRY_ID,
+		data: {
+			...artist.data,
+			...images?.data,
+			theme: theme?.data,
+			socials: socials?.data,
+			mods: mods?.data,
+		},
+	};
 }
 
 export async function getMods(): Promise<ModsConfig> {
