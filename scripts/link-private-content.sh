@@ -19,7 +19,11 @@ PUBLIC_ASSET_ENTRIES=(.gitkeep template sample-cover.svg)
 
 # Brand paths that may be overlaid from the content repo when present.
 BRAND_APP_PATHS=(
-	src/Site.yaml
+	src/site/artist.yaml
+	src/site/images.yaml
+	src/site/theme.yaml
+	src/site/socials.yaml
+	src/site/mods.yaml
 	src/content/site/About.md
 	src/assets/ui/logo.svg
 	src/assets/ui/logo-dark.svg
@@ -32,6 +36,9 @@ BRAND_APP_PATHS=(
 	public/favicon.svg
 	public/favicon.ico
 )
+
+# Local backups of template brand files replaced by overlays (gitignored).
+BRAND_BACKUP_DIR="$APP_ROOT/.lander/brand-backup"
 
 usage() {
 	cat <<'EOF'
@@ -49,7 +56,7 @@ Environment:
                  (default: ../lander-concept-content next to this project)
 
 Brand overlay (optional files in the content repo):
-  src/Site.yaml
+  src/site/{artist,images,theme,socials,mods}.yaml
   src/content/site/About.md
   src/assets/ui/*   (logos, banner, icon)
   public/favicon.svg, public/favicon.ico
@@ -57,7 +64,7 @@ EOF
 }
 
 # Sibling repo mirrors the app paths Keystatic writes, plus optional brand:
-#   lander-concept-content/src/Site.yaml
+#   lander-concept-content/src/site/{artist,images,theme,socials,mods}.yaml
 #   lander-concept-content/src/content/{site,releases,performances,projects}
 #   lander-concept-content/src/assets/{ui,releases,performances,projects}
 #   lander-concept-content/public/favicon.*
@@ -65,6 +72,7 @@ CONTENT_SRC="$CONTENT_REPO/src"
 
 ensure_content_repo() {
 	mkdir -p \
+		"$CONTENT_SRC/site" \
 		"$CONTENT_SRC/content/site" \
 		"$CONTENT_SRC/content/releases" \
 		"$CONTENT_SRC/content/performances" \
@@ -167,16 +175,34 @@ migrate_asset_entries() {
 	shopt -u nullglob
 }
 
+# Save a real template file before replacing it with a content-repo symlink.
+backup_brand_file() {
+	local app_rel=$1
+	local src="$APP_ROOT/$app_rel"
+	local dest="$BRAND_BACKUP_DIR/$app_rel"
+	# Only backup once per overlay cycle (keep the original template bytes).
+	if [[ -e "$dest" || -L "$dest" ]]; then
+		return 0
+	fi
+	if [[ -f "$src" && ! -L "$src" ]]; then
+		mkdir -p "$(dirname "$dest")"
+		cp -a "$src" "$dest"
+	fi
+}
+
 # Replace app path with symlink to content-repo target (even if a real file exists).
+# Pass app-relative path as $4 so we can restore the template file on unlink.
 link_force() {
 	local target=$1
 	local link=$2
 	local quiet=${3:-false}
+	local app_rel=${4:-}
 	mkdir -p "$(dirname "$link")"
 	if [[ -L "$link" ]]; then
 		ln -sfn "$target" "$link"
 		$quiet || echo "relink   $link -> $target"
 	elif [[ -e "$link" ]]; then
+		[[ -n "$app_rel" ]] && backup_brand_file "$app_rel"
 		rm -f "$link"
 		ln -s "$target" "$link"
 		echo "overlay  $link -> $target"
@@ -184,6 +210,36 @@ link_force() {
 		ln -s "$target" "$link"
 		echo "link     $link -> $target"
 	fi
+}
+
+# Restore one brand path after removing an overlay symlink.
+restore_brand_file() {
+	local app_rel=$1
+	local dest="$APP_ROOT/$app_rel"
+	local backup="$BRAND_BACKUP_DIR/$app_rel"
+
+	if [[ -f "$backup" ]]; then
+		mkdir -p "$(dirname "$dest")"
+		cp -a "$backup" "$dest"
+		rm -f "$backup"
+		echo "restore  $app_rel (from link backup)"
+		return 0
+	fi
+
+	# Per-path restore: a missing pathspec must not fail the whole batch.
+	if git -C "$APP_ROOT" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+		if git -C "$APP_ROOT" cat-file -e "HEAD:$app_rel" 2>/dev/null; then
+			if git -C "$APP_ROOT" restore --source=HEAD --worktree -- "$app_rel" 2>/dev/null \
+				|| git -C "$APP_ROOT" checkout HEAD -- "$app_rel" 2>/dev/null; then
+				echo "restore  $app_rel (from git HEAD)"
+				return 0
+			fi
+		fi
+	fi
+
+	# Overlay-only file (exists in content repo, not in the template) — nothing to restore.
+	echo "remove   $app_rel (no template default)"
+	return 0
 }
 
 link_path() {
@@ -253,7 +309,7 @@ link_brand_overlay() {
 		[[ -e "$content_abs" || -L "$content_abs" ]] || continue
 		link_parent="$(dirname "$APP_ROOT/$app_rel")"
 		rel="$(rel_to_content_repo "$link_parent")"
-		link_force "$rel/$app_rel" "$APP_ROOT/$app_rel" "$quiet"
+		link_force "$rel/$app_rel" "$APP_ROOT/$app_rel" "$quiet" "$app_rel"
 	done
 }
 
@@ -272,21 +328,17 @@ unlink_symlinks_in() {
 }
 
 unlink_brand_overlay() {
-	local app_rel restored=()
+	local app_rel
 	for app_rel in "${BRAND_APP_PATHS[@]}"; do
 		if [[ -L "$APP_ROOT/$app_rel" ]]; then
 			echo "unlink   $APP_ROOT/$app_rel"
 			rm "$APP_ROOT/$app_rel"
-			restored+=("$app_rel")
+			restore_brand_file "$app_rel"
 		fi
 	done
-	if ((${#restored[@]})); then
-		# Prefer git-tracked template defaults when available.
-		if git -C "$APP_ROOT" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-			git -C "$APP_ROOT" restore --source=HEAD --worktree --staged -- "${restored[@]}" 2>/dev/null \
-				|| git -C "$APP_ROOT" checkout HEAD -- "${restored[@]}" 2>/dev/null \
-				|| true
-		fi
+	# Drop empty backup dirs left behind.
+	if [[ -d "$BRAND_BACKUP_DIR" ]]; then
+		find "$BRAND_BACKUP_DIR" -type d -empty -delete 2>/dev/null || true
 	fi
 }
 
@@ -302,9 +354,8 @@ show_status() {
 	echo
 	echo "Symlinks:"
 	{
-		find "$APP_ROOT/src/content" "$APP_ROOT/src/assets" -maxdepth 3 -type l -printf '  %p -> %l\n' 2>/dev/null || true
+		find "$APP_ROOT/src/content" "$APP_ROOT/src/assets" "$APP_ROOT/src/site" -maxdepth 3 -type l -printf '  %p -> %l\n' 2>/dev/null || true
 		find "$APP_ROOT/public" -maxdepth 1 -type l -printf '  %p -> %l\n' 2>/dev/null || true
-		[[ -L "$APP_ROOT/src/Site.yaml" ]] && printf '  %s -> %s\n' "$APP_ROOT/src/Site.yaml" "$(readlink "$APP_ROOT/src/Site.yaml")"
 	} | sort -u
 }
 
@@ -351,7 +402,7 @@ if $do_unlink; then
 		unlink_symlinks_in "$APP_ROOT/src/assets/$collection"
 	done
 	unlink_brand_overlay
-	echo "Done. Public template files were left in place."
+	echo "Done. Template defaults restored; private catalog left untouched in $CONTENT_REPO."
 	exit 0
 fi
 

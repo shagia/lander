@@ -1,0 +1,11 @@
+# Landing-page components. Set a toggle to false to hide it.
+# releasesVariant: "text" (list) or "image" (cover grid).
+aboutText: true
+audioPlayer: true
+banner: true
+linkLens: true
+performancesText: true
+projectsText: true
+releases: true
+socialLinksContent: true
+releasesVariant: image

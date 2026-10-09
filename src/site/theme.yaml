@@ -1,0 +1,16 @@
+# Omit any key to keep the Sass default in
+# src/styles/global/abstracts/_colors.scss.
+colors:
+  canvas: "#e8eaed"
+  text: "#14141c"
+  surface: "#f4f5f7"
+  surfaceHover: "#e5e7eb"
+  surfaceMuted: "#f9fafb"
+  linkLargeBg: "#f4f5f7"
+  linkSmallBg: "#c8ccd2"
+  border: "#e5e7eb"
+  borderMuted: "#d1d5db"
+  borderStrong: "#9ca3af"
+  borderAccent: "#3d7ea6"
+  focus: "#2563eb"
+  muted: "#6b7280"

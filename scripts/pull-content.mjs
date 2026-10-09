@@ -27,7 +27,11 @@ const PUBLIC_ASSET_ENTRIES = new Set([".gitkeep", "template", "sample-cover.svg"
 
 /** Optional brand overlay paths mirrored from the content repo. */
 const BRAND_PATHS = [
-	"src/Site.yaml",
+	"src/site/artist.yaml",
+	"src/site/images.yaml",
+	"src/site/theme.yaml",
+	"src/site/socials.yaml",
+	"src/site/mods.yaml",
 	"src/content/site/About.md",
 	"src/assets/ui/logo.svg",
 	"src/assets/ui/logo-dark.svg",

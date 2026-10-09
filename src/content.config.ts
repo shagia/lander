@@ -1,7 +1,13 @@
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 import { defineCollection } from "astro:content";
-import { site } from "./site.collection";
+import {
+	siteArtist,
+	siteImages,
+	siteMods,
+	siteSocials,
+	siteTheme,
+} from "./site.collection";
 
 const SITE_CONTENT_BASE = "./src/content/site";
 
@@ -136,4 +142,14 @@ const about = defineCollection({
 	schema: z.object({}),
 });
 
-export const collections = { releases, projects, performances, about, site };
+export const collections = {
+	releases,
+	projects,
+	performances,
+	about,
+	siteArtist,
+	siteImages,
+	siteTheme,
+	siteSocials,
+	siteMods,
+};

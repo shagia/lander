@@ -1,0 +1,7 @@
+# Artist identity — header, footer, and page metadata.
+artist: Artist Name
+legalName: Artist Name
+title: Artist Name
+description: A short description of your music, projects, and links.
+url: https://example.com
+email: hello@example.com
