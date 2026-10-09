@@ -1,7 +1,12 @@
-# Artist identity — header, footer, and page metadata.
+# Site identity, header, footer, and page metadata.
 artist: Artist Name
 legalName: Artist Name
 title: Artist Name
-description: A short description of your music, projects, and links.
+# Use | for multi-line text. Blank lines → paragraphs; single newlines → line breaks.
+description: |
+  Get started with your site by editing your description in src/site/artist.yaml.
+
+  Add a second paragraph with a blank line above it,
+  or keep a soft line break like this.
 url: https://example.com
 email: hello@example.com

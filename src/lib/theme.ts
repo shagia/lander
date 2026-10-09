@@ -49,13 +49,17 @@ const themeColorFields = Object.fromEntries(
 	THEME_COLOR_KEYS.map((key) => [key, optionalThemeColor]),
 ) as { [K in ThemeColorKey]: typeof optionalThemeColor };
 
-export const themeColorsSchema = z.object(themeColorFields).optional();
+export const themeColorsSchema = z
+	.object(themeColorFields)
+	.nullish()
+	.transform((value) => value ?? undefined);
 
-export const themeSchema = z
-	.object({
+export const themeSchema = z.preprocess(
+	(value) => value ?? {},
+	z.object({
 		colors: themeColorsSchema,
-	})
-	.optional();
+	}),
+);
 
 /** Maps camel cased YAML keys to kebab cased `--palette-*` CSS custom properties. */
 const THEME_COLOR_CSS_VARS: Record<ThemeColorKey, string> = {

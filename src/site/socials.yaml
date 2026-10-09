@@ -1,5 +1,4 @@
-# Blank, null, or omitted handles are ignored.
-# Keys match src/lib/socials.ts (add a handle to show that platform).
+# Social handles
 soundcloud: your-handle
 bandcamp: yourname.bandcamp.com
 instagram: your-handle

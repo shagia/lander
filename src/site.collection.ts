@@ -1,7 +1,7 @@
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 import { defineCollection } from "astro:content";
-import { themeColorsSchema } from "./lib/theme";
+import { themeSchema } from "./lib/theme";
 import { modsObjectSchema } from "./lib/mods";
 
 const SITE_BASE = "./src/site";
@@ -144,18 +144,15 @@ export const siteImages = defineCollection({
 	},
 });
 
-/** Palette overrides **/
+/** Palette overrides — empty file / no colors keeps Sass defaults **/
 export const siteTheme = defineCollection({
 	loader: glob({
 		pattern: "theme.yaml",
 		base: SITE_BASE,
 		generateId: () => "theme",
 	}),
-	schema: z.object({
-		colors: themeColorsSchema,
-	}),
+	schema: themeSchema,
 });
-
 /** Social handles **/
 export const siteSocials = defineCollection({
 	loader: glob({
