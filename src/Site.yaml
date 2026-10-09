@@ -1,52 +1,51 @@
-artist: Devin S.G.
-legalName: Devin S.G.
-title: Devin S.G.
-description: Music, engineering, and multimedia from Devin S.G.
-url: https://devin.sg
-email: devin@devin.sg
-icon: ./assets/ui/logo.svg
-avatar: ./assets/ui/banner.jpeg
+artist: Artist Name
+legalName: Artist Name
+title: Artist Name
+description: A short description of your music, projects, and links.
+url: https://example.com
+email: hello@example.com
+icon: ./assets/ui/icon.svg
+avatar: ./assets/ui/banner.svg
 logo:
   light: ./assets/ui/logo.svg
-  dark: ./assets/ui/logo-white.svg
+  dark: ./assets/ui/logo-dark.svg
 banner:
-  image: ./assets/ui/banner.jpeg
-  position: center 27%
-  imageSize: 1.6
-  credit: "Photo credit: Devin S.G."
+  image: ./assets/ui/banner.svg
+  position: center center
+  imageSize: 1.2
+  credit: "Replace this banner in src/assets/ui/"
 
 # Omitting a key keeps the Sass default in src/styles/global/abstracts/_colors.scss.
 theme:
   colors:
-    canvas: "#cfcfcf"
-    text: "#14142c"
-    surface: "#f3f4f6"
+    canvas: "#e8eaed"
+    text: "#14141c"
+    surface: "#f4f5f7"
     surfaceHover: "#e5e7eb"
     surfaceMuted: "#f9fafb"
-    linkLargeBg: "#f3f4f6"
-    linkSmallBg: "#bcbcbc"
+    linkLargeBg: "#f4f5f7"
+    linkSmallBg: "#c8ccd2"
     border: "#e5e7eb"
     borderMuted: "#d1d5db"
     borderStrong: "#9ca3af"
-    borderAccent: "#95b9ff"
+    borderAccent: "#3d7ea6"
     focus: "#2563eb"
     muted: "#6b7280"
 
 # social handles are optional: blank, null, or omitted social handles are ignored
 socials:
-  soundcloud: devin_sg
-  instagram: 0devin.sg
-  bluesky: devin.sg
-  # twitter:
-  email: devin@devin.sg
+  # soundcloud: your-handle
+  # instagram: your-handle
+  # bluesky: your.handle
+  email: hello@example.com
 
 # Mods are your site's configuration. Read more about 'mods', 'releasesVariant', and their defaults in src/components/mods/README.md
 mods:
   aboutText: true
   audioPlayer: false
-  banner: false
+  banner: true
   linkLens: true
-  performancesText: false
+  performancesText: true
   projectsText: true
   releases: true
   socialLinksContent: true

@@ -13,7 +13,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const APP_ROOT = path.resolve(__dirname, "..");
 const SCRIPT = path.join(APP_ROOT, "scripts", "link-private-content.sh");
 
-const PUBLIC_NAMES = new Set([".gitkeep", "template.md", "template"]);
+const PUBLIC_NAMES = new Set([".gitkeep", "template.md", "template", "sample.md", "sample-cover.svg"]);
 const WATCH_DIRS = [
 	"src/content/releases",
 	"src/content/performances",

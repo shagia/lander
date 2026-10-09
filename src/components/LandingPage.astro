@@ -173,7 +173,7 @@ const showFeatured = Boolean(featuredHeadline || featuredSummary.length > 0);
 					) : (
 						<div class="landing-default-columns">
 							<div class="landing-default-column landing-default-column--music">
-								{mods.releases && <Releases variant="text" paged />}
+								{mods.releases && <Releases paged />}
 								{mods.performancesText && (
 									<PerformancesText paged />
 								)}
