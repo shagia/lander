@@ -31,16 +31,9 @@ Open `http://localhost:4321` and the admin at `http://localhost:4321/keystatic`.
 
 Leave the Keystatic GitHub env vars empty (see `[.env.example](./.env.example)`) to keep Keystatic in local mode.
 
-## Customize (template surface)
+## Customization
 
-Everything you need to rebrand lives in content and assets — not components:
-
-1. `src/site/` — Keystatic Site Settings (`artist`, `images`, `theme`, `socials`, `mods` YAML); About copy lives in `artist.description`
-2. `src/assets/ui/` — `logo.svg`, `logo-dark.svg`, `banner.svg`, `icon.svg`
-3. `public/favicon.svg` (and `favicon.ico`)
-4. `src/content/{releases,projects,performances}/` — start from the included `sample.md` files
-
-The template ships neutral placeholders plus one sample release/project/performance so the page is usable before you add your own catalog.
+Content and assets are easy to replace, either by utilizing `/Keystatic`, or dropping your files into the assets folder. Read the customize walkthrough here: **[docs/customize.md](./docs/customize.md)**
 
 ## Commands
 
