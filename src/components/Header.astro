@@ -1,43 +1,8 @@
 ---
-import { coverSrc, getSiteConfig } from "../lib/landing";
+import Logo from "./Logo.astro";
 import "../styles/global/header.scss";
-
-const site = await getSiteConfig();
-const lightLogo = site?.data.logo?.light ?? site?.data.icon;
-const darkLogo = site?.data.logo?.dark ?? lightLogo;
-
-const lightSrc = lightLogo ? coverSrc(lightLogo) : undefined;
-const darkSrc = darkLogo ? coverSrc(darkLogo) : undefined;
-
-const lightMeta =
-	lightLogo != null && typeof lightLogo === "object" ? lightLogo : undefined;
-const darkMeta =
-	darkLogo != null && typeof darkLogo === "object" ? darkLogo : undefined;
 ---
 
 <header class="site-header" transition:persist="site-header">
-	<a href="/" class="site-logo-link" aria-label="Home">
-		{
-			lightSrc && (
-				<img
-					src={lightSrc}
-					width={lightMeta?.width}
-					height={lightMeta?.height}
-					alt="Logo"
-					class="site-logo site-logo-light"
-				/>
-			)
-		}
-		{
-			darkSrc && (
-				<img
-					src={darkSrc}
-					width={darkMeta?.width}
-					height={darkMeta?.height}
-					alt=""
-					class="site-logo site-logo-dark"
-				/>
-			)
-		}
-	</a>
+	<Logo />
 </header>

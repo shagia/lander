@@ -1,0 +1,52 @@
+@keyframes logo-spin {
+	0% {
+		transform: rotateY(0deg);
+	}
+
+	50% {
+		transform: rotateY(90deg);
+	}
+
+	100% {
+		transform: rotateY(0deg);
+	}
+}
+
+:root {
+	/* Presets */
+	/* Spin preset */
+	--logo-preset-spin-name: logo-spin;
+	--logo-preset-spin-duration: 13s;
+	--logo-preset-spin-iteration: infinite;
+	--logo-preset-spin-timing: steps(128);
+	--logo-preset-spin-fill: forwards;
+	// Add more presets here
+	/*
+		--logo-preset-<id>-name: logo-<id>;
+		--logo-preset-<id>-duration: <duration>;
+		--logo-preset-<id>-iteration: <iteration>;
+		--logo-preset-<id>-timing: <timing>;
+		--logo-preset-<id>-fill: <fill>;
+	*/
+}
+
+/* Binders */
+/* Spin binder */
+.site-logo--spin {
+	--logo-slot-name: var(--logo-preset-spin-name);
+	--logo-slot-duration: var(--logo-preset-spin-duration);
+	--logo-slot-iteration: var(--logo-preset-spin-iteration);
+	--logo-slot-timing: var(--logo-preset-spin-timing);
+	--logo-slot-fill: var(--logo-preset-spin-fill);
+}
+
+// Add more binders here
+/*
+	.site-logo--<id> {
+		--logo-slot-name: var(--logo-preset-<id>-name);
+		--logo-slot-duration: var(--logo-preset-<id>-duration);
+		--logo-slot-iteration: var(--logo-preset-<id>-iteration);
+		--logo-slot-timing: var(--logo-preset-<id>-timing);
+		--logo-slot-fill: var(--logo-preset-<id>-fill);
+	}
+*/

@@ -1,4 +1,8 @@
 import { config, fields, collection, singleton } from '@keystatic/core';
+import {
+	LOGO_ANIMATION_DEFAULT,
+	LOGO_ANIMATION_OPTIONS,
+} from './src/lib/logo-animations';
 
 const linkItem = fields.object({
 	id: fields.text({ label: 'ID', validation: { isRequired: true } }),
@@ -237,6 +241,11 @@ export default config({
 				socialLinksContent: fields.checkbox({
 					label: 'Social links',
 					defaultValue: true,
+				}),
+				logoAnimation: fields.select({
+					label: 'Logo animation',
+					options: [...LOGO_ANIMATION_OPTIONS],
+					defaultValue: LOGO_ANIMATION_DEFAULT,
 				}),
 				releasesVariant: fields.select({
 					label: 'Releases layout',

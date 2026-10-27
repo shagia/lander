@@ -1,4 +1,18 @@
 import { z } from "zod";
+import {
+	LOGO_ANIMATION_DEFAULT,
+	LOGO_ANIMATION_IDS,
+	type LogoAnimation,
+} from "./logo-animations";
+
+export type { LogoAnimation } from "./logo-animations";
+export {
+	LOGO_ANIMATION_DEFAULT,
+	LOGO_ANIMATION_IDS,
+	LOGO_ANIMATION_LIBRARY,
+	LOGO_ANIMATION_OPTIONS,
+	logoAnimationClass,
+} from "./logo-animations";
 
 export const MOD_DEFAULTS = {
 	aboutText: true,
@@ -23,6 +37,7 @@ export const RELEASES_VARIANT_DEFAULT: ReleasesVariant = "text";
 export type ModsConfig = {
 	[K in ModId]: boolean;
 } & {
+	logoAnimation: LogoAnimation;
 	releasesVariant: ReleasesVariant;
 };
 
@@ -39,7 +54,7 @@ const modToggleFields = Object.fromEntries(
 /** Mods object shape **/
 export const modsObjectSchema = z.object({
 	...modToggleFields,
-	/** Default Releases layout when the component omits `variant`. */
+	logoAnimation: z.enum(LOGO_ANIMATION_IDS).optional(),
 	releasesVariant: z.enum(RELEASES_VARIANTS).optional(),
 });
 
@@ -57,6 +72,7 @@ export function resolveMods(input?: ModsConfigInput | null): ModsConfig {
 		releases: input?.releases ?? MOD_DEFAULTS.releases,
 		socialLinksContent:
 			input?.socialLinksContent ?? MOD_DEFAULTS.socialLinksContent,
+		logoAnimation: input?.logoAnimation ?? LOGO_ANIMATION_DEFAULT,
 		releasesVariant: input?.releasesVariant ?? RELEASES_VARIANT_DEFAULT,
 	};
 }

@@ -1,0 +1,47 @@
+---
+import { coverSrc, getMods, getSiteConfig } from "../lib/landing";
+import { logoAnimationClass } from "../lib/logo-animations";
+import "../styles/components/logo.scss";
+
+const site = await getSiteConfig();
+const mods = await getMods();
+const lightLogo = site?.data.logo?.light ?? site?.data.icon;
+const darkLogo = site?.data.logo?.dark ?? lightLogo;
+
+const lightSrc = lightLogo ? coverSrc(lightLogo) : undefined;
+const darkSrc = darkLogo ? coverSrc(darkLogo) : undefined;
+
+const lightMeta =
+	lightLogo != null && typeof lightLogo === "object" ? lightLogo : undefined;
+const darkMeta =
+	darkLogo != null && typeof darkLogo === "object" ? darkLogo : undefined;
+
+const blockClass = ["site-logo", logoAnimationClass(mods.logoAnimation)]
+	.filter(Boolean)
+	.join(" ");
+---
+
+<a href="/" class={blockClass} aria-label="Home">
+	{
+		lightSrc && (
+			<img
+				src={lightSrc}
+				width={lightMeta?.width}
+				height={lightMeta?.height}
+				alt="Logo"
+				class="site-logo-media site-logo-light"
+			/>
+		)
+	}
+	{
+		darkSrc && (
+			<img
+				src={darkSrc}
+				width={darkMeta?.width}
+				height={darkMeta?.height}
+				alt=""
+				class="site-logo-media site-logo-dark"
+			/>
+		)
+	}
+</a>
