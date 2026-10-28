@@ -3,7 +3,7 @@ aboutText: true
 audioPlayer: true
 banner: true
 linkLens: true
-logoAnimation: spin
+logoAnimation: none
 performancesText: true
 projectsText: true
 releases: true
